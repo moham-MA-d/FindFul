@@ -1,0 +1,16 @@
+<app-nav></app-nav>                                    
+
+<div id="page-contents"  *ngIf="currentUser$ | async">
+        <div class="container">
+        <div class="row">
+           
+            <!-- Newsfeed Common Side Bar Left
+             ================================================= -->
+            <app-left></app-left>
+
+            <app-center></app-center>
+
+         </div>
+    </div>
+</div>
+
