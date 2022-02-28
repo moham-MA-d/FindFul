@@ -15,7 +15,7 @@ namespace API.Controllers
         private readonly IUserService _userService;
 
         public UsersController(IUserService userService)
-         {
+        {
             _userService = userService;
         }
 
