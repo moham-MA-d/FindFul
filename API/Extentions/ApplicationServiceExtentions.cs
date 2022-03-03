@@ -3,14 +3,16 @@ using API.Services.Interfaces;
 using Core;
 using Core.IRepositories.User;
 using Core.IService.User;
+using Core.Iservices.Mapper;
 using Data;
-using Data.Helpers;
 using Data.Repositories.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Service.Classes.Mapper;
 using Service.Classes.User;
+using Service.Helpers;
 
 namespace API.Findful.Extentions
 {
@@ -25,8 +27,9 @@ namespace API.Findful.Extentions
             services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
             services.AddScoped<IUnitOfWork, UnitOfWork>(); 
             
-            services.AddScoped<IUserRepository, UserRepository>(); 
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMapperService, MapperService>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 

@@ -10,7 +10,7 @@ import { MemberService } from 'src/app/services/member/member.service';
 })
 export class ProfileTimelineComponent implements OnInit {
 
-  member: Member;
+  member: Member = new Member();
   constructor() { }
 
   ngOnInit() {

@@ -19,3 +19,4 @@ export class Member {
     lastActivity: string;
     photos: Photo[];
 }
+

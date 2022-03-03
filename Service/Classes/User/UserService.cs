@@ -42,11 +42,6 @@ namespace Service.Classes.User
             return await _userRepository.GetAllMembers();
         }
 
-        public Task<AppUser> Update(AppUser userToBeUpdated, AppUser user)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public async Task<bool> IsPasswordCurrect(int userId, string password)
         {

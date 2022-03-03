@@ -8,12 +8,14 @@ import { ProfileAboutComponent } from 'src/app/components/members/Profile/profil
 import { ProfileTimelineComponent } from 'src/app/components/members/Profile/profileTimeline/profileTimeline.component';
 import { ProfileHeaderComponent } from 'src/app/components/members/Profile/profileHeader/profileHeader.component';
 import { ProfileEditComponent } from 'src/app/components/members/Profile/ProfileEdit/profileEdit/profileEdit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    HomeModule
+    HomeModule,
+    FormsModule
   ],
   declarations: [
     CenterComponent,

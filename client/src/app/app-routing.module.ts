@@ -11,6 +11,7 @@ import { ProfileEditComponent } from './components/members/Profile/ProfileEdit/p
 import { ProfileTimelineComponent } from './components/members/Profile/profileTimeline/profileTimeline.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PreventUnsavedChangesGuard } from './guards/leave/prevent-unsaved-changes.guard';
 import { DefaultComponent } from './layouts/default/default.component';
 import { CenterComponent } from './modules/components-wrapper/center/center.component';
 
@@ -27,7 +28,7 @@ const routes: Routes = [
           { path: 'home', component: HomeComponent },
           { path: 'members', component: MembersComponent },
           { path: 'members/:username', component: ProfileTimelineComponent },
-          { path: 'members/:username/edit', component: ProfileEditComponent },
+          { path: 'members/:username/edit', component: ProfileEditComponent, canDeactivate: [PreventUnsavedChangesGuard],  runGuardsAndResolvers: 'always', },
           { path: 'members/:username/timeline', component: ProfileTimelineComponent },
           { path: 'members/:username/about', component: ProfileAboutComponent },
           { path: 'messages', component: MessagesComponent }

@@ -14,14 +14,14 @@ export class ProfileHeaderComponent implements OnInit {
   @Output() user = new EventEmitter();
   member: Member = new Member();
 
-  constructor(private memberService: MemberService, private route: ActivatedRoute, private routeService: ComponentService) { }
+  constructor(private memberService: MemberService, private route: ActivatedRoute, private compService: ComponentService) { }
 
   ngOnInit() {
-    this.routeService.setChatBlockEnable(false);
+    this.compService.setChatBlockEnable(false);
     this.loadMember();
   }
   ngOnDestroy()	{
-    this.routeService.setChatBlockEnable(true);
+    this.compService.setChatBlockEnable(true); 
   }
 
 
