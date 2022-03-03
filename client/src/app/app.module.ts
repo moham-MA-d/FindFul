@@ -14,6 +14,8 @@ import { ErrorInterceptor } from './Interceptors/errors/error.interceptor';
 import { JwtInterceptor } from './Interceptors/jwt/jwt.interceptor';
 import { DefaultModule } from './layouts/default/default.module';
 import { FullWidthModule } from './layouts/fullWidth/fullWidth.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './Interceptors/loading.interceptor';
 
 
 //Main and necessary Module of Angular project which is called in main.ts 
@@ -32,11 +34,13 @@ import { FullWidthModule } from './layouts/fullWidth/fullWidth.module';
     SharedModule,
     SnippetComponentsModule,
     DefaultModule,
-    FullWidthModule
+    FullWidthModule,
+    NgxSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -17,7 +17,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let currentUser: User;
-
     // take(): with using take() method we don't need to unsubscribe, after the observable being completed
     // we will automatically unsubscribe from it.
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => currentUser = user );
