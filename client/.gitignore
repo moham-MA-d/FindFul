@@ -5,6 +5,8 @@ ssl
 src/resources/images
 src/resources/fonts
 src/resources/css/emoji
+appsettings.json
+*.db*
 
 # compiled output
 /dist
