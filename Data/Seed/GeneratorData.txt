@@ -18,7 +18,7 @@
       DateOfBirth: '{{date(new Date(1990, 0, 1), new Date(2010, 0, 1))}}',
       Email: '{{email()}}',
       
-      Photos: [
+      TheUserPhotosList: [
         {
           Url: function(num) {
             return 'https://randomuser.me/api/portraits/men/' + num.integer(1,99) + '.jpg';

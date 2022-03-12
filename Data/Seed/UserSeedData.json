@@ -15,7 +15,7 @@
     "LastActivity": "2021-11-05",
     "DateOfBirth": "2003-02-08",
     "Email": "shannonsnider@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/women/7.jpg",
         "IsMain": true
@@ -38,7 +38,7 @@
     "LastActivity": "2021-01-09",
     "DateOfBirth": "2002-07-14",
     "Email": "raebyers@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/women/82.jpg",
         "IsMain": true
@@ -61,7 +61,7 @@
     "LastActivity": "2021-12-01",
     "DateOfBirth": "1990-04-04",
     "Email": "stefaniemcdaniel@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/women/56.jpg",
         "IsMain": true
@@ -84,7 +84,7 @@
     "LastActivity": "2021-02-23",
     "DateOfBirth": "1991-08-31",
     "Email": "tonyaburnett@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/women/78.jpg",
         "IsMain": true
@@ -107,7 +107,7 @@
     "LastActivity": "2021-09-29",
     "DateOfBirth": "2007-04-10",
     "Email": "lizkane@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/women/94.jpg",
         "IsMain": true
@@ -130,7 +130,7 @@
     "LastActivity": "2021-05-04",
     "DateOfBirth": "2008-05-30",
     "Email": "gretchensosa@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/women/25.jpg",
         "IsMain": true
@@ -153,7 +153,7 @@
     "LastActivity": "2021-07-11",
     "DateOfBirth": "1996-01-10",
     "Email": "conwaysmith@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/82.jpg",
         "IsMain": true
@@ -176,7 +176,7 @@
     "LastActivity": "2021-05-22",
     "DateOfBirth": "2000-11-11",
     "Email": "contrerasnieves@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/88.jpg",
         "IsMain": true
@@ -199,7 +199,7 @@
     "LastActivity": "2021-08-05",
     "DateOfBirth": "2003-12-22",
     "Email": "sullivancantu@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/37.jpg",
         "IsMain": true
@@ -222,7 +222,7 @@
     "LastActivity": "2021-05-13",
     "DateOfBirth": "2000-09-08",
     "Email": "howardsolomon@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/83.jpg",
         "IsMain": true
@@ -245,7 +245,7 @@
     "LastActivity": "2021-06-27",
     "DateOfBirth": "2003-11-19",
     "Email": "noelfrost@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/31.jpg",
         "IsMain": true
@@ -268,7 +268,7 @@
     "LastActivity": "2021-04-17",
     "DateOfBirth": "1991-08-24",
     "Email": "rosalesengland@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/80.jpg",
         "IsMain": true
@@ -291,7 +291,7 @@
     "LastActivity": "2021-09-17",
     "DateOfBirth": "1999-02-12",
     "Email": "callahansweeney@venoflex.com",
-    "Photos": [
+    "TheUserPhotosList": [
       {
         "Url": "https://randomuser.me/api/portraits/men/97.jpg",
         "IsMain": true
