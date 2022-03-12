@@ -1,6 +1,5 @@
 
 <div class="timeline-cover margin-top">
-  <h1>{{member.lastName}}</h1>
   <!--Timeline Menu for Large Screens-->
   <div class="timeline-nav-bar hidden-sm hidden-xs">
     <div class="row">
@@ -15,7 +14,7 @@
         <ul class="list-inline profile-menu">
           <li><a routerLink="/members/{{member.userName}}/timeline">Timeline</a></li>
           <li><a routerLink="/members/{{member.userName}}/about">About</a></li>
-          <li><a href="timeline-album.html">Album</a></li>
+          <li><a routerLink="/members/{{member.userName}}/album">Album</a></li>
           <li><a href="timeline-friends.html">Friends</a></li>
         </ul>
         <ul class="follow-me list-inline">
@@ -36,8 +35,8 @@
     <div class="mobile-menu">
       <ul class="list-inline">
         <li><a routerLink="/members/{{member.userName}}/timeline">Timeline</a></li>
-          <li><a routerLink="/members/{{member.userName}}/about">About</a></li>
-        <li><a >Album</a></li>
+        <li><a routerLink="/members/{{member.userName}}/about">About</a></li>
+        <li><a routerLink="/members/{{member.userName}}/album">Album</a></li>
         <li><a href="timeline-friends.html">Friends</a></li>
       </ul>
       <button class="btn-primary">Add Friend</button>

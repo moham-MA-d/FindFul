@@ -13,6 +13,7 @@ export class ProfileHeaderComponent implements OnInit {
 
   @Output() user = new EventEmitter();
   member: Member = new Member();
+  
 
   constructor(private memberService: MemberService, private route: ActivatedRoute, private compService: ComponentService) { }
 
@@ -29,6 +30,11 @@ export class ProfileHeaderComponent implements OnInit {
     let username = this.route.snapshot.paramMap.get("username");
     this.memberService.getMember(username).subscribe(mem => {
       this.member = mem;
+      if (mem.userName == username) {
+        this.memberService.currentMember = mem;
+      }else{
+        this.memberService.currentMember = undefined;
+      }
       this.user.emit(this.member);
     });
   }

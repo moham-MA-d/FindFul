@@ -1,4 +1,4 @@
-import { Photo } from "../photo/photo";
+import { userPhoto } from "./userPhoto";
 
 export class Member {
     guId: string;
@@ -17,6 +17,6 @@ export class Member {
     createDateTime: string;
     age: number;
     lastActivity: string;
-    photos: Photo[];
+    theUserPhotos: userPhoto[];
 }
 

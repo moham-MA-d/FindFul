@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LandingRegisterComponent } from './components/landings/landing-register/landing-register.component';
 import { MembersComponent } from './components/members/members.component';
 import { ProfileAboutComponent } from './components/members/Profile/profileAbout/profileAbout.component';
+import { ProfileAlbumComponent } from './components/members/Profile/profileAlbum/profileAlbum.component';
 import { ProfileEditComponent } from './components/members/Profile/ProfileEdit/profileEdit/profileEdit.component';
 import { ProfileTimelineComponent } from './components/members/Profile/profileTimeline/profileTimeline.component';
 import { MessagesComponent } from './components/messages/messages.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
           { path: 'members/:username/edit', component: ProfileEditComponent, canDeactivate: [PreventUnsavedChangesGuard],  runGuardsAndResolvers: 'always', },
           { path: 'members/:username/timeline', component: ProfileTimelineComponent },
           { path: 'members/:username/about', component: ProfileAboutComponent },
+          { path: 'members/:username/album', component: ProfileAlbumComponent },
           { path: 'messages', component: MessagesComponent }
         ]
       }

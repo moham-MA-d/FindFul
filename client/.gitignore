@@ -6,6 +6,9 @@ src/resources/images
 src/resources/fonts
 src/resources/css/emoji
 appsettings.json
+../API/appsettings.json
+../API/appsettings.Development.json
+
 *.db*
 
 # compiled output

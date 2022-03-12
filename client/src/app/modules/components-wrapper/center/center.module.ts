@@ -9,6 +9,7 @@ import { ProfileTimelineComponent } from 'src/app/components/members/Profile/pro
 import { ProfileHeaderComponent } from 'src/app/components/members/Profile/profileHeader/profileHeader.component';
 import { ProfileEditComponent } from 'src/app/components/members/Profile/ProfileEdit/profileEdit/profileEdit.component';
 import { FormsModule } from '@angular/forms';
+import { ProfileAlbumComponent } from 'src/app/components/members/Profile/profileAlbum/profileAlbum.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     ProfileTimelineComponent,
     ProfileHeaderComponent,
     ProfileEditComponent,
+    ProfileAlbumComponent
   ],
   exports: [
     CenterComponent,
@@ -31,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     ProfileAboutComponent,
     ProfileTimelineComponent,
     ProfileHeaderComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    ProfileAlbumComponent
   ]
 })
 export class CenterModule { }

@@ -10,7 +10,6 @@ import { MemberService } from 'src/app/services/member/member.service';
 })
 export class ProfileAboutComponent implements OnInit {
 
-  
   member: Member;
   constructor() { }
 
