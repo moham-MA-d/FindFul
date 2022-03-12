@@ -10,7 +10,7 @@ namespace Extentions.Common
     {
         public static int CalculateAge(this DateTime dateOfBirth)
         {
-            return new DateTimeExtentionHelper().GetCalculateAge(dateOfBirth);
+            return new DateTimeExtensionHelper().GetCalculateAge(dateOfBirth);
         }
 
 

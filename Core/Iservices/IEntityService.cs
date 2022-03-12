@@ -14,6 +14,8 @@ namespace Core.IService
         void Update(T entity);
         Task SoftDeleteAsync(T entity);
         Task RemoveAsync(T entity);
-        Task<T> GetById(int Id);
+        Task<T> GetByIdAsync(int Id);
+        
+        Task SaveChangesAsync();
     }
 }

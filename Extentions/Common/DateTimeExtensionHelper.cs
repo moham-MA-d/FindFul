@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Extentions.Common
 {
-    public class DateTimeExtentionHelper
+    public class DateTimeExtensionHelper
     {
         public int GetCalculateAge(DateTime dateOfBirth)
         {

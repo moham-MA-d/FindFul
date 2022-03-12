@@ -8,7 +8,10 @@ ssl
 src/resources/images
 src/resources/fonts
 src/resources/css/emoji
+API/appsettings.json
+API/appsettings.Development.json
 appsettings.json
+appsettings.Development.json
 *.db*
 
 # User-specific files

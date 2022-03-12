@@ -1,4 +1,4 @@
-using API.Findful.Extentions;
+using API.Findful.Extensions;
 using API.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
-    <ProjectReference Include="..\Extentions\Extentions.csproj" />
+    <ProjectReference Include="..\Extentions\Extensions.csproj" />
   </ItemGroup>
 
 </Project>

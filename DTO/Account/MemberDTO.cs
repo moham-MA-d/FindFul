@@ -1,4 +1,4 @@
-﻿using DTO.Media;
+﻿using DTO.Account.Photo;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +16,6 @@ namespace DTO.Account
         public DateTime CreateDateTime { get; set; }
         public int Age { get; set; }
         public DateTime LastActivity { get; set; }
-        public ICollection<PhotoDTO> Photos { get; set; }
+        public ICollection<MemberPhotoDTO> Photos { get; set; }
     }
 }

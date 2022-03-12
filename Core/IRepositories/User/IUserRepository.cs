@@ -10,6 +10,6 @@ namespace Core.IRepositories.User
         Task<MemberDTO> GetUserByEmailAsync(string email);
         Task<MemberDTO> GetUserByUsernameAsync(string username);
         Task<IEnumerable<MemberDTO>> GetAllMembers();
-
+        Task<AppUser> GetUserByIdAsync(int id);
     }
 }

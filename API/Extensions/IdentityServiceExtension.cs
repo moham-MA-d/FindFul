@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace API.Findful.Extentions
+namespace API.Findful.Extensions
 {
-    public static class IdentityServiceExtention
+    public static class IdentityServiceExtension
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {

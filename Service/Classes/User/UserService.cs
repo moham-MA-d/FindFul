@@ -18,13 +18,11 @@ namespace Service.Classes.User
 {
     public class UserService : EntityService<AppUser>, IUserService, IEntityService<AppUser>
     {
-        IUnitOfWork _unitOfWork;
         IUserRepository _userRepository;
 
         public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
             : base(unitOfWork, userRepository)
         {
-            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
         }
 
@@ -41,11 +39,14 @@ namespace Service.Classes.User
         {
             return await _userRepository.GetAllMembers();
         }
-
+        public async Task<AppUser> GetUserByIdAsync(int id)
+        {
+            return await _userRepository.GetUserByIdAsync(id);
+        }
 
         public async Task<bool> IsPasswordCurrect(int userId, string password)
         {
-            var user = await GetById(userId);
+            var user = await GetByIdAsync(userId);
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -111,5 +112,12 @@ namespace Service.Classes.User
         {
             return Regex.Match(phone, @"^(\+[0-9]{9})$").Success;
         }
+
+        public string GenerateRandomUsername(string name)
+        {
+            return name + new Random(11).ToString();
+        }
+
+     
     }
 }

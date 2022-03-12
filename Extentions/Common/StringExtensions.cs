@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Extentions.Common
 {
-    public static class StringExtentions
+    public static class StringExtensions
     {
         public static bool IsNullOrEmptyOrWhiteSpace(this string input)
         {

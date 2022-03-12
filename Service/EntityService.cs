@@ -33,10 +33,10 @@ namespace Service
         {
             if (entity == null) throw new ArgumentNullException("entity");
             _repository.Remove(entity);
-            await _unitOfWork.CommitAsync();
+            await SaveChangesAsync();
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
         }
@@ -44,8 +44,13 @@ namespace Service
         public async Task<T> AddAsync(T entity)
         {
             await _repository.AddAsync(entity);
-            await _unitOfWork.CommitAsync();
+            await SaveChangesAsync();
             return entity;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _unitOfWork.CommitAsync();
         }
     }
 }

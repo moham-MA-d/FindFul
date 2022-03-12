@@ -50,6 +50,13 @@ namespace Data.Repositories.User
             }
         }
 
+        public async Task<AppUser> GetUserByIdAsync(int id)
+        {
+            return await _context.Users
+                .Include(x => x.TheUserPhotosList)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         //public async Task<int> Update(AppUser entity)
         //{
         //    var catalogue = await _context.Users.FindAsync(entity);
