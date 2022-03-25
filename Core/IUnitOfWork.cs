@@ -13,6 +13,8 @@ namespace Core
         /// <returns>The number of objects in an Added, Modified, or Deleted state</returns>
         Task<int> CommitAsync();
 
+        int Commit();
+
         //IUserRepository Users { get; }
     }
 }

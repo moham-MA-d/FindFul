@@ -23,7 +23,7 @@ namespace Service
         {
             if (entity == null) throw new ArgumentNullException("entity");
             _repository.Update(entity);
-            _unitOfWork.CommitAsync();
+            SaveChanges();
         }
         public Task SoftDeleteAsync(T entity)
         {
@@ -36,6 +36,10 @@ namespace Service
             await SaveChangesAsync();
         }
 
+        public T GetById(int id)
+        {
+            return _repository.GetById(id);
+        }
         public async Task<T> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
@@ -51,6 +55,10 @@ namespace Service
         public async Task SaveChangesAsync()
         {
             await _unitOfWork.CommitAsync();
+        }
+        public void SaveChanges()
+        {
+            _unitOfWork.Commit();
         }
     }
 }

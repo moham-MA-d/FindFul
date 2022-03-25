@@ -1,0 +1,9 @@
+.nav-profile-photo{
+    width: 35px;
+    display: inline;
+    border-radius: 100px;
+}
+
+.nav-profile-photo-wrp {
+    padding: 12px 0 0 0;
+}

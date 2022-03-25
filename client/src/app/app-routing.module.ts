@@ -8,7 +8,7 @@ import { LandingRegisterComponent } from './components/landings/landing-register
 import { MembersComponent } from './components/members/members.component';
 import { ProfileAboutComponent } from './components/members/Profile/profileAbout/profileAbout.component';
 import { ProfileAlbumComponent } from './components/members/Profile/profileAlbum/profileAlbum.component';
-import { ProfileEditComponent } from './components/members/Profile/ProfileEdit/profileEdit/profileEdit.component';
+import { ProfileEditComponent } from './components/members/Profile/profileEdit/profileEdit.component';
 import { ProfileTimelineComponent } from './components/members/Profile/profileTimeline/profileTimeline.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';

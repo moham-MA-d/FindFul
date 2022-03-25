@@ -1,0 +1,110 @@
+
+  .modal-content>img{
+    display: block;
+    margin: 0 auto;
+  }
+  .img-wrapper:hover:after 
+  
+  .drag-area2>input.upload-new-image{
+    display: none !important;
+  }
+
+  .drag-area2-wrapper.square {
+    height: 300px;
+    width: 300px;
+    max-height: 300px;
+    max-width: 300px;
+  }
+  
+  .drag-area2-wrapper.rectangle {
+    height: 200px;
+    width: 500px;
+    max-height: 200px;
+    max-width: 500px;
+  }
+  
+
+  .drag-area2 {
+    width: inherit;
+    height: inherit;
+    border: 2px dashed #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #5aa8d5;
+  }
+  
+  .drag-area2-wrapper .upload-zone-info{
+    position: absolute;
+    width: inherit;
+    background-color: #02020280;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    bottom: 0;
+    display: none;
+  }
+  
+  .drag-area2-wrapper .progress{
+    height: 2px;
+    margin-bottom: -5px;
+    padding: 0;
+    margin-left: -5px;
+  }
+  .drag-area2-wrapper .upload-zone-info.enabled {
+    display: block;
+  }
+  .upload-zone-info .progress-wrapper{
+    display: block;
+  }
+  .drag-area2 .active{
+    border: 2px dashed rgb(207, 240, 255);
+    background-color: #76bbe4;
+  }
+  .drag-area2 .actived{
+    border: 2px dashed rgb(0, 0, 0);
+    background-color: #1d1d1d;
+  }
+  .drag-area2 .icon{
+    font-size: 100px;
+    color: #fff;
+  }
+  .drag-area2 header{
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #fff;
+  }
+  .drag-area2 span{
+    font-size: 1.2em;;
+    font-weight: 500;
+    color: #fff;
+    margin: 10px 0 15px 0;
+  }
+  .drag-area2 button{
+    padding: 10px 25px;
+    font-size: 1.5em;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #5256ad;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .drag-area2 img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+   
+  }
+  
+  .uploaded-image{
+    height: 500px;
+    
+    max-height: 501px;
+    max-width: 701px;
+  }
+  

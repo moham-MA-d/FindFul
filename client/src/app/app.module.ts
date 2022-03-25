@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SharedModule } from './modules/shared.module';
-import { SnippetComponentsModule } from './modules/snippet-components.module';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './Interceptors/errors/error.interceptor';
 import { JwtInterceptor } from './Interceptors/jwt/jwt.interceptor';
@@ -23,7 +22,7 @@ import { LoadingInterceptor } from './Interceptors/loading.interceptor';
   declarations: [
     AppComponent,
     NotFoundComponent,
-    TestErrorsComponent    
+    TestErrorsComponent
   ],
   imports: [
     BrowserModule, //basic modulde to show our code in SPA.
@@ -32,7 +31,6 @@ import { LoadingInterceptor } from './Interceptors/loading.interceptor';
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
-    SnippetComponentsModule,
     DefaultModule,
     FullWidthModule,
     NgxSpinnerModule

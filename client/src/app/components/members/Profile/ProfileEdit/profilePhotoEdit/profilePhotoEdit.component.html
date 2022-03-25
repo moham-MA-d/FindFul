@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="block-title">
+      <h4 class="grey"><i class="icon ion-android-checkmark-circle mr-2"></i>Upload Profile Photo</h4>
+      <div class="line"></div>
+    </div>
+    
+  </div>
+  <div class="col-md-6">
+    <div>
+      <img class="img-responsive profile-photo-edit" src="{{member.profilePhotoUrl}}" alt="photo-{{member.userName}}"> 
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <app-photo-upload [uploadPhoto]="uploadPhotoInfo"></app-photo-upload>
+  </div>
+
+</div>

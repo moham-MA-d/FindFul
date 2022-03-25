@@ -10,7 +10,8 @@ namespace Core.IService.User
     public interface IUserService : IEntityService<AppUser>
     {
         Task<MemberDTO> GetByEmail(string email);
-        Task<MemberDTO> GetByUsername(string username);
+        MemberDTO GetByUsername(string username);
+        Task<MemberDTO> GetByUsernameAsync(string username);
         Task<IEnumerable<MemberDTO>> GetAllMembers();
         Task<AppUser> GetUserByIdAsync(int id);
 

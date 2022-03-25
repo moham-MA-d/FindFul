@@ -33,13 +33,23 @@ export class AccountService {
     .pipe(map((response: User) => {
       const user = response;
       if(user){
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
+        this.setCurrentUser(user);
       }
     }))
     ;
   }
 
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((user: User) => {
+        if (user) {
+          this.setCurrentUser(user);
+        }
+      })
+    )
+  }
+
+  
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
@@ -49,6 +59,7 @@ export class AccountService {
   //set user to observable
   setCurrentUser(user:User) {
     this.isLoggedIn = true;
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 

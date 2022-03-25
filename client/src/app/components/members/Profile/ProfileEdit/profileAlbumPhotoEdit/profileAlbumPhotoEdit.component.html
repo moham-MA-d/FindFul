@@ -1,0 +1,44 @@
+<div class="row">
+
+    <ul class="nav nav-tabs mb-2 b0">
+        <li class="active"><a href="#AllImages" data-toggle="tab" aria-expanded="false">All Images</a></li>
+        <li class="pull-right"><a href="#UploadNew" data-toggle="tab" aria-expanded="false">Upload New Image</a></li>
+    </ul>
+
+    <div class="tab-content ">
+        
+        <div class="tab-pane active" id="AllImages">
+            <div class="col-md-12">
+                <ul class="images-list list-inline">
+                    <li *ngFor="let photo of photos | async" class="img">
+                        <div class="img-wrapper" data-toggle="modal" [attr.data-target]="'.photo-'+photo.id">
+                            <img src="{{photo.url}}" alt="photo">
+                        </div>
+                        <div class="modal fade photo-{{photo.id}}" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <img src="{{photo.url}}" alt="photo">
+                                </div>
+                            </div>
+                        </div>
+                        <i class="fa fa-trash" (click)="deleteAlbumPhoto(photo.id)"></i>
+                        <i *ngIf="photo.isMain" class="fa fa-car green"></i>
+                        <i *ngIf="!photo.isMain" class="fa fa-car"></i>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="UploadNew">
+
+            <div class="col-md-6">
+                <app-photo-upload2 [uploadPhoto]="uploadPhotoInfo"></app-photo-upload2>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

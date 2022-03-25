@@ -40,7 +40,6 @@ export class MemberService {
     if (this.currentMember !== undefined) {
       return of(this.currentMember);
     }
-      console.log("server");
       return this.http.get<Member>(this.baseUrl + 'users/GetUser/' + userName);
   }
 
@@ -54,12 +53,16 @@ export class MemberService {
   }
 
   getMemberPhotos(userName: string) {
-    return this.http.get<userPhoto[]>(this.baseUrl + 'users/GetUserPhotos/' + userName).pipe(
+    return this.http.get<userPhoto[]>(this.baseUrl + 'userAlbum/GetUserPhotos/' + userName).pipe(
       map(photos => {
         this.userPhotos = photos;
         return this.userPhotos;
       })
     );
+  }
+
+  deleteAlbumPhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'UserAlbum/DeleteAlbumPhoto/' + photoId);
   }
 
 }

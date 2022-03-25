@@ -40,9 +40,14 @@ namespace Data.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
-        public ValueTask<T> GetByIdAsync(int id)
+        public T GetById(int id)
         {
-            return _context.Set<T>().FindAsync(id);
+            return _context.Set<T>().Find(id);
+        }
+
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public void Remove(T entity)

@@ -35,6 +35,11 @@ namespace Data
             // Save changes with the default options
             return await _dbContext.SaveChangesAsync();
         }
+        public int Commit()
+        {
+            // Save changes with the default options
+            return  _dbContext.SaveChanges();
+        }
 
         /// <summary>
         /// Disposes the current object
