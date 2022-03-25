@@ -31,7 +31,11 @@ namespace Service.Classes.User
         {
             return await _userRepository.GetUserByEmailAsync(email);
         }
-        public async Task<MemberDTO> GetByUsername(string username)
+        public MemberDTO GetByUsername(string username)
+        {
+            return  _userRepository.GetUserByUsername(username);
+        }
+        public async Task<MemberDTO> GetByUsernameAsync(string username)
         {
             return await _userRepository.GetUserByUsernameAsync(username);
         }

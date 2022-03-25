@@ -6,10 +6,9 @@ using Microsoft.Extensions.Logging;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
 using Core.Models.Entities.User;
-using Data;
 using DTO.Account;
-using Data.Repositories;
 using Core.IRepositories.User;
+using System.Linq;
 
 namespace Data.Repositories.User
 {
@@ -28,6 +27,12 @@ namespace Data.Repositories.User
             return await _context.Users
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(x => x.Email == email);
+        }
+        public MemberDTO GetUserByUsername(string username)
+        {
+            return _context.Users
+                .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
+                .SingleOrDefault(x => x.UserName == username);
         }
         public async Task<MemberDTO> GetUserByUsernameAsync(string username)
         {

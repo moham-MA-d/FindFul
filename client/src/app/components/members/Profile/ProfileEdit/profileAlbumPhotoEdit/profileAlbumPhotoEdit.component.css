@@ -1,0 +1,42 @@
+.images-list .img-wrapper>img{
+  width: 180px;
+}
+.images-list .img {
+  position: relative;
+}
+.images-list .img i.fa-trash {
+  position: absolute;
+  bottom: 10px;
+  right: 10%;
+  font-size: 1.5em;
+}
+.images-list .img i.fa-car {
+  position: absolute;
+  bottom: 10px;
+  left: 10%;
+  font-size: 1.5em;
+}
+.images-list .img i.fa-trash:hover::before {
+  color: red !important;
+  cursor: pointer;
+}
+
+.images-list .img i.fa-car:hover::before {
+  color: rgb(3, 116, 8) !important;
+  cursor: pointer;
+}
+.images-list .img i.fa-car.green {
+  color: rgb(52, 194, 59) !important;
+}
+.modal-content>img{
+  display: block;
+  margin: 0 auto;
+}
+.img-wrapper:hover:after 
+
+.uploaded-image{
+  height: 500px;
+  
+  max-height: 501px;
+  max-width: 701px;
+}

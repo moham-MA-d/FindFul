@@ -29,8 +29,6 @@ namespace API.Findful.Extensions
             services.AddScoped<ITokenService, TokenService>();
 
             services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
-            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
-            
             
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -41,6 +39,7 @@ namespace API.Findful.Extensions
             services.AddScoped<IPhotoServiceAPI, PhotoServiceAPI>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
             //connection string is defined in appsetting.json
             services.AddDbContext<DataContext>(x => x.UseSqlServer(configuration.GetConnectionString("FindFulConnection")));

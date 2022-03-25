@@ -23,7 +23,10 @@ namespace Core.Models.Entities.User
         public DateTime CreateDateTime { get; set; } = DateTime.Now;
         public DateTime DateOfBirth { get; set; }
         public DateTime LastActivity { get; set; } = DateTime.Now;
-
+        public string ProfilePhotoUrl { get; set; }
+        public string ProfilePhotoUrlPublicId { get; set; }
+        public string CoverPhotoUrl { get; set; }
+        public string CoverPhotoUrlPublicId { get; set; }
         public ICollection<UserPhoto> TheUserPhotosList { get; set; }
 
     }

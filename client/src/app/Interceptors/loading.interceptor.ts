@@ -22,6 +22,5 @@ export class LoadingInterceptor implements HttpInterceptor {
        this.spinnerService.idle();
       })
     );
-    
   }
 }

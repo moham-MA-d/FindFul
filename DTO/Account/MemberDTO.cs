@@ -9,7 +9,8 @@ namespace DTO.Account
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public string PhotoUrl { get; set; }
+        public string ProfilePhotoUrl { get; set; }
+        public string CoverPhotoUrl { get; set; }
         public int Sex { get; set; }
         public int Gender { get; set; }
         public bool IsActive { get; set; }

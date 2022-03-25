@@ -7,7 +7,8 @@ export class Member {
     phone: string;
     firstName: string;
     lastName: string;
-    photoUrl: string;
+    profilePhotoUrl: string;
+    coverPhotoUrls: string;
     sex: number;
     gender: number;
     isActive: boolean;

@@ -24,7 +24,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserSessionDTO>> Register(RegisterDTO register)
         {
            
-            if (await _userService.GetByUsername(register.UserName) != null)
+            if (await _userService.GetByUsernameAsync(register.UserName) != null)
                 return BadRequest("Username is Taken");
 
             var user = _userService.CreateAppUserForRegisteration(register);
@@ -55,11 +55,11 @@ namespace API.Controllers
                     user = await _userService.GetByEmail(loginDTO.UserName);
                     break;
                 case DTO.Enumarations.UserEmums.LoginInputType.Phone:
-                    user = await _userService.GetByUsername(loginDTO.UserName);
+                    user = await _userService.GetByUsernameAsync(loginDTO.UserName);
                     break;
                 case DTO.Enumarations.UserEmums.LoginInputType.Username:
                 case DTO.Enumarations.UserEmums.LoginInputType.None:
-                    user = await _userService.GetByUsername(loginDTO.UserName);
+                    user = await _userService.GetByUsernameAsync(loginDTO.UserName);
                     break;
             }
             
@@ -73,7 +73,8 @@ namespace API.Controllers
             return new UserSessionDTO
             {
                 UserName = user.UserName,
-                Token = _tokenService.CreateToken(user.UserName)
+                Token = _tokenService.CreateToken(user.UserName),
+                PhotoUrl = user.ProfilePhotoUrl
             };
         }
 

@@ -1,0 +1,28 @@
+<div class="col-md-9">
+  
+  <ul class="nav nav-tabs mb-2">
+
+    <li class="active"><a href="#BasicInfo" data-toggle="tab" aria-expanded="false">Basic Info</a></li>
+    <li><a href="#Album" data-toggle="tab" aria-expanded="false">Album</a></li>
+    <li><a href="#ProfilePhoto" data-toggle="tab" aria-expanded="false">Profile Photo</a></li>
+    <li><a href="#Settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
+
+  </ul>
+
+  <div class="tab-content ">
+
+    <div class="tab-pane active" id="BasicInfo">
+      <app-profileEditBasicInfo [member]="member"></app-profileEditBasicInfo>
+    </div>
+
+    <div class="tab-pane" id="Album">
+      <app-profileAlbumPhotoEdit [member]="member"></app-profileAlbumPhotoEdit>
+    </div>
+
+    <div class="tab-pane" id="ProfilePhoto">
+      <app-profilePhotoEdit [member]="member"></app-profilePhotoEdit>
+    </div>
+
+  </div>
+
+</div>

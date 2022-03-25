@@ -34,6 +34,12 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("CoverPhotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverPhotoUrlPublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
@@ -81,6 +87,12 @@ namespace Data.Migrations
                     b.Property<string>("Phone")
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
+
+                    b.Property<string>("ProfilePhotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePhotoUrlPublicId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferalCode")
                         .HasMaxLength(10)
@@ -136,7 +148,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
-                        .WithMany("ThePhotosList")
+                        .WithMany("TheUserPhotosList")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -146,7 +158,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.User.AppUser", b =>
                 {
-                    b.Navigation("ThePhotosList");
+                    b.Navigation("TheUserPhotosList");
                 });
 #pragma warning restore 612, 618
         }

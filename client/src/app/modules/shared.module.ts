@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { NavComponent } from '../components/nav/nav.component';
 import { RouterModule } from '@angular/router';
 
@@ -13,11 +13,11 @@ import { RouterModule } from '@angular/router';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-center'
     }),
-    RouterModule
+    RouterModule,
   ],
   exports:[
     ToastrModule,
-    NavComponent
+    NavComponent,
   ]
 })
 export class SharedModule { }
