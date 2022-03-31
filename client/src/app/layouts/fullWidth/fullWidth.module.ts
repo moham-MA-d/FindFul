@@ -5,25 +5,29 @@ import { LandingRegisterComponent } from 'src/app/components/landings/landing-re
 import { LoginComponent } from 'src/app/components/forms/login/login.component';
 import { RegisterComponent } from 'src/app/components/forms/register/register.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextInputComponent } from 'src/app/components/snippets/text-input/text-input.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     FullWidthComponent,
     LandingRegisterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TextInputComponent
   ],
   exports:[
     FullWidthComponent,
     LandingRegisterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TextInputComponent
   ]
 })
 export class FullWidthModule { }

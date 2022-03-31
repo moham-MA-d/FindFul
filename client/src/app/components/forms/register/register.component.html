@@ -8,21 +8,18 @@
         <div class="line-divider"></div>
         <div class="form-wrapper">
             <p class="signup-text">Signup now and meet awesome people around the world</p>
-            <form action="#">
-                <fieldset class="form-group">
-                    <input type="text" class="form-control" id="example-name" placeholder="Enter name">
-                </fieldset>
-                <fieldset class="form-group">
-                    <input type="email" class="form-control" id="example-email" placeholder="Enter email">
-                </fieldset>
-                <fieldset class="form-group">
-                    <input type="password" class="form-control" id="example-password" placeholder="Enter a password">
-                </fieldset>
+            <form [formGroup]="registerForm" autocomplete="off" >
+              <app-text-input [formControl]='registerForm.controls["username"]' [label]='"username"' [errorColor]='"white"'></app-text-input>
+              <app-text-input [formControl]='registerForm.controls["email"]' [label]='"email"' [errorColor]='"white"'></app-text-input>
+              <app-text-input [formControl]='registerForm.controls["password"]' [label]='"password"' [type]='"password"' [errorColor]='"white"'></app-text-input>
+              <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm password"' [type]='"password"' [errorColor]='"white"'></app-text-input>
             </form>
+            <p>Form value {{registerForm.value | json}}</p>
+            <p>Form status {{registerForm.status | json}}</p>
             <p>By signning up you agree to the terms</p>
             <button class="btn-secondary">Signup</button>
         </div>
-        <a href="#">Already have an account?</a>
+        <a routerLink="/login">Already have an account?</a>
         <img class="form-shadow" src="images/bottom-shadow.png" alt="">
     </div><!-- Sign Up Form End -->
 
