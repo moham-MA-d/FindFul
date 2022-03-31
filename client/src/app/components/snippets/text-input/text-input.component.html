@@ -1,0 +1,10 @@
+<fieldset class="form-group">
+  <input type="{{type}}"
+  [class.is-invalid]="ngCongrol.invalid && ngCongrol.touched"
+  [formControl]="ngCongrol.control"
+  type="password" class="form-control"  placeholder="{{label}}">
+  <div *ngIf="ngCongrol.control.errors?.required" class="invalid-feedback {{errorColor}}">Please enter {{label}}</div>
+  <div *ngIf="ngCongrol.control.errors?.minlength" class="invalid-feedback" {{errorColor}}>{{label}} must be at least {{ngCongrol.control.errors.minLength['requiredLength']}}</div>
+  <div *ngIf="ngCongrol.control.errors?.maxlength" class="invalid-feedback" {{errorColor}}>{{label}} must be at most {{ngCongrol.control.errors.maxLength['requiredLength']}}</div>
+  <div *ngIf="ngCongrol.control.errors?.isMatching" class="invalid-feedback" {{errorColor}}>Passwords do not match</div>
+</fieldset>

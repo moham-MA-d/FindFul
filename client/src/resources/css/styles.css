@@ -565,7 +565,6 @@ textarea{
 }
 
 .sign-up-form .form-wrapper .form-group .form-control{
-  border: none;
   box-shadow: none;
   border-radius: 17px;
   padding-left: 20px;
@@ -2722,6 +2721,27 @@ ul.contact li i{
   left: -7px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+
+/* Fix Boostrap  */
+
+.form-group input {
+  border: 2px solid #97b5c9;
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+  border-color: #e47681;
+}
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: .875em;
+  color: #dc3545;
+}
+.is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+  display: block;
 }
 
 
