@@ -9,30 +9,49 @@
     <form #editForm="ngForm" id="editForm" class="form-inline" >
       <div class="row">
         <div class="form-group col-xs-6">
-          <label for="firstname">First name</label>
-          <input [(ngModel)]="member.firstName" id="firstname" class="form-control input-group-lg" type="text" name="firstName" title="Enter first name" placeholder="First name" >
+          <label for="firstName">My firstName</label>
+          <input [(ngModel)]="member.firstName" id="firstName" class="form-control input-group-lg" type="text" name="firstName" title="Enter first name" placeholder="My first name">
         </div>
-        <div class="form-group col-xs-6">
-          <label for="lastname" class="">Last name</label>
-          <input [(ngModel)]="member.lastName" id="lastname" class="form-control input-group-lg" type="text" name="lastName" title="Enter last name" placeholder="Last name">
+          <div class="form-group col-xs-6">
+            <label for="lastname" class="">Last name</label>
+            <input [(ngModel)]="member.lastName" id="lastName" class="form-control input-group-lg" type="text" name="lastName" title="Enter last name" placeholder="My last name">
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-xs-6">
-          <label for="email">My email</label>
-          <input [(ngModel)]="member.email" id="email" class="form-control input-group-lg" type="text" name="email" title="Enter Email" placeholder="My Email"  disabled>
-        </div>
+        <div class="row">
+          <div class="form-group col-xs-6">
+            <label for="lastname" class="">email</label>
+            <input [(ngModel)]="member.email" id="email" class="form-control input-group-lg" type="text" name="email" title="Enter email" placeholder="email" disabled>
+          </div>
         <div class="form-group col-xs-6">
           <label for="phone">My phone</label>
           <input [(ngModel)]="member.phone" id="phone" class="form-control input-group-lg" type="text" name="phone" title="Enter Phone Number" placeholder="My Phone" disabled>
         </div>
       </div>
       <div class="row">
+        <div class="container">
+          <div class="row">
+             <div class='col-sm-6'>
+                <div class="form-group">
+                   <div class='input-group date' id='datetimepicker1'>
+                      <input type='text' class="form-control" />
+                      <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                   </div>
+                </div>
+             </div>
+             <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+             </script>
+          </div>
+       </div>
         <p class="custom-label"><strong>Date of Birth</strong></p>
         <div class="form-group col-sm-3 col-xs-6">
           <label for="month" class="sr-only"></label>
           <select class="form-control" id="day">
-            <option value="Day">Day</option>
+            <option value="Day" >Day</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -377,7 +396,7 @@
         <div class="form-group col-xs-12">
           <label for="my-info">About me</label>
           <textarea [(ngModel)]="member.info" id="my-info" name="information" class="form-control" placeholder="Some texts about me" rows="4" cols="400">
-            
+
           </textarea>
         </div>
       </div>

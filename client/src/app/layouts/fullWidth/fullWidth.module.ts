@@ -6,28 +6,27 @@ import { LoginComponent } from 'src/app/components/forms/login/login.component';
 import { RegisterComponent } from 'src/app/components/forms/register/register.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextInputComponent } from 'src/app/components/snippets/text-input/text-input.component';
+import { SharedModule } from 'src/app/modules/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [
     FullWidthComponent,
     LandingRegisterComponent,
     LoginComponent,
     RegisterComponent,
-    TextInputComponent
   ],
   exports:[
     FullWidthComponent,
     LandingRegisterComponent,
     LoginComponent,
     RegisterComponent,
-    TextInputComponent
   ]
 })
 export class FullWidthModule { }
