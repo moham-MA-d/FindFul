@@ -7,7 +7,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { SharedModule } from './modules/shared.module';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './Interceptors/errors/error.interceptor';
 import { JwtInterceptor } from './Interceptors/jwt/jwt.interceptor';
@@ -17,7 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './Interceptors/loading.interceptor';
 
 
-//Main and necessary Module of Angular project which is called in main.ts 
+//Main and necessary Module of Angular project which is called in main.ts
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +30,6 @@ import { LoadingInterceptor } from './Interceptors/loading.interceptor';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
     DefaultModule,
     FullWidthModule,
     NgxSpinnerModule

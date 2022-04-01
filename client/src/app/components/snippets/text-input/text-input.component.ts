@@ -1,19 +1,22 @@
-import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl, FormControl } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit, Self } from '@angular/core';
+import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.css']
+  styleUrls: ['./text-input.component.css'],
 })
 
 // ControlValueAccessor : Defines an interface that acts as a bridge between the Angular forms API and a native element in the DOM.
-export class TextInputComponent implements ControlValueAccessor {
+export class TextInputComponent implements ControlValueAccessor, OnInit {
 
   @Input() label: string;
+  @Input() classNamesParent: string;
+  @Input() classNames: string;
+  @Input() hasLalbelTag: boolean = false;
   @Input() errorColor: string = 'red';
   @Input() type: string = 'text';
-
+  @Input() data: any;
 
   // We are going to inject control inside this component
   // @Self()  : Self metadata. Self decorator and metadata.
@@ -22,10 +25,16 @@ export class TextInputComponent implements ControlValueAccessor {
     this.ngCongrol.valueAccessor = this;
   }
 
-  writeValue(obj: any): void {
+  ngOnInit(): void {
 
   }
+
+  writeValue(obj: any): void {
+    this.ngCongrol.control.setValue(this.data);
+  }
+
   registerOnChange(fn: any): void {
+    this.ngCongrol.control.setValue(this.data);
 
   }
   registerOnTouched(fn: any): void {

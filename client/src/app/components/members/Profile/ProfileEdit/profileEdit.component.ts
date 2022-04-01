@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Member } from 'src/app/models/user/member';
 import { User } from 'src/app/models/user/user';
@@ -9,7 +9,7 @@ import { MemberService } from 'src/app/services/member/member.service';
   selector: 'app-profileEdit',
   templateUrl: './profileEdit.component.html',
   styleUrls: ['./profileEdit.component.css']
-  
+
 })
 export class ProfileEditComponent implements OnInit {
   [x: string]: any;
@@ -33,6 +33,6 @@ export class ProfileEditComponent implements OnInit {
   }
 
 
-  
+
 
 }
