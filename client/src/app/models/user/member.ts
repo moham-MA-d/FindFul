@@ -18,6 +18,7 @@ export class Member {
     createDateTime: string;
     age: number;
     lastActivity: string;
+    dateOfBirth: Date;
     theUserPhotos: userPhoto[];
 }
 
