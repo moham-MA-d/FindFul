@@ -15,7 +15,10 @@ import { SnippetComponentsModule } from '../../snippet-components.module';
 import { ProfilePhotoEditComponent } from 'src/app/components/members/Profile/ProfileEdit/profilePhotoEdit/profilePhotoEdit.component';
 import { ProfileEditBasicInfoComponent } from 'src/app/components/members/Profile/ProfileEdit/profileEditBasicInfo/profileEditBasicInfo.component';
 import { SharedModule } from '../../shared.module';
-
+import { MatDatepickerModule } from '@angular/material/datepicker/';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +27,11 @@ import { SharedModule } from '../../shared.module';
     FormsModule,
     SnippetComponentsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   declarations: [
     CenterComponent,
@@ -49,6 +56,7 @@ import { SharedModule } from '../../shared.module';
     ProfileAlbumPhotoEditComponent,
     ProfilePhotoEditComponent,
     ProfileEditBasicInfoComponent,
-  ]
+  ],
+  providers:[MatDatepickerModule, MatNativeDateModule]
 })
 export class CenterModule { }

@@ -13,6 +13,7 @@ namespace DTO.Account
         public string CoverPhotoUrl { get; set; }
         public int Sex { get; set; }
         public int Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int Age { get; set; }

@@ -41,6 +41,7 @@ export class MemberService {
       return of(this.currentMember);
     }
       return this.http.get<Member>(this.baseUrl + 'users/GetUser/' + userName);
+
   }
 
   updateMember(member: Member) {
