@@ -43,8 +43,10 @@
     - Scroll Down Arrow
     - Preloader
 ==================================================*/
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+
+
+@import "FindFul.css";
 
 html, body {
   height: 100%;
