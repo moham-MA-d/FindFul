@@ -1,5 +1,7 @@
 import { Component, forwardRef, Input, OnInit, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlContainer, ControlValueAccessor, FormGroup, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-text-input',
@@ -8,15 +10,20 @@ import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/for
 })
 
 // ControlValueAccessor : Defines an interface that acts as a bridge between the Angular forms API and a native element in the DOM.
-export class TextInputComponent implements ControlValueAccessor, OnInit {
+export class TextInputComponent implements OnInit {
+
+  filteredOptions: Observable<string[]>;
 
   @Input() label: string;
+  @Input() name: string;
   @Input() classNamesParent: string;
   @Input() classNames: string;
   @Input() hasLalbelTag: boolean = false;
   @Input() errorColor: string = 'red';
   @Input() type: string = 'text';
   @Input() data: any;
+  @Input() autoCompleteOptions: string[];
+
 
   // We are going to inject control inside this component
   // @Self()  : Self metadata. Self decorator and metadata.
@@ -25,16 +32,37 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
     this.ngCongrol.valueAccessor = this;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
+
+  ngOnChanges() {
+    var component = this.ngCongrol.valueAccessor as TextInputComponent;
+    if (component.name === "city") {
+      this.filteredOptions = this.ngCongrol.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      )
+    }
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.autoCompleteOptions.filter(option => option?.toLowerCase()?.includes(filterValue));
+  }
+
+
+  autoCompleteSelected(selectedValue, control: any) {
+    if (control.valueAccessor.name == "city") {
+
+    }
   }
 
   writeValue(obj: any): void {
-    this.ngCongrol.control.setValue(this.data);
+    //this.ngCongrol.control.setValue(this.data);
   }
 
   registerOnChange(fn: any): void {
-    this.ngCongrol.control.setValue(this.data);
+    //this.ngCongrol.control.setValue(this.data);
 
   }
   registerOnTouched(fn: any): void {

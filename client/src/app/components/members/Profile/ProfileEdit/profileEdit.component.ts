@@ -28,7 +28,7 @@ export class ProfileEditComponent implements OnInit {
   loadMember() {
     this.memberService.getMember(this.user.userName).subscribe(mem => {
       this.member = mem;
-     console.log("load member : ", mem);
+      console.log("load member : ", mem);
     });
   }
 

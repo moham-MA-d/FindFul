@@ -1,4 +1,4 @@
-<fieldset class="form-group {{classNamesParent}}">
+<!-- <fieldset class="form-group {{classNamesParent}}">
   <label *ngIf="hasLalbelTag">{{label}}</label>
   <input type="{{type}}"
   name="{{label}}"
@@ -10,4 +10,27 @@
   <div *ngIf="ngCongrol.control.errors?.minlength" class="invalid-feedback {{errorColor}}">{{label}} must be at least {{ngCongrol.control.errors.minlength['requiredLength']}}</div>
   <div *ngIf="ngCongrol.control.errors?.maxlength" class="invalid-feedback {{errorColor}}">{{label}} must be at most {{ngCongrol.control.errors.maxlength['requiredLength']}}</div>
   <div *ngIf="ngCongrol.control.errors?.isMatching" class="invalid-feedback  {{errorColor}}">Passwords do not match</div>
-</fieldset>
+</fieldset> -->
+
+
+
+<mat-form-field class="{{classNamesParent}}" appearance="fill">
+  <mat-label>{{label}}</mat-label>
+  <input type="{{type}}" matInput [formControl]="ngCongrol.control" value="{{data}}" placeholder="Please enter {{label}}" aria-label="Number" [matAutocomplete]="auto" >
+
+  <!-- <span *ngIf="autoCompleteOptions"> -->
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)='autoCompleteSelected($event.option.value, ngCongrol)'>
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
+  <!-- </span> -->
+
+  <!-- <mat-error *ngIf="ngCongrol.control.errors?.required">
+    Please enter a valid email address
+  </mat-error> -->
+  <mat-error *ngIf="ngCongrol.control.errors?.required"> {{label}} is required </mat-error>
+  <mat-error *ngIf="ngCongrol.control.errors?.minlength"> {{label}} is {{label}} must be at least {{ngCongrol.control.errors.minlength['requiredLength']}}</mat-error>
+  <mat-error *ngIf="ngCongrol.control.errors?.maxlength"> {{label}} is  {{label}} must be at most {{ngCongrol.control.errors.maxlength['requiredLength']}}</mat-error>
+  <mat-error *ngIf="ngCongrol.control.errors?.isMatching"> {{label}} do not match </mat-error>
+</mat-form-field>
