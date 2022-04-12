@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO.Enumarations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,15 @@ namespace DTO.Account
 {
     public class MemberUpdateDTO
     {
-        public string Info { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string DateOfBirth { get; set; }
         public string Phone { get; set; }
+        public UserEmums.Sex Sex { get; set; }
+        public UserEmums.Gender Gender { get; set; }
+        public string Info { get; set; }
 
     }
 }

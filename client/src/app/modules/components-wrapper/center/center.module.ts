@@ -20,6 +20,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { EnumToArrayPipe } from 'src/app/helper/EnumToArrayPipe';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -33,8 +36,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatAutocompleteModule
-
+    MatAutocompleteModule,
+    MatSelectModule,
   ],
   declarations: [
     CenterComponent,
@@ -47,6 +50,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ProfileAlbumPhotoEditComponent,
     ProfilePhotoEditComponent,
     ProfileEditBasicInfoComponent,
+    EnumToArrayPipe
   ],
   exports: [
     CenterComponent,
@@ -59,6 +63,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ProfileAlbumPhotoEditComponent,
     ProfilePhotoEditComponent,
     ProfileEditBasicInfoComponent,
+    EnumToArrayPipe
+
   ],
   providers:[MatDatepickerModule, MatNativeDateModule]
 })

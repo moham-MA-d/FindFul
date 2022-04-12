@@ -9,12 +9,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
     NavComponent,
-    TextInputComponent
+    TextInputComponent,
   ],
   imports: [
     CommonModule,
@@ -27,12 +27,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   exports:[
     ToastrModule,
     NavComponent,
-    TextInputComponent
+    TextInputComponent,
   ]
 })
 export class SharedModule { }

@@ -2093,3 +2093,14 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   font-family: 'Material Icons Outlined', 'Material Icons'; }
   .material-icons .mat-badge-content {
     font-family: 'Roboto'; }
+
+
+
+::ng-deep .mat-form-field-outline-start {
+  border-radius: 28px 0 0 28px !important;
+  min-width: 28px !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 28px 28px 0 !important;
+}
