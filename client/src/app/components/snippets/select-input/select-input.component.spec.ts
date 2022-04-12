@@ -3,21 +3,21 @@
 // import { By } from '@angular/platform-browser';
 // import { DebugElement } from '@angular/core';
 
-// import TextInputComponent from './text-input.component';
+// import { SelectInputComponent } from './select-input.component';
 
-// describe('TextInputComponent', () => {
-//   let component: TextInputComponent;
-//   let fixture: ComponentFixture<TextInputComponent>;
+// describe('SelectInputComponent', () => {
+//   let component: SelectInputComponent;
+//   let fixture: ComponentFixture<SelectInputComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ TextInputComponent ]
+//       declarations: [ SelectInputComponent ]
 //     })
 //     .compileComponents();
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(TextInputComponent);
+//     fixture = TestBed.createComponent(SelectInputComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

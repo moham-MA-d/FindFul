@@ -16,7 +16,12 @@
 
 <mat-form-field class="{{classNamesParent}}" appearance="fill">
   <mat-label>{{label}}</mat-label>
-  <input type="{{type}}" matInput [formControl]="ngCongrol.control" value="{{data}}" placeholder="Please enter {{label}}" aria-label="Number" [matAutocomplete]="auto" >
+
+  <textarea *ngIf="isTextArea" cdkAutosizeMinRows="1" [formControl]="ngCongrol.control"
+        cdkAutosizeMaxRows="5" matInput placeholder="{{placeholder}}"> value="{{data}}"</textarea>
+
+  <input *ngIf="!isTextArea" type="{{type}}" matInput [formControl]="ngCongrol.control"
+    value="{{data}}" placeholder="Please enter {{label}}" [matAutocomplete]="auto" >
 
   <!-- <span *ngIf="autoCompleteOptions"> -->
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)='autoCompleteSelected($event.option.value, ngCongrol)'>

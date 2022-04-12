@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, FormGroup, NgForm, Validators, FormControl, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { Member } from 'src/app/models/user/member';
 import { MemberService } from 'src/app/services/member/member.service';
 
@@ -14,16 +14,20 @@ import { MemberService } from 'src/app/services/member/member.service';
   styleUrls: ['./profileEditBasicInfo.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [{ provide: ProfileEditBasicInfoComponent, useExisting: ProfileEditBasicInfoComponent }]
-
 })
+
 export class ProfileEditBasicInfoComponent implements OnInit {
 
   countriesFilteredOptions: Observable<string[]>;
-
   @ViewChild('editForm') editForm: NgForm;
   @Input() member: Member;
   basicInfoForm: FormGroup;
-  date = new Date((new Date().getTime() - 3888000000));
+  enumSexValues = Member.Sex;
+  enumSexKeys=[];
+
+  enumGenderValues = Member.Gender;
+  enumGenderKeys=[];
+  dateOfBirth: Date;
 
   countries: string[] = [];
   cities: string[] = [];
@@ -42,15 +46,23 @@ export class ProfileEditBasicInfoComponent implements OnInit {
     private readonly changeDetectorRef: ChangeDetectorRef,
     private httpClient: HttpClient
   ) {
+    //this.enumSexKeys = Object.keys(this.enumSexValues).filter(k => !isNaN(Number(k)));
+    //this.enumGenderKeys = Object.keys(this.enumGenderValues).filter(k => !isNaN(Number(k)));
   }
 
+
   ngOnInit() {
+
+    this.enumSexKeys = Object.keys(this.enumSexValues);
+    this.enumGenderKeys = Object.keys(this.enumGenderValues);
+
     this.GetCountries();
   }
 
   ngOnChanges() {
-    this.InitializeForm();
+    this.dateOfBirth = new Date(this.member.dateOfBirth);
 
+    this.InitializeForm();
     this.countriesFilteredOptions = this.basicInfoForm.controls.country.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
@@ -68,25 +80,31 @@ export class ProfileEditBasicInfoComponent implements OnInit {
   ngAfterViewChecked() {
     this.changeDetectorRef.detectChanges();
   }
+
   InitializeForm() {
     this.basicInfoForm = this.fb.group({
       firstName: [this.member.firstName, Validators.required],
-      lastName: ['', Validators.required],
-      email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
-      phone: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      dateOfBirth: [''],
-      country: [''],
-      city: [''],
+      lastName: [this.member.lastName, Validators.required],
+      email: new FormControl({ value: this.member.email, disabled: true }, [Validators.required, Validators.email]),
+      phone: [this.member.phone],
+      dateOfBirth:[],
+      country: [this.member.country],
+      sex: [this.member.sex],
+      gender: [this.member.gender],
+      city: [this.member.city],
+      info: [this.member.info]
     })
+
   }
 
   updateMember() {
-    return this.memberService.updateMember(this.member).subscribe(() => {
+    return this.memberService.updateMember(this.basicInfoForm.value).subscribe(() => {
       this.toaster.success("Successfully Updated!");
       // to keep and preserve the values of the form we pass this.member
-      this.editForm.reset(this.member);
+      this.editForm.reset(this.basicInfoForm.value);
     });
   }
+
 
   countrySelected(countryName: string) {
     this.cities = [];
@@ -115,6 +133,10 @@ export class ProfileEditBasicInfoComponent implements OnInit {
 
   GetCities(countryName: string) {
 
+    if (countryName.indexOf('Iran') >= 0) {
+      countryName = "Iran";
+    }
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -125,7 +147,6 @@ export class ProfileEditBasicInfoComponent implements OnInit {
       })
     }
     const body = JSON.stringify({"country": countryName});
-
 
     var r =  this.httpClient.post('https://countriesnow.space/api/v0.1/countries/cities', body, httpOptions);
 
@@ -139,6 +160,7 @@ export class ProfileEditBasicInfoComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
 }
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;

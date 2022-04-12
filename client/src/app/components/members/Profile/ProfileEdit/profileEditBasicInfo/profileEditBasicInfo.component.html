@@ -12,12 +12,11 @@
 
       <div class="row">
 
-        <app-text-input [formControl]='basicInfoForm.controls["firstName"]' [name]='"firstName"' [label]='"first name"'
+        <app-text-input [formControlName]="'firstName'" [label]='"first name"'
           [errorColor]='"red"' [data]="member.firstName" [classNamesParent]='"col-xs-6"'>
         </app-text-input>
 
-
-        <app-text-input [formControl]='basicInfoForm.controls["lastName"]' [name]='"lastName"' [label]='"last name"'
+        <app-text-input [formControlName]="'lastName'" [name]='"lastName"' [label]='"last name"'
           [errorColor]='"red"' [data]="member.lastName" [classNamesParent]='"col-xs-6"'>
         </app-text-input>
 
@@ -25,11 +24,11 @@
 
       <div class="row">
 
-        <app-text-input [formControl]='basicInfoForm.controls["email"]' [name]='"email"' [label]='"email"'
+        <app-text-input  [formControlName]='"email"' [label]='"email"'
           [errorColor]='"red"' [data]="member.email" [classNamesParent]='"col-xs-6"'>
         </app-text-input>
 
-        <app-text-input [formControl]='basicInfoForm.controls["phone"]' [name]='"phone"' [label]='"phone"'
+        <app-text-input  [formControlName]='"phone"' [label]='"phone"'
           [errorColor]='"red"' [data]="member.phone" [classNamesParent]='"col-xs-6"'>
         </app-text-input>
 
@@ -42,28 +41,42 @@
         <div class="col-sm-3 col-xs-6">
           <mat-form-field appearance="fill">
             <mat-label>Date of birth</mat-label>
-            <input title="Date of birth" [value]="member.dateOfBirth" matInput [matDatepicker]="picker">
+            <input title="Date of birth" [value]="dateOfBirth" matInput [matDatepicker]="picker" [formControlName]="'dateOfBirth'">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
 
       </div>
-      <div class="form-group gender">
-        <span class="custom-label"><strong>I am a: </strong></span>
-        <label class="radio-inline">
-          <input type="radio" name="optradio" checked="">Male
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="optradio">Female
-        </label>
+      <div class="row">
+
+        <mat-form-field class="col-xs-6" appearance="fill" >
+          <mat-label>Sex</mat-label>
+          <mat-select [(value)]="member.sex" [formControlName]="'sex'">
+            <mat-option *ngFor="let option of enumSexKeys | enumToArray" [value]="option.index" >
+              {{option.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="col-xs-6" appearance="fill" >
+          <mat-label>Gender</mat-label>
+          <mat-select [(value)]="member.gender" [formControlName]='"gender"'>
+            <mat-option *ngFor="let option of enumGenderKeys| enumToArray" [value]="option.index">
+              {{option.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
 
       <div class="row">
 
         <mat-form-field class="col-xs-6" appearance="fill">
           <mat-label>Country</mat-label>
-          <input type="text" matInput  value="member.country" placeholder="Please enter country" [formControl]="basicInfoForm.controls.country" [matAutocomplete]="auto" >
+          <input type="text" matInput value="member.country" placeholder="Please enter country"
+            [formControl]="basicInfoForm.controls.country" [matAutocomplete]="auto">
 
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)='countrySelected($event.option.value)'>
             <mat-option *ngFor="let option of countriesFilteredOptions | async" [value]="option">
@@ -80,15 +93,14 @@
           [errorColor]='"red"' [data]="member.city" [classNamesParent]='"col-xs-6"' [autoCompleteOptions]="cities">
         </app-text-input>
 
-
-        <div class="form-group col-xs-12">
-          <label for="my-info">About me</label>
-          <textarea id="my-info" name="information" class="form-control" placeholder="Some texts about me" rows="4"
-            cols="400">
-
-          </textarea>
-        </div>
       </div>
+
+      <div class="row">
+        <app-text-input [formControl]='basicInfoForm.controls["info"]' [name]='"info"' [label]='"information"'
+          [placeholder]='"Please Write about yourself"' [data]="member.info" [classNamesParent]='"col-xs-12"'>
+        </app-text-input>
+      </div>
+
       <button [disabled]="!editForm.dirty" type="button" class="btn btn-primary" (click)="updateMember()">Save
         Changes</button>
     </form>

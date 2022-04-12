@@ -1,4 +1,5 @@
 ﻿using DTO.Account.Photo;
+using DTO.Enumarations;
 using System;
 using System.Collections.Generic;
 
@@ -11,9 +12,6 @@ namespace DTO.Account
         public string Email { get; set; }
         public string ProfilePhotoUrl { get; set; }
         public string CoverPhotoUrl { get; set; }
-        public int Sex { get; set; }
-        public int Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int Age { get; set; }

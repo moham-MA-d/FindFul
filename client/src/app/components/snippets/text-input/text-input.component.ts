@@ -1,5 +1,5 @@
-import { Component, forwardRef, Input, OnInit, Self } from '@angular/core';
-import { ControlContainer, ControlValueAccessor, FormGroup, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, OnInit, Self } from '@angular/core';
+import { NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -14,6 +14,8 @@ export class TextInputComponent implements OnInit {
 
   filteredOptions: Observable<string[]>;
 
+  @Input() isTextArea: boolean;
+  @Input() placeholder: string;
   @Input() label: string;
   @Input() name: string;
   @Input() classNamesParent: string;
