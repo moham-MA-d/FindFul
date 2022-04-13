@@ -12,6 +12,8 @@ using Core.IServices.User;
 using DTO.Account.Photo;
 using Microsoft.AspNetCore.Http;
 using Core.Models.Entities.User;
+using DTO.Pagination;
+using Extensions.Common;
 
 namespace API.Controllers
 {
@@ -31,9 +33,13 @@ namespace API.Controllers
             _userPhotoService = userPhotoService;
         }
 
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] PageParameters pageParameters)
         {
-            var members = await _userService.GetAllMembers();
+            var members = await _userService.GetAllMembers(pageParameters);
+
+            Response.AddPaginationHeader(members.CurrentPage, members.PageSize, members.TotalItems, members.TotalPages);
+
             return Ok(members);
         }
        

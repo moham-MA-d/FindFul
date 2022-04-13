@@ -2,6 +2,7 @@
 using Core.Models.Entities.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DTO.Pagination;
 
 namespace Core.IRepositories.User
 {
@@ -10,7 +11,7 @@ namespace Core.IRepositories.User
         Task<MemberDTO> GetUserByEmailAsync(string email);
         MemberDTO GetUserByUsername(string username);
         Task<MemberDTO> GetUserByUsernameAsync(string username);
-        Task<IEnumerable<MemberDTO>> GetAllMembers();
+        Task<PagedListBase<MemberDTO>> GetAllMembers(PageParameters pageParameters);
         Task<AppUser> GetUserByIdAsync(int id);
     }
 }
