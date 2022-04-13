@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Pagination } from 'src/app/models/helper/pagination';
 import { Member } from 'src/app/models/user/member';
 import { MemberService } from 'src/app/services/member/member.service';
 
@@ -10,13 +10,24 @@ import { MemberService } from 'src/app/services/member/member.service';
 })
 
 export class MembersComponent implements OnInit {
-  
-  members: Observable<Member[]>;
+
+  members: Member[];
+  pagination: Pagination;
+  pageNumber = 1;
+  pageSize = 5;
 
   constructor(private memberService: MemberService) { }
 
   ngOnInit(): void {
-    this.members = this.memberService.getMembers();
+    this.loadMembers();
   }
+
+  loadMembers() {
+    this.memberService.getMembers(this.pageNumber, this.pageSize).subscribe(response => {
+      this.members = response.result;
+      this.pagination = response.pagination;
+    })
+  }
+
 
 }

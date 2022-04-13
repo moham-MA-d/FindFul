@@ -9,6 +9,8 @@ using Core.Models.Entities.User;
 using DTO.Account;
 using Core.IRepositories.User;
 using System.Linq;
+using DTO.Pagination;
+using Data.Helpers;
 
 namespace Data.Repositories.User
 {
@@ -40,18 +42,23 @@ namespace Data.Repositories.User
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
-        public async Task<IEnumerable<MemberDTO>> GetAllMembers()
+        public async Task<PagedListBase<MemberDTO>> GetAllMembers(PageParameters pageParameters)
         {
             try
             {
-                return await _context.Users
+                var query = _context.Users
                     .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
-                    .ToListAsync();
+                    
+                    //Because We only going to read the data and we are not going to to anything else with the data
+                    .AsNoTracking();
+
+                return await PagedList<MemberDTO>.CreateAsync(query, pageParameters.PageNumber, pageParameters.PageSize);
+                    
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "{Repo} All function error", typeof(UserRepository));
-                return new List<MemberDTO>();
+                return null;
             }
         }
 
