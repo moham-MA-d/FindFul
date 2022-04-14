@@ -1,10 +1,9 @@
-export interface Pagination {
-
-  currentPage: number;
+export class Pagination {
+  pageIndex: number;
   totalPages: number;
   pageSize: number;
   totalItems: number;
-
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 }
 
 

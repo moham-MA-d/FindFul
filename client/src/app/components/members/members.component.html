@@ -1,21 +1,38 @@
 <div class="col-md-9">
 
-<div class="friend-list">
-    <div class="row">
+  <div class="row">
+    <div class="friend-list">
+      <div class="row">
         <div class="col-md-6 col-sm-6" *ngFor="let member of members">
-        <div class="friend-card">
-          <img src="{{member.profilePhotoUrl}}" alt="profile-cover" class="img-responsive cover">
-          <div class="card-info">
-          <img src="{{member.profilePhotoUrl}}" alt="user" class="profile-photo-lg">
-          <div class="friend-info">
-            <a href="#" class="pull-right text-green">{{member.city}}</a>
-              <h5><a routerLink="/members/{{member.userName}}/timeline" class="profile-link">{{member.firstName + member.lastName}}</a></h5>
-              <p>cccc</p>
+          <div class="friend-card">
+            <img src="{{member.profilePhotoUrl}}" alt="profile-cover" class="img-responsive cover">
+            <div class="card-info">
+              <img src="{{member.profilePhotoUrl}}" alt="user" class="profile-photo-lg">
+              <div class="friend-info">
+                <a href="#" class="pull-right text-green">{{member.city}}</a>
+                <h5><a routerLink="/members/{{member.userName}}/timeline" class="profile-link">{{member.firstName +
+                    member.lastName}}</a></h5>
+                <p>cccc</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
   </div>
-</div>
 
+
+  <div class="row">
+
+    <mat-paginator
+      [length]="pagination.totalItems"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+      (page)="onPageChanged($event)"
+      aria-label="Select page">
+    </mat-paginator>
+
+  </div>
+
+</div>

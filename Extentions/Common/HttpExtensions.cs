@@ -6,9 +6,9 @@ namespace Extensions.Common
 {
     public static class HttpExtensions
     {
-        public static void AddPaginationHeader(this HttpResponse response, int currentPage, int pageSize, int totalItems, int totalPages)
+        public static void AddPaginationHeader(this HttpResponse response, int pageIndex, int pageSize, int totalItems, int totalPages)
         {
-            var paginationHeader = new PagiantionHeader(currentPage, pageSize, totalItems, totalPages);
+            var paginationHeader = new PagiantionHeader(pageIndex - 1, pageSize, totalItems, totalPages);
             var option = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -21,4 +21,3 @@ namespace Extensions.Common
         }
     }
 }
-//5892-1011-5053-2485
