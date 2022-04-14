@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { EnumToArrayPipe } from 'src/app/helper/EnumToArrayPipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   imports: [
@@ -38,6 +39,8 @@ import { EnumToArrayPipe } from 'src/app/helper/EnumToArrayPipe';
     MatInputModule,
     MatAutocompleteModule,
     MatSelectModule,
+    MatPaginatorModule
+
   ],
   declarations: [
     CenterComponent,

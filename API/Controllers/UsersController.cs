@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Core.Models.Entities.User;
 using DTO.Pagination;
 using Extensions.Common;
+using System;
 
 namespace API.Controllers
 {
@@ -36,9 +37,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] PageParameters pageParameters)
         {
+            ++pageParameters.PageIndex;
             var members = await _userService.GetAllMembers(pageParameters);
 
-            Response.AddPaginationHeader(members.CurrentPage, members.PageSize, members.TotalItems, members.TotalPages);
+            Response.AddPaginationHeader(members.PageIndex, members.PageSize, members.TotalItems, members.TotalPages);
 
             return Ok(members);
         }

@@ -8,15 +8,15 @@ namespace DTO.Pagination
 {
     public class PagiantionHeader
     {
-        public PagiantionHeader(int currentPage, int itemsPerPAge, int totalItems, int totalPages)
+        public PagiantionHeader(int pageIndex, int itemsPerPage, int totalItems, int totalPages)
         {
-            CurrentPage = currentPage;
-            ItemsPerPage = itemsPerPAge;
+            PageIndex = pageIndex;
+            ItemsPerPage = itemsPerPage;
             TotalItems = totalItems;
             TotalPages = totalPages;
         }
 
-        public int CurrentPage { get; set; }
+        public int PageIndex { get; set; }
         public int ItemsPerPage { get; set; }
         public int TotalItems { get; set; }
         public int TotalPages { get; set; }

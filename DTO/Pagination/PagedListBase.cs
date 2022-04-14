@@ -5,14 +5,14 @@ namespace DTO.Pagination
 {
     public class PagedListBase<T> : List<T>
     {
-        public int CurrentPage { get; set; }
+        public int PageIndex { get; set; }
         public int TotalPages { get; set; }
         public int PageSize { get; set; }
         public int TotalItems { get; set; }
 
-        public PagedListBase(IEnumerable<T> items, int count, int pageNumber, int pageSize)
+        public PagedListBase(IEnumerable<T> items, int count, int pageIndex, int pageSize)
         {
-            CurrentPage = pageNumber;
+            PageIndex = pageIndex;
             TotalPages = (int) Math.Ceiling(count / (double) pageSize);
             PageSize = pageSize;
             TotalItems = count;

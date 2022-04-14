@@ -52,7 +52,7 @@ namespace Data.Repositories.User
                     //Because We only going to read the data and we are not going to to anything else with the data
                     .AsNoTracking();
 
-                return await PagedList<MemberDTO>.CreateAsync(query, pageParameters.PageNumber, pageParameters.PageSize);
+                return await PagedList<MemberDTO>.CreateAsync(query, pageParameters.PageIndex, pageParameters.PageSize);
                     
             }
             catch (Exception ex)

@@ -22,14 +22,14 @@ export class MemberService {
 
   constructor(private http: HttpClient) { }
 
-  getMembers(pageNumber?: number, pageSize?: number) {
+  getMembers(pageIndex?: number, pageSize?: number) {
 
     // HttpParams: gives us the ability to serialize the parameters and add then to query string.
     let params = new HttpParams();
 
-    if (pageNumber !== null && pageSize !== null) {
+    if (pageIndex !== null && pageSize !== null) {
       //query string:
-      params = params.append('pageNumber', pageNumber.toString());
+      params = params.append('pageIndex', pageIndex.toString());
       params = params.append('pageSize', pageSize.toString());
     }
     // in normal usage of get() this will give us the response body
