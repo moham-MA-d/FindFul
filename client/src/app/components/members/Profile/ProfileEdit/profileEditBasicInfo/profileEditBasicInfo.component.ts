@@ -5,6 +5,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { UserEnums } from 'src/app/enum/userEnums';
 import { Member } from 'src/app/models/user/member';
 import { MemberService } from 'src/app/services/member/member.service';
 
@@ -22,10 +23,10 @@ export class ProfileEditBasicInfoComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm;
   @Input() member: Member;
   basicInfoForm: FormGroup;
-  enumSexValues = Member.Sex;
+  enumSexValues = UserEnums.Sex;
   enumSexKeys=[];
 
-  enumGenderValues = Member.Gender;
+  enumGenderValues = UserEnums.Gender;
   enumGenderKeys=[];
   dateOfBirth: Date;
 

@@ -35,10 +35,27 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] PageParameters pageParameters)
+        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] UserParameters userParameters)
         {
-            ++pageParameters.PageIndex;
-            var members = await _userService.GetAllMembers(pageParameters);
+            ++userParameters.PageIndex;
+
+            var memberDto = await _userService.GetByUsernameAsync(User.GetUsername());
+            userParameters.CurrentUsername = memberDto.UserName;
+            userParameters.Gender = memberDto.Gender;
+
+            switch (memberDto.Sex)
+            {
+                case DTO.Enumarations.UserEnums.Sex.Female:
+                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.Male;
+                    break;
+                case DTO.Enumarations.UserEnums.Sex.Male:
+                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.Female;
+                    break;
+                default:
+                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.None;
+                    break;
+            }
+            var members = await _userService.GetAllMembers(userParameters);
 
             Response.AddPaginationHeader(members.PageIndex, members.PageSize, members.TotalItems, members.TotalPages);
 
@@ -61,7 +78,7 @@ namespace API.Controllers
         public async Task<ActionResult> Update(MemberUpdateDTO memberUpdateDto)
         {
             var memberDto = await _userService.GetByUsernameAsync(User.GetUsername());
-
+            
             var appUser = await _userService.GetByIdAsync(memberDto.Id);
 
             appUser = _mapperservice.MemberUpdateDtoToAppUser(memberUpdateDto, appUser);

@@ -2752,8 +2752,16 @@ ul.contact li i{
 
 
 
-/* HELPER */
+/* Fix Material */
 
+.mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+  background-color: #27aae1 !important;
+  border-color: #27aae1 !important;
+}
+
+
+
+/* HELPER */
 .m0{
   margin: 0 !important;
 }
