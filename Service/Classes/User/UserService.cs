@@ -11,7 +11,7 @@ using Core;
 using Core.IRepositories.User;
 using DTO.Enumarations;
 using System.Text.RegularExpressions;
-using static DTO.Enumarations.UserEmums;
+using static DTO.Enumarations.UserEnums;
 using System.Diagnostics;
 using DTO.Pagination;
 
@@ -40,9 +40,9 @@ namespace Service.Classes.User
         {
             return await _userRepository.GetUserByUsernameAsync(username);
         }
-        public async Task<PagedListBase<MemberDTO>> GetAllMembers(PageParameters pageParameters)
+        public async Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters)
         {
-            return await _userRepository.GetAllMembers(pageParameters);
+            return await _userRepository.GetAllMembers(userParameters);
         }
         public async Task<AppUser> GetUserByIdAsync(int id)
         {

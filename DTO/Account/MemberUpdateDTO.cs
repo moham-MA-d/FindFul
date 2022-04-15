@@ -15,8 +15,8 @@ namespace DTO.Account
         public string Country { get; set; }
         public string DateOfBirth { get; set; }
         public string Phone { get; set; }
-        public UserEmums.Sex Sex { get; set; }
-        public UserEmums.Gender Gender { get; set; }
+        public UserEnums.Sex Sex { get; set; }
+        public UserEnums.Gender Gender { get; set; }
         public string Info { get; set; }
 
     }

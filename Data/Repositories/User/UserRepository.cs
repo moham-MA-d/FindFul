@@ -42,18 +42,30 @@ namespace Data.Repositories.User
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
-        public async Task<PagedListBase<MemberDTO>> GetAllMembers(PageParameters pageParameters)
+        public async Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters)
         {
             try
             {
-                var query = _context.Users
-                    .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
-                    
-                    //Because We only going to read the data and we are not going to to anything else with the data
-                    .AsNoTracking();
+                var query = _context.Users.AsQueryable();
+                
+                query = query.Where(x => x.UserName != userParameters.CurrentUsername);
 
-                return await PagedList<MemberDTO>.CreateAsync(query, pageParameters.PageIndex, pageParameters.PageSize);
-                    
+                if (userParameters.Sex != DTO.Enumarations.UserEnums.Sex.None)
+                    query = query.Where(x => x.Sex == (int)userParameters.Sex);
+
+                if (userParameters.Gender != DTO.Enumarations.UserEnums.Gender.None)
+                    query = query.Where(x => x.Gender == (int)userParameters.Gender);
+
+                var minDob = DateTime.Today.AddYears(-userParameters.MaxAge - 1);
+                var maxDob = DateTime.Today.AddYears(-userParameters.MinAge);
+                query = query.Where(x => x.DateOfBirth >= minDob && x.DateOfBirth <= maxDob);
+                
+                //We used `AsNoTracking()` Because We only going to read the data and we are not going to to anything else with the data
+                return await PagedList<MemberDTO>.CreateAsync(
+                    query.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+                    userParameters.PageIndex,
+                    userParameters.PageSize);
+
             }
             catch (Exception ex)
             {

@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedResult } from 'src/app/models/helper/pagination';
 import { Member } from 'src/app/models/user/member';
+import { UserParameters } from 'src/app/models/user/userParameters';
 import { userPhoto } from 'src/app/models/user/userPhoto';
 import { environment } from 'src/environments/environment';
 
@@ -18,29 +19,29 @@ export class MemberService {
   currentMember: Member;
   members: Member[] = [];
   userPhotos: userPhoto[] = [];
-  paginatedResult: PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
 
   constructor(private http: HttpClient) { }
 
-  getMembers(pageIndex?: number, pageSize?: number) {
+  getMembers(userParameters: UserParameters) {
 
-    // HttpParams: gives us the ability to serialize the parameters and add then to query string.
-    let params = new HttpParams();
+    let params = this.getPaginationHeaders(userParameters.pageIndex, userParameters.pageSize);
+    params = this.getFilteredHeaders(params, userParameters);
 
-    if (pageIndex !== null && pageSize !== null) {
-      //query string:
-      params = params.append('pageIndex', pageIndex.toString());
-      params = params.append('pageSize', pageSize.toString());
-    }
+    return this.getPaginationResult<Member[]>(this.baseUrl + 'users', params);
+  }
+
+  private getPaginationResult<T>(url: string, params: HttpParams) {
+    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
+
     // in normal usage of get() this will give us the response body
     // when we observing the response and use this to pass the params to it the we get the Full response back
-    return this.http.get<Member[]>(this.baseUrl + 'users', {observe: 'response', params}).pipe(
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
       map(response => {
-        this.paginatedResult.result = response.body; // response.body = Member[]
+        paginatedResult.result = response.body; // response.body = Member[]
         if (response.headers.get("Pagination") !== null) {
-          this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+          paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
         }
-        return this.paginatedResult;
+        return paginatedResult;
       })
     );
   }
@@ -77,6 +78,29 @@ export class MemberService {
 
   deleteAlbumPhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'UserAlbum/DeleteAlbumPhoto/' + photoId);
+  }
+
+  private getPaginationHeaders(pageIndex: number, pageSize: number) {
+
+    // HttpParams: gives us the ability to serialize the parameters and add them to query string.
+    let params = new HttpParams();
+
+    if (pageIndex !== null && pageSize !== null) {
+      //query string:
+      params = params.append('pageIndex', pageIndex.toString());
+      params = params.append('pageSize', pageSize.toString());
+    }
+    return params;
+  }
+
+  private getFilteredHeaders(param:HttpParams, userParamms: UserParameters){
+
+    param = param.append('minAge', userParamms.minAge.toString());
+    param = param.append('maxAge', userParamms.maxAge.toString());
+    param = param.append('sex', userParamms.sex.toString());
+    param = param.append('gender', userParamms.gender.toString());
+
+    return param;
   }
 
 }

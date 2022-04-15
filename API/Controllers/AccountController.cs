@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Services.Interfaces;
 using Core.IService.User;
 using Extentions.Common;
+using DTO.Enumarations;
 
 namespace API.Controllers
 {
@@ -34,7 +35,9 @@ namespace API.Controllers
             return new UserSessionDTO
             {
                 UserName = user.UserName,
-                Token = _tokenService.CreateToken(user.UserName)
+                Token = _tokenService.CreateToken(user.UserName),
+                Gender = (UserEnums.Gender)user.Gender,
+                Sex = (UserEnums.Sex)user.Sex
             };
         }
 
@@ -51,14 +54,14 @@ namespace API.Controllers
             var user = new MemberDTO();
             switch (inputType)
             {
-                case DTO.Enumarations.UserEmums.LoginInputType.Email:
+                case DTO.Enumarations.UserEnums.LoginInputType.Email:
                     user = await _userService.GetByEmail(loginDTO.UserName);
                     break;
-                case DTO.Enumarations.UserEmums.LoginInputType.Phone:
+                case DTO.Enumarations.UserEnums.LoginInputType.Phone:
                     user = await _userService.GetByUsernameAsync(loginDTO.UserName);
                     break;
-                case DTO.Enumarations.UserEmums.LoginInputType.Username:
-                case DTO.Enumarations.UserEmums.LoginInputType.None:
+                case DTO.Enumarations.UserEnums.LoginInputType.Username:
+                case DTO.Enumarations.UserEnums.LoginInputType.None:
                     user = await _userService.GetByUsernameAsync(loginDTO.UserName);
                     break;
             }
@@ -74,7 +77,9 @@ namespace API.Controllers
             {
                 UserName = user.UserName,
                 Token = _tokenService.CreateToken(user.UserName),
-                PhotoUrl = user.ProfilePhotoUrl
+                PhotoUrl = user.ProfilePhotoUrl,
+                Gender = user.Gender,
+                Sex = user.Sex
             };
         }
 

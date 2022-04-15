@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace DTO.Enumarations
 {
-    public class UserEmums
+    public class UserEnums
     {
         public enum Sex
         {
             Female = 0,
             Male = 1,
             RatherNotToSay = 2,
-            Other = 3
+            Other = 3,
+            None = 4
         }
 
         //https://www.womenshealthmag.com/relationships/a36395721/gender-identity-list/
@@ -61,6 +62,9 @@ namespace DTO.Enumarations
 
             [Description("Gendervoid is a term that is similar to agender, but specifically refers to not only a lack of gender identity, but also a sense of loss or a void in not feeling that gender identity,” explains Marsh. For gendervoid people, they feel like they don’t experience or aren’t able to feel their gender.")]
             Gendervoid,
+
+            [Description("None")]
+            None
 
         }
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models.Entities.User;
-using static DTO.Enumarations.UserEmums;
+using static DTO.Enumarations.UserEnums;
 using DTO.Pagination;
 
 namespace Core.IService.User
@@ -13,7 +13,7 @@ namespace Core.IService.User
         Task<MemberDTO> GetByEmail(string email);
         MemberDTO GetByUsername(string username);
         Task<MemberDTO> GetByUsernameAsync(string username);
-        Task<PagedListBase<MemberDTO>> GetAllMembers(PageParameters pageParameters);
+        Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters);
         Task<AppUser> GetUserByIdAsync(int id);
 
         Task<bool> IsPasswordCurrect(int userId, string password);
