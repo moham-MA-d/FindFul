@@ -1,0 +1,53 @@
+:host() {
+  display: block;
+  position: relative;
+  content: 'lool';
+}
+.mat-slider-min-value .mat-slider-thumb{
+
+  background-color: #27aae1 !important;
+
+}
+
+.mat-range-slider.mat-range-min-slider.mat-slider
+{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.mat-range-slider.mat-range-max-slider.mat-slider
+{
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+::ng-deep .mat-range-slider.mat-range-min-slider.mat-slider > div > div.mat-slider-ticks-container,
+::ng-deep .mat-range-slider.mat-range-min-slider.mat-slider > div > div.mat-slider-track-wrapper
+{
+  display: none !important;
+}
+
+::ng-deep .mat-range-slider.mat-range-max-slider.mat-slider > div > div.mat-slider-track-wrapper > .mat-slider-track-fill
+{
+  transform: none !important;
+  z-index: 2;
+
+  /* in order for the filltrack not to disappear */
+  display: block !important;
+}
+
+::ng-deep .mat-range-slider.mat-range-max-slider.mat-slider > div > div.mat-slider-track-wrapper > .mat-slider-track-background
+{
+  transform: none !important;
+  z-index: 1;
+}
+
+::ng-deep .mat-range-slider.mat-range-min-slider.mat-slider > div > div.mat-slider-thumb-container
+{
+  z-index: 3;
+}

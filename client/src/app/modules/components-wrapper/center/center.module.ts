@@ -23,6 +23,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { EnumToArrayPipe } from 'src/app/helper/EnumToArrayPipe';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   imports: [
@@ -39,8 +42,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatAutocompleteModule,
     MatSelectModule,
-    MatPaginatorModule
-
+    MatPaginatorModule,
+    MatSliderModule,
+    MatButtonModule,
+    MatButtonToggleModule
   ],
   declarations: [
     CenterComponent,

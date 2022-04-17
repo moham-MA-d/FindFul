@@ -50,16 +50,27 @@ namespace Data.Repositories.User
                 
                 query = query.Where(x => x.UserName != userParameters.CurrentUsername);
 
-                if (userParameters.Sex != DTO.Enumarations.UserEnums.Sex.None)
+                if (userParameters.Sex != DTO.Enumarations.UserEnums.Sex.All)
                     query = query.Where(x => x.Sex == (int)userParameters.Sex);
 
-                if (userParameters.Gender != DTO.Enumarations.UserEnums.Gender.None)
+                if (userParameters.Gender != DTO.Enumarations.UserEnums.Gender.All)
                     query = query.Where(x => x.Gender == (int)userParameters.Gender);
 
                 var minDob = DateTime.Today.AddYears(-userParameters.MaxAge - 1);
                 var maxDob = DateTime.Today.AddYears(-userParameters.MinAge);
                 query = query.Where(x => x.DateOfBirth >= minDob && x.DateOfBirth <= maxDob);
-                
+
+                query = userParameters.OrderBy switch
+                {
+                    DTO.Enumarations.UserEnums.OrderBy.Newest => query.OrderByDescending(x => x.CreateDateTime),
+                    DTO.Enumarations.UserEnums.OrderBy.Oldest => query.OrderBy(x => x.CreateDateTime),
+                    DTO.Enumarations.UserEnums.OrderBy.AgeAsc => query.OrderByDescending(x => x.DateOfBirth),
+                    DTO.Enumarations.UserEnums.OrderBy.AgeDes => query.OrderBy(x => x.DateOfBirth),
+                    DTO.Enumarations.UserEnums.OrderBy.LastActivity => query.OrderByDescending(x => x.LastActivity),
+                    _ => query.OrderByDescending(x => x.CreateDateTime),
+                };
+
+
                 //We used `AsNoTracking()` Because We only going to read the data and we are not going to to anything else with the data
                 return await PagedList<MemberDTO>.CreateAsync(
                     query.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider).AsNoTracking(),

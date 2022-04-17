@@ -99,6 +99,7 @@ export class MemberService {
     param = param.append('maxAge', userParamms.maxAge.toString());
     param = param.append('sex', userParamms.sex.toString());
     param = param.append('gender', userParamms.gender.toString());
+    param = param.append('orderBy', userParamms.orderBy.toString());
 
     return param;
   }

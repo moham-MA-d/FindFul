@@ -35,6 +35,8 @@ namespace API.Findful.Extensions
             services.AddScoped<IUserPhotoRepository, UserPhotoRepository>();
             services.AddScoped<IUserPhotoService, UserPhotoService>();
 
+            services.AddScoped<LogUserActivity>();
+
             services.AddScoped<IMapperService, MapperService>();
             services.AddScoped<IPhotoServiceAPI, PhotoServiceAPI>();
 

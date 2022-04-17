@@ -11,16 +11,19 @@ namespace DTO.Enumarations
     {
         public enum Sex
         {
-            Female = 0,
-            Male = 1,
-            RatherNotToSay = 2,
-            Other = 3,
-            None = 4
+            All = 0,
+            Female = 1,
+            Male = 2,
+            RatherNotToSay = 3,
+            Other = 4,
         }
 
         //https://www.womenshealthmag.com/relationships/a36395721/gender-identity-list/
         public enum Gender
         {
+            [Description("All")]
+            All = 0,
+
             [Description("In conversations about gender, you may hear this expression used. Gender identity is about one's psychological sense of self. Anatomical sex is comprised of things like genitals, chromosomes, hormones, body hair, and more,” says Sophie Mona Pagès, relationship expert and founder of LVRSNFRNDS, a social network that fosters connections and conversations about relationships. You may be familiar with the terms ‘AFAB’ (Assigned Female At Birth) and ‘AMAB ’(Assigned Male At Birth). This is what they are about.” AFAB and AMAB people may not choose to identify with those terms during childhood, or when they become adolescents or adults.")]
             Anatomical_sex,
 
@@ -63,17 +66,23 @@ namespace DTO.Enumarations
             [Description("Gendervoid is a term that is similar to agender, but specifically refers to not only a lack of gender identity, but also a sense of loss or a void in not feeling that gender identity,” explains Marsh. For gendervoid people, they feel like they don’t experience or aren’t able to feel their gender.")]
             Gendervoid,
 
-            [Description("None")]
-            None
 
         }
 
+        public enum OrderBy
+        {
+            Newest = 0,
+            Oldest = 1,
+            LastActivity = 2,
+            AgeDes = 3,
+            AgeAsc = 4,
+        }
         public enum LoginInputType
         {
-            Email= 0,
-            Phone = 1,
-            Username = 2,
-            None = 3
+            None = 0,
+            Email = 1,
+            Phone = 2,
+            Username = 3,
         }
     }
 }

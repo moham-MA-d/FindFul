@@ -35,7 +35,7 @@ namespace API.Controllers
             return new UserSessionDTO
             {
                 UserName = user.UserName,
-                Token = _tokenService.CreateToken(user.UserName),
+                Token = _tokenService.CreateToken(user.UserName, user.Id),
                 Gender = (UserEnums.Gender)user.Gender,
                 Sex = (UserEnums.Sex)user.Sex
             };
@@ -76,7 +76,7 @@ namespace API.Controllers
             return new UserSessionDTO
             {
                 UserName = user.UserName,
-                Token = _tokenService.CreateToken(user.UserName),
+                Token = _tokenService.CreateToken(user.UserName, user.Id),
                 PhotoUrl = user.ProfilePhotoUrl,
                 Gender = user.Gender,
                 Sex = user.Sex
