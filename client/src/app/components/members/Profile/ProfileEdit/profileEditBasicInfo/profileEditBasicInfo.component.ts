@@ -23,11 +23,13 @@ export class ProfileEditBasicInfoComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm;
   @Input() member: Member;
   basicInfoForm: FormGroup;
+
   enumSexValues = UserEnums.Sex;
   enumSexKeys=[];
 
   enumGenderValues = UserEnums.Gender;
   enumGenderKeys=[];
+
   dateOfBirth: Date;
 
   countries: string[] = [];

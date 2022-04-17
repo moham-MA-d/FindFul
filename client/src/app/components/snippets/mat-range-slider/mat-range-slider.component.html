@@ -1,0 +1,42 @@
+<ng-container [formGroup]="formGroup">
+
+  <mat-slider #sMin
+      class="mat-range-slider mat-range-min-slider noclick"
+      [disabled]="disabled"
+      [color]="color"
+      [invert]="invert"
+      [tabIndex]="tabIndex"
+      [max]="max"
+      [min]="min"
+      [step]="step"
+      thumbLabel
+      [tickInterval]="tickInterval"
+      [displayWith]="displayWith"
+      [vertical]="vertical"
+      (blur)="_onTouched();"
+      [formControlName]="_switchCase ? 'max' : 'min'"
+  >
+  </mat-slider>
+
+  <mat-slider #sMax
+      class="mat-range-slider mat-range-max-slider noclick"
+      [disabled]="disabled"
+      [color]="color"
+      [invert]="invert"
+      [tabIndex]="tabIndex"
+      [max]="max"
+      [min]="min"
+      [step]="step"
+      thumbLabel
+      [tickInterval]="tickInterval"
+      [displayWith]="displayWith1"
+      [vertical]="vertical"
+      (blur)="_onTouched();"
+      [formControlName]="_switchCase ? 'min' : 'max'"
+  >
+  </mat-slider>
+
+</ng-container>
+
+
+

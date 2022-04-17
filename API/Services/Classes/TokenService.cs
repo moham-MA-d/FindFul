@@ -12,18 +12,19 @@ namespace API.Services.Classes
 {
     public class TokenService : ITokenService
     {
-        // SymmetricSecurityKey is type of encryption where there is ONLY ONE key to encryption and decryption. because the in this situation (JWT) key
-        //      remains on the server.
+        // SymmetricSecurityKey is type of encryption where there is ONLY ONE key to encryption and decryption.
+        //  because in this situation (JWT) key remains on the server.
         private readonly SymmetricSecurityKey _key;
         public TokenService(IConfiguration configuration)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
         }
-        public string CreateToken(string username)
+        public string CreateToken(string username, int userId)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, username)
+                new Claim(JwtRegisteredClaimNames.NameId, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, username)
             };
 
             var creds =  new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

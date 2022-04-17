@@ -1,5 +1,54 @@
 <div class="col-md-9">
 
+  <div class="row filter-wrp">
+
+    <form class="form-inline" #form="ngForm" (ngSubmit)="loadMembers()" autocomplete="off">
+
+      <div class="form-group col-xs-12 col-md-4">
+        <div>
+          <mat-range-slider [style.flex-grow]="vertical ? 0 : 1" #rs1 class="example-margin" [disabled]="disabled"
+            [invert]="invert" [max]="max" [min]="min" [step]="step" [color]="color" [thumbLabel]="thumbLabel"
+            [tickInterval]="getSliderTickInterval()" (input)="sliderValue = $event.value" [(ngModel)]="value" name="slider"
+            [vertical]="vertical">
+          </mat-range-slider>
+          <span class="age-range">Age Range</span>
+        </div>
+      </div>
+
+      <mat-form-field class="form-group col-xs-6 col-md-3" appearance="fill" >
+        <mat-label>Sex</mat-label>
+        <mat-select [(ngModel)]="userParams.sex" name="sex">
+          <mat-option *ngFor="let option of enumSexKeys | enumToArray" [value]="option.index" >
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="form-group col-xs-6 col-md-3" appearance="fill" >
+        <mat-label>Gender</mat-label>
+        <mat-select [(ngModel)]="userParams.gender" name="gender">
+          <mat-option *ngFor="let option of enumGenderKeys | enumToArray" [value]="option.index">
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="form-group col-xs-12 col-md-2">
+          <button mat-button color="primary" type="submit">Apply Filters</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="row mb-2">
+
+    <mat-button-toggle-group class="sort-filter" appearance="legacy" name="fontStyle" aria-label="Font Style" [(ngModel)]="userParams.orderBy" (change)="loadMembers()">
+      <mat-button-toggle *ngFor="let opt of enumSortKeys | enumToArray" value="{{opt.index}}">{{opt.name}}</mat-button-toggle>
+    </mat-button-toggle-group>
+
+  </div>
+
   <div class="row">
     <div class="friend-list">
       <div class="row">
@@ -24,13 +73,8 @@
 
   <div class="row">
 
-    <mat-paginator
-      [length]="pagination.totalItems"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-      [pageIndex]="pageIndex"
-      (page)="onPageChanged($event)"
-      aria-label="Select page">
+    <mat-paginator [length]="pagination.totalItems" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex" (page)="onPageChanged($event)" aria-label="Select page">
     </mat-paginator>
 
   </div>

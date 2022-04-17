@@ -52,7 +52,7 @@ namespace API.Controllers
                     userParameters.Sex = DTO.Enumarations.UserEnums.Sex.Female;
                     break;
                 default:
-                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.None;
+                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.All;
                     break;
             }
             var members = await _userService.GetAllMembers(userParameters);
