@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CreatePostComponent } from '../snippets/create-post/create-post.component';
 import { PostContentComponent } from '../snippets/post-content/post-content.component';
 import { HomeComponent } from './home.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -13,7 +14,8 @@ import { HomeComponent } from './home.component';
     PostContentComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CKEditorModule
   ],
   exports: [
     HomeComponent,
