@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +8,10 @@ using DTO.Account;
 using Core.IService.User;
 using Core;
 using Core.IRepositories.User;
-using DTO.Enumarations;
 using System.Text.RegularExpressions;
-using static DTO.Enumarations.UserEnums;
 using System.Diagnostics;
 using DTO.Pagination;
+using static DTO._Enumarations.UserEnums;
 
 namespace Service.Classes.User
 {

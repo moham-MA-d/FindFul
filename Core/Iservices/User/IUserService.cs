@@ -1,10 +1,8 @@
 ﻿using DTO.Account;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models.Entities.User;
-using static DTO.Enumarations.UserEnums;
 using DTO.Pagination;
+using static DTO._Enumarations.UserEnums;
 
 namespace Core.IService.User
 {

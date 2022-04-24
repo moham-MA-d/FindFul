@@ -19,6 +19,109 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Core.Models.Entities.Comments.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AngersCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CommentsCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DislikesCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FavesCount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LaughsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikesCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SadsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ViewsIpCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ViewsTotalCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ViewsUsersCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WowsCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("Core.Models.Entities.User.AppUser", b =>
                 {
                     b.Property<int>("Id")
@@ -145,19 +248,58 @@ namespace Data.Migrations
                     b.ToTable("UserPhotos");
                 });
 
-            modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
+            modelBuilder.Entity("Core.Models.Entities.Comments.Comment", b =>
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
-                        .WithMany("TheUserPhotosList")
+                        .WithMany("TheCommentsList")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Models.Entities.Posts.Post", "ThePost")
+                        .WithMany("TheCommentsList")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("TheAppUser");
+
+                    b.Navigation("ThePost");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
+                {
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                        .WithMany("ThePostsList")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("TheAppUser");
                 });
 
+            modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
+                {
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                        .WithMany("TheUserPhotosList")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("TheAppUser");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
+                {
+                    b.Navigation("TheCommentsList");
+                });
+
             modelBuilder.Entity("Core.Models.Entities.User.AppUser", b =>
                 {
+                    b.Navigation("TheCommentsList");
+
+                    b.Navigation("ThePostsList");
+
                     b.Navigation("TheUserPhotosList");
                 });
 #pragma warning restore 612, 618

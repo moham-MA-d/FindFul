@@ -1,7 +1,22 @@
-            <!-- Post Create Box
+<!-- Post Create Box
         ================================================= -->
-        <div class="create-post">
 
-          <ckeditor [editor]="Editor" data="<p>2222222222222</p>" (ready)="onReady($event)"></ckeditor>
+<div class="row">
 
-        </div><!-- Post Create Box End-->
+  <form class="form-group" #sendForm="ngForm" (ngSubmit)="onSendForm()">
+
+    <div class="create-post">
+      <ckeditor [(ngModel)]="model.editorData" (ngModelChange)="onSearchChange($event)" [editor]="Editor" (ready)="onReady($event)" name="editorData" required="required"></ckeditor>
+    </div>
+
+    <div class="post-button-wrapper">
+      <button mat-button [disabled]="!model.cansSendPost" ngClass="{{model.cansSendPost}}"
+        type="submit">
+        Send
+        <mat-icon class="ml-4">send</mat-icon>
+      </button>
+    </div>
+
+  </form>
+
+</div>

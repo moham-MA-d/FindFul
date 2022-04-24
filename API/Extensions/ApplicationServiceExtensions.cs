@@ -2,17 +2,21 @@
 using API.Services.Classes;
 using API.Services.Interfaces;
 using Core;
+using Core.IRepositories.Posts;
 using Core.IRepositories.User;
 using Core.IService.User;
 using Core.IServices.Mapper;
+using Core.IServices.Posts;
 using Core.IServices.User;
 using Data;
+using Data.Repositories.Posts;
 using Data.Repositories.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Service.Classes.Mapper;
+using Service.Classes.Posts;
 using Service.Classes.User;
 using Service.Helpers;
 
@@ -32,6 +36,10 @@ namespace API.Findful.Extensions
             
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostService, PostService>();
+
             services.AddScoped<IUserPhotoRepository, UserPhotoRepository>();
             services.AddScoped<IUserPhotoService, UserPhotoService>();
 

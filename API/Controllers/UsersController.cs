@@ -11,10 +11,8 @@ using API.Services.Interfaces;
 using Core.IServices.User;
 using DTO.Account.Photo;
 using Microsoft.AspNetCore.Http;
-using Core.Models.Entities.User;
 using DTO.Pagination;
 using Extensions.Common;
-using System;
 
 namespace API.Controllers
 {
@@ -41,20 +39,7 @@ namespace API.Controllers
 
             var memberDto = await _userService.GetByUsernameAsync(User.GetUsername());
             userParameters.CurrentUsername = memberDto.UserName;
-            userParameters.Gender = memberDto.Gender;
-
-            switch (memberDto.Sex)
-            {
-                case DTO.Enumarations.UserEnums.Sex.Female:
-                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.Male;
-                    break;
-                case DTO.Enumarations.UserEnums.Sex.Male:
-                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.Female;
-                    break;
-                default:
-                    userParameters.Sex = DTO.Enumarations.UserEnums.Sex.All;
-                    break;
-            }
+           
             var members = await _userService.GetAllMembers(userParameters);
 
             Response.AddPaginationHeader(members.PageIndex, members.PageSize, members.TotalItems, members.TotalPages);
@@ -72,14 +57,12 @@ namespace API.Controllers
 
             return Ok(member);
         }
-
+         
 
         [HttpPut]
         public async Task<ActionResult> Update(MemberUpdateDTO memberUpdateDto)
         {
-            var memberDto = await _userService.GetByUsernameAsync(User.GetUsername());
-            
-            var appUser = await _userService.GetByIdAsync(memberDto.Id);
+            var appUser = await _userService.GetByIdAsync(User.GetUserId());
 
             appUser = _mapperservice.MemberUpdateDtoToAppUser(memberUpdateDto, appUser);
             _userService.Update(appUser);
@@ -105,8 +88,7 @@ namespace API.Controllers
         [HttpPost("AddProfilePhoto")]
         public async Task<ActionResult<MemberPhotoDTO>> AddProfilePhoto(IFormFile file)
         {
-            var user = await _userService.GetByUsernameAsync(User.GetUsername());
-            var appUser = await _userService.GetUserByIdAsync(user.Id);
+            var appUser = await _userService.GetUserByIdAsync(User.GetUserId());
 
             var result = await _photoServiceAPI.AddPhotoAsyncAPI(file);
             if (result.Error != null) return BadRequest(result.Error.Message);
@@ -123,8 +105,7 @@ namespace API.Controllers
         [HttpDelete("DeleteProfilePhoto")]
         public async Task<ActionResult> DeleteProfilePhoto()
         {
-            var user = await _userService.GetByUsernameAsync(User.GetUsername());
-            var appUser = await _userService.GetUserByIdAsync(user.Id);
+            var appUser = await _userService.GetUserByIdAsync(User.GetUserId());
 
             appUser.ProfilePhotoUrl = null;
             appUser.ProfilePhotoUrlPublicId = null;

@@ -1,6 +1,6 @@
-//User
+
 [
-    '{{repeat(5, 7)}}',
+    '{{repeat(100)}}',
     {
       GuId: '{{guid()}}',
       IsActive: true,
@@ -8,24 +8,18 @@
       FirstName: '{{firstName("male")}}',
       LastName: '{{surname()}} ',
       Phone: '{{phone()}} ',
-      Sex: '1',
+      Sex: '2',
       Gender: '{{integer(1,10)}} ',
       Info: '{{lorem(1, "paragraphs")}}',
       City: '{{city()}}',
       Country: '{{country()}}',
-      CreateDateTime: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
-      LastActivity: '{{date(new Date(2021, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
-      DateOfBirth: '{{date(new Date(1990, 0, 1), new Date(2010, 0, 1))}}',
+      CreateDateTime: '{{date(new Date(2014, 0, 1), new Date(2021, 0, 1), "YYYY-MM-dd")}}',
+      LastActivity: '{{date(new Date(2021, 0, 1), new Date(2021, 0, 1), "YYYY-MM-dd")}}',
+      DateOfBirth: '{{date(new Date(1990, 0, 1), new Date(2010, 0, 1), "YYYY-MM-dd")}}',
       Email: '{{email()}}',
-      
-      TheUserPhotosList: [
-        {
-          Url: function(num) {
+      ProfilePhotoUrl: function(num) {
             return 'https://randomuser.me/api/portraits/men/' + num.integer(1,99) + '.jpg';
           },
-          IsMain: true
-        }
-      ]
     }
   ]
 

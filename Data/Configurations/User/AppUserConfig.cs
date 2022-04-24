@@ -8,6 +8,23 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+
+            builder
+                .HasMany(x => x.ThePostsList)
+                .WithOne(x => x.TheAppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder
+                .HasMany(x => x.TheUserPhotosList)
+                .WithOne(x => x.TheAppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            #region Properties
+
             builder.Property(x => x.UserName)
                 .IsRequired()
                 .HasColumnType("varchar")
@@ -43,6 +60,8 @@ namespace Data.Configurations.User
             builder.Property(x => x.Phone)
                 .HasColumnType("varchar")
                 .HasMaxLength(15);
+            #endregion
+
 
         }
     }

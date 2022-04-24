@@ -1190,10 +1190,22 @@ ul.online-users li span.online-dot{
   width: 100%;
   min-height: 90px;
   padding: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #f1f2f2;
 }
 
+.post-button-wrapper{
+  padding-right: 20px; height: 40px;
+}
+.post-button-wrapper button {
+  float:right; background-color: #1967a1; color: aliceblue;
+}
+.post-button-wrapper button mat-icon{
+  padding-bottom: 27px;
+}
+.post-button-wrapper button.mat-button-disabled{
+  background-color: #bdbdbd;
+  color: #878787 !important;
+}
+.cr
 .create-post .form-group{
   margin-bottom: 0;
   display: inline-flex;
@@ -2910,3 +2922,9 @@ ul.contact li i{
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.ck-editor__editable_inline {
+  max-height: 100px;
+}

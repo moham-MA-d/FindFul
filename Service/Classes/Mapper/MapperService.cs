@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Core.IServices.Mapper;
+using Core.Models.Entities.Posts;
 using Core.Models.Entities.User;
 using DTO.Account;
 using DTO.Account.Photo;
+using DTO.Posts;
 
 namespace Service.Classes.Mapper
 {
@@ -20,10 +22,14 @@ namespace Service.Classes.Mapper
         {
             return _mapper.Map(memberUpdateDTO, appUser);
         }
-
         public MemberPhotoDTO UserPhotoToMemberPhotoDto(UserPhoto userPhoto)
         {
             return _mapper.Map<MemberPhotoDTO>(userPhoto);
+        }
+        
+        public Post PostsDtoToPost(PostsDTO postsDTO)
+        {
+            return _mapper.Map<Post>(postsDTO);
         }
     }
 }

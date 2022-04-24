@@ -24,6 +24,7 @@ import MediaEmbedToolbar from '@ckeditor/ckeditor5-media-embed/src/mediaembedtoo
 import Mention from '@ckeditor/ckeditor5-mention/src/mention.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 class Editor extends ClassicEditor {}
 
@@ -38,6 +39,7 @@ Editor.builtinPlugins = [
 	CloudServices,
 	Essentials,
 	Image,
+	SimpleUploadAdapter,
 	ImageCaption,
 	ImageInsert,
 	ImageResize,
@@ -49,7 +51,7 @@ Editor.builtinPlugins = [
 	MediaEmbedToolbar,
 	Mention,
 	Paragraph,
-	TextTransformation
+	TextTransformation,
 ];
 
 // Editor configuration.

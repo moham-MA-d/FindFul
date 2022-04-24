@@ -8,7 +8,7 @@ namespace Core.Models.Entities.User
         public string PublicId { get; set; }
         public bool IsDelete { get; set; }
 
-        public AppUser TheAppUser { get; set; }
         public int AppUserId { get; set; }
+        public AppUser TheAppUser { get; set; }
     }
 }

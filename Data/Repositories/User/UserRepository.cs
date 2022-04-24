@@ -11,6 +11,7 @@ using Core.IRepositories.User;
 using System.Linq;
 using DTO.Pagination;
 using Data.Helpers;
+using DTO._Enumarations;
 
 namespace Data.Repositories.User
 {
@@ -50,10 +51,10 @@ namespace Data.Repositories.User
                 
                 query = query.Where(x => x.UserName != userParameters.CurrentUsername);
 
-                if (userParameters.Sex != DTO.Enumarations.UserEnums.Sex.All)
+                if (userParameters.Sex != UserEnums.Sex.All)
                     query = query.Where(x => x.Sex == (int)userParameters.Sex);
 
-                if (userParameters.Gender != DTO.Enumarations.UserEnums.Gender.All)
+                if (userParameters.Gender != UserEnums.Gender.All)
                     query = query.Where(x => x.Gender == (int)userParameters.Gender);
 
                 var minDob = DateTime.Today.AddYears(-userParameters.MaxAge - 1);
@@ -62,11 +63,11 @@ namespace Data.Repositories.User
 
                 query = userParameters.OrderBy switch
                 {
-                    DTO.Enumarations.UserEnums.OrderBy.Newest => query.OrderByDescending(x => x.CreateDateTime),
-                    DTO.Enumarations.UserEnums.OrderBy.Oldest => query.OrderBy(x => x.CreateDateTime),
-                    DTO.Enumarations.UserEnums.OrderBy.AgeAsc => query.OrderByDescending(x => x.DateOfBirth),
-                    DTO.Enumarations.UserEnums.OrderBy.AgeDes => query.OrderBy(x => x.DateOfBirth),
-                    DTO.Enumarations.UserEnums.OrderBy.LastActivity => query.OrderByDescending(x => x.LastActivity),
+                    UserEnums.OrderBy.Newest => query.OrderByDescending(x => x.CreateDateTime),
+                    UserEnums.OrderBy.Oldest => query.OrderBy(x => x.CreateDateTime),
+                    UserEnums.OrderBy.AgeAsc => query.OrderByDescending(x => x.DateOfBirth),
+                    UserEnums.OrderBy.AgeDes => query.OrderBy(x => x.DateOfBirth),
+                    UserEnums.OrderBy.LastActivity => query.OrderByDescending(x => x.LastActivity),
                     _ => query.OrderByDescending(x => x.CreateDateTime),
                 };
 
