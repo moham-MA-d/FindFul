@@ -1,9 +1,7 @@
 ﻿using DTO.Account;
 using Core.Models.Entities.User;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DTO.Pagination;
-using System.Linq;
 
 namespace Core.IRepositories.User
 {

@@ -21,7 +21,7 @@ export class Member {
   info: string;
   city: string;
   country: string;
-  createDateTime: string;
+  createDateTime: Date;
   age: number;
   lastActivity: string;
   dateOfBirth: Date;

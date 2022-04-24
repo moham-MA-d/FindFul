@@ -4,6 +4,11 @@ import { CreatePostComponent } from '../snippets/create-post/create-post.compone
 import { PostContentComponent } from '../snippets/post-content/post-content.component';
 import { HomeComponent } from './home.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
 
 
 
@@ -11,11 +16,18 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
   declarations: [
     HomeComponent,
     CreatePostComponent,
-    PostContentComponent
+    PostContentComponent,
+
   ],
   imports: [
+    FormsModule,
     CommonModule,
-    CKEditorModule
+    CKEditorModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatDividerModule,
+    MatIconModule
+
   ],
   exports: [
     HomeComponent,

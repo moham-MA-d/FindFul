@@ -4,6 +4,8 @@ using AutoMapper;
 using Core.Models.Entities.User;
 using Extentions.Common;
 using DTO.Account.Photo;
+using DTO.Posts;
+using Core.Models.Entities.Posts;
 
 namespace Service.Helpers
 {
@@ -16,6 +18,7 @@ namespace Service.Helpers
                 .ForMember(dst => dst.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<UserPhoto, MemberPhotoDTO>();
             CreateMap<MemberUpdateDTO, AppUser>();
+            CreateMap<PostsDTO, Post>();
         }
     }
 }

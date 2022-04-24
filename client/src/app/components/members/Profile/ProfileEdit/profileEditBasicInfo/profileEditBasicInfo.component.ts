@@ -20,7 +20,7 @@ import { MemberService } from 'src/app/services/member/member.service';
 export class ProfileEditBasicInfoComponent implements OnInit {
 
   countriesFilteredOptions: Observable<string[]>;
-  @ViewChild('editForm') editForm: NgForm;
+  @ViewChild('editForm') public editForm: NgForm;
   @Input() member: Member;
   basicInfoForm: FormGroup;
 

@@ -1,5 +1,4 @@
 ﻿using DTO.Account.Photo;
-using DTO.Enumarations;
 using System;
 using System.Collections.Generic;
 

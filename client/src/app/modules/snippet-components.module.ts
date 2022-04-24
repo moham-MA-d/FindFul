@@ -18,7 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FileUploadModule,
     MatSliderModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
 
   declarations: [

@@ -22,7 +22,7 @@ export class JwtInterceptor implements HttpInterceptor {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => currentUser = user );
     if (currentUser) {
       // we want to clone `request` and add authentication header into it.
-      // it will attach our token to every request when we are logged in 
+      // it will attach our token to every request when we are logged in
       request = request.clone(
         {
           setHeaders: {

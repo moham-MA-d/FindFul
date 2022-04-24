@@ -1,3 +1,5 @@
+using Core.Models.Entities.Comments;
+using Core.Models.Entities.Posts;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +29,10 @@ namespace Core.Models.Entities.User
         public string ProfilePhotoUrlPublicId { get; set; }
         public string CoverPhotoUrl { get; set; }
         public string CoverPhotoUrlPublicId { get; set; }
-        public ICollection<UserPhoto> TheUserPhotosList { get; set; }
 
+
+        public ICollection<UserPhoto> TheUserPhotosList { get; set; }
+        public ICollection<Post> ThePostsList { get; set; }
+        public ICollection<Comment> TheCommentsList { get; set; }
     }
 }
