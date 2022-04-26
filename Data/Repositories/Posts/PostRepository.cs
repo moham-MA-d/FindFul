@@ -34,7 +34,8 @@ namespace Data.Repositories.Posts
                 _ => query.OrderByDescending(x => x.CreateDateTime),
             };
 
-            return await PagedList<PostsDTO>.CreateAsync(query.ProjectTo<PostsDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+            return await PagedList<PostsDTO>.CreateAsync(
+                query.ProjectTo<PostsDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
                 postParameters.PageIndex,
                 postParameters.PageSize);
 

@@ -40,6 +40,7 @@ namespace API.Controllers
             var memberDto = await _userService.GetByUsernameAsync(User.GetUsername());
             userParameters.CurrentUsername = memberDto.UserName;
            
+            //Get All Users Except current user
             var members = await _userService.GetAllMembers(userParameters);
 
             Response.AddPaginationHeader(members.PageIndex, members.PageSize, members.TotalItems, members.TotalPages);

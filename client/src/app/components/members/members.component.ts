@@ -12,23 +12,24 @@ import { MemberService } from 'src/app/services/member/member.service';
 @Component({
   selector: 'app-members',
   templateUrl: './members.component.html',
-  styleUrls: ['./members.component.css']
+  styleUrls: ['./members.component.css'],
 })
 
 export class MembersComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
-  members: Member[];
+  members: Member[] | null = [];
   pagination: Pagination = new Pagination();
-  userParams: UserParameters;
-  user: User;
+  userParams!: UserParameters;
+  user: User = new User;
 
   pageIndex = 0;
   pageSize = 5;
   // MatPaginator Output
-  pageEvent: PageEvent;
-  pageSizeOptions: number[];
+  // MatPaginator Output
+  pageEvent: PageEvent = new PageEvent;
+  pageSizeOptions: number[] = [];
 
   enumSexValues = UserEnums.Sex;
   enumSexKeys=[];
@@ -39,6 +40,7 @@ export class MembersComponent implements OnInit {
   enumSortValues = UserEnums.OrderBy;
   enumSortKeys=[];
 
+  //Age Slider Configuration
   autoTicks = false;
   disabled = false;
   invert = false;
@@ -59,31 +61,29 @@ export class MembersComponent implements OnInit {
     }
     return 0;
   }
+  formatLabel(value: number) {
+    return value;
+  }
+
 
   constructor(private memberService: MemberService, private accountService: AccountService) {
+
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.user = user;
       this.userParams = new UserParameters(user);
     })
   }
 
-  formatLabel(value: number) {
-    return value;
-  }
-
   ngOnInit(): void {
-
     this.enumSexKeys = Object.keys(this.enumSexValues);
     this.enumGenderKeys = Object.keys(this.enumGenderValues);
     this.enumSortKeys = Object.keys(this.enumSortValues);
-
     this.loadMembers();
     this.pageSizeOptions = this.pagination.pageSizeOptions;
 
   }
 
   loadMembers() {
-
     this.userParams.minAge = this.sliderValue?.min ?? this.value;
     this.userParams.maxAge = this.sliderValue?.max ?? this.max;
 
@@ -100,7 +100,7 @@ export class MembersComponent implements OnInit {
     }
   }
 
-  onPageChanged(e) {
+  onPageChanged(e: { pageIndex: number; pageSize: number; }) {
 
     this.pageIndex = e.pageIndex;
     this.pageSize = e.pageSize;

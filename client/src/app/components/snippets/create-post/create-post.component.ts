@@ -10,13 +10,13 @@ import { PostService } from 'src/app/services/post/post.service';
 export class UploadAdapter {
   private _loader;
 
-  constructor(loader) {
+  constructor(loader: any) {
     this._loader = loader;
   }
 
   upload() {
     return this._loader.file.then(
-      (file) =>
+      (file: Blob) =>
         new Promise((resolve, reject) => {
           var myReader = new FileReader();
           myReader.onloadend = (e) => {
@@ -59,9 +59,8 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onReady(eventData) {
+  onReady(eventData: { plugins: { get: (arg0: string) => { (): any; new(): any; createUploadAdapter: (loader: any) => UploadAdapter; }; }; }) {
     eventData.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-      console.log('loader : ', loader);
       console.log(btoa(loader.file));
       return new UploadAdapter(loader);
     };
@@ -70,7 +69,7 @@ export class CreatePostComponent implements OnInit {
   onSendForm() {
     if (this.model.editorData.length > 8) {
       this.post.body =  this.model.editorData;
-      return this.postService.sendForm(this.post).subscribe(r => {console.log("rrrr:", r)});
+      return this.postService.sendPost(this.post).subscribe(r => {console.log("rrrr:", r)});
     }
   }
 

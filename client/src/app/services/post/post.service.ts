@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Pagination } from 'src/app/models/helper/pagination';
 import { Post } from 'src/app/models/post/post';
+import { PostParameters } from 'src/app/models/post/postParameters';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,16 +12,32 @@ import { environment } from 'src/environments/environment';
 export class PostService {
 
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  pagination: Pagination = new Pagination();
 
-  sendForm(post: Post) {
-    return this.http.post(this.baseUrl + 'Home/AddPost', post).pipe(
+  constructor(private http: HttpClient) {
+   }
+
+  sendPost(post: Post) {
+    return this.http.post(this.baseUrl + 'Post/AddPost', post).pipe(
       map((r: any) => {
           console.log("Post: ", r);
       })
     )
   }
 
+  GetAllPosts(postParameters: PostParameters) {
 
+    let params = this.pagination.getPaginationHeaders(postParameters.pageIndex, postParameters.pageSize);
+    params = this.getFilteredHeaders(params, postParameters);
+
+    return this.pagination.getPaginationResult<Post[]>(this.baseUrl + 'Post/GetPosts', params, this.http);
+  }
+
+  private getFilteredHeaders(param:HttpParams, postParameters: PostParameters){
+
+    param = param.append('orderBy', postParameters.orderBy.toString());
+
+    return param;
+  }
 }
 
