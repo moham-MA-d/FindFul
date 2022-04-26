@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DTO.Account;
+using System.ComponentModel.DataAnnotations;
 
 namespace DTO.Posts
 {
@@ -8,5 +9,7 @@ namespace DTO.Posts
 
         [Required]
         public string Body { get; set; }
+
+        public MemberDTO TheAppUser { get; set; }
     }
 }

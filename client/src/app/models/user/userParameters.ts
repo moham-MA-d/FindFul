@@ -1,18 +1,17 @@
 import { UserEnums } from "src/app/enum/userEnums";
+import { PageParameters } from "../page/pageParameters";
 import { User } from "./user";
 
-export class UserParameters {
+export class UserParameters extends PageParameters {
 
   gender: UserEnums.Gender;
   sex: UserEnums.Sex;
   orderBy: UserEnums.OrderBy;
   minAge = 10;
   maxAge = 99;
-  pageIndex = 0;
-  pageSize = 5;
 
   constructor(user: User) {
-
+    super();
     this.gender = user.gender;
     this.orderBy = UserEnums.OrderBy.Newest;
 

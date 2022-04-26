@@ -1,10 +1,10 @@
-   
+
    		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
        <meta name="viewport" content="width=device-width, initial-scale=1">
        <meta name="description" content="This is social network html5 template available in themeforest......" />
        <meta name="keywords" content="Social Network, Social Media, Make Friends, Newsfeed, Profile Page" />
        <meta name="robots" content="index, follow" />
-       
+
    <!-- Header
     ================================================= -->
 		<header id="header" class="">
@@ -38,21 +38,21 @@
               <ng-container >
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle nav-profile-photo-wrp" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="nav-profile-photo" src="{{member.profilePhotoUrl}}" alt="{{member.userName}}" >
-                    {{member.userName}}
+                    <img class="nav-profile-photo" src="{{user.photoUrl}}" alt="{{user.userName}}" >
+                    {{user.userName}}
                     <span><img src="" alt=""></span></a>
                   <ul class="dropdown-menu newsfeed-home">
                     <li><a href="newsfeed.html">Newsfeed</a></li>
                     <li><a href="newsfeed-people-nearby.html">Poeple Nearly</a></li>
                     <li><a href="newsfeed-friends.html">My friends</a></li>
                     <li><a href="newsfeed-messages.html">Chatroom</a></li>
-                    <li><a routerLink="/members/{{member.userName}}/edit">Edit</a></li>
+                    <li><a routerLink="/members/{{user.userName}}/edit">Edit</a></li>
                     <li><a routerLink="/" (click)="logout()" >log out</a></li>
                   </ul>
                 </li>
               </ng-container>
             </ul>
-           
+
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->
       </nav>

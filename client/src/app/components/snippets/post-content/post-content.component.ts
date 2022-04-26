@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Post } from 'src/app/models/post/post';
+import { User } from 'src/app/models/user/user';
+import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
   selector: 'app-post-content',
@@ -7,9 +12,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostContentComponent implements OnInit {
 
-  constructor() { }
+  @Input() posts: Post;
+
+  user: User;
+  currentUser$!: Observable<User>;
+
+  constructor(public accountService: AccountService) {
+    accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+  }
 
   ngOnInit(): void {
+    this.currentUser$ = this.accountService.currentUser$;
   }
 
 }
