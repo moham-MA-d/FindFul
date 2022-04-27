@@ -26,6 +26,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatPaginatorModule,
     MatSliderModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    TimeagoModule.forRoot()
   ],
   declarations: [
     CenterComponent,
@@ -71,7 +73,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ProfileAlbumPhotoEditComponent,
     ProfilePhotoEditComponent,
     ProfileEditBasicInfoComponent,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    TimeagoModule
 
   ],
   providers:[MatDatepickerModule, MatNativeDateModule]
