@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
+import { TimeagoModule } from 'ngx-timeago';
 
 
 
@@ -26,13 +27,15 @@ import {MatIconModule} from '@angular/material/icon';
     MatButtonModule,
     MatButtonToggleModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    TimeagoModule.forRoot()
 
   ],
   exports: [
     HomeComponent,
     CreatePostComponent,
-    PostContentComponent
+    PostContentComponent,
+    TimeagoModule
   ]
 })
 export class HomeModule { }

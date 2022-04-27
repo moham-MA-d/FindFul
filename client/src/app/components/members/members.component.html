@@ -6,9 +6,9 @@
 
       <div class="form-group col-xs-12 col-md-4">
         <div>
-          <mat-range-slider [style.flex-grow]="vertical ? 0 : 1" #rs1 class="example-margin" [disabled]="disabled"
-            [invert]="invert" [max]="max" [min]="min" [step]="step" [color]="color" [thumbLabel]="thumbLabel"
-            [tickInterval]="getSliderTickInterval()" (input)="sliderValue = $event.value" [(ngModel)]="value" name="slider"
+          <mat-range-slider [style.flex-grow]="vertical ? 0 : 1" #rs1 class="example-margin"
+            [invert]="invert" [max]="userParams.maxAgeSlider" [min]="userParams.minAgeSlider" [step]="step" [color]="color" [thumbLabel]="thumbLabel"
+            [tickInterval]="getSliderTickInterval()" (input)="sliderValue = $event.value" [(ngModel)]="userParams.valueSlider" name="slider"
             [vertical]="vertical">
           </mat-range-slider>
           <span class="age-range">Age Range</span>

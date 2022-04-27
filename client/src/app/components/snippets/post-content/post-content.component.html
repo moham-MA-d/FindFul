@@ -7,7 +7,7 @@
             <div class="post-detail">
               <div class="user-info">
                 <h5><a href="/members/{{post.theAppUser.userName}}" class="profile-link">{{post.theAppUser.firstName}}</a> <span class="following">following</span></h5>
-                <p class="text-muted">{{post.createDateTime}}</p>
+                <p class="text-muted">{{post.createDateTime | timeago }}</p>
               </div>
               <div class="reaction">
                 <a class="btn text-green"><i class="icon ion-thumbsup"></i> 23</a>

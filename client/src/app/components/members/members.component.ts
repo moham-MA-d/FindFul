@@ -25,7 +25,7 @@ export class MembersComponent implements OnInit {
   user: User = new User;
 
   pageIndex = 0;
-  pageSize = 5;
+  pageSize = 10;
   // MatPaginator Output
   // MatPaginator Output
   pageEvent: PageEvent = new PageEvent;
@@ -42,14 +42,10 @@ export class MembersComponent implements OnInit {
 
   //Age Slider Configuration
   autoTicks = false;
-  disabled = false;
   invert = false;
-  min = 18;
-  max = 99;
   showTicks = false;
   step = 1;
   thumbLabel = false;
-  value = 20;
   vertical = false;
   tickInterval = 1;
   color = 'primary';
@@ -65,13 +61,8 @@ export class MembersComponent implements OnInit {
     return value;
   }
 
-
-  constructor(private memberService: MemberService, private accountService: AccountService) {
-
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
-      this.user = user;
-      this.userParams = new UserParameters(user);
-    })
+  constructor(private memberService: MemberService) {
+    this.userParams = memberService.userParams;
   }
 
   ngOnInit(): void {
@@ -84,8 +75,8 @@ export class MembersComponent implements OnInit {
   }
 
   loadMembers() {
-    this.userParams.minAge = this.sliderValue?.min ?? this.value;
-    this.userParams.maxAge = this.sliderValue?.max ?? this.max;
+    //this.userParams.minAgeSlider = this.sliderValue?.min ?? this.value;
+    //this.userParams.maxAgeSlider = this.sliderValue?.max ?? this.max;
 
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;
@@ -107,6 +98,7 @@ export class MembersComponent implements OnInit {
 
     this.userParams.pageIndex = e.pageIndex;
     this.userParams.pageSize = e.pageSize;
+
 
     this.loadMembers();
   }

@@ -1,4 +1,5 @@
 ﻿using DTO.Account;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DTO.Posts
@@ -9,6 +10,7 @@ namespace DTO.Posts
 
         [Required]
         public string Body { get; set; }
+        public DateTime CreateDateTime { get; set; }
 
         public MemberDTO TheAppUser { get; set; }
     }
