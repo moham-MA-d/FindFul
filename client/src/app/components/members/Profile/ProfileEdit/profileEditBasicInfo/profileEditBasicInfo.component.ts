@@ -56,8 +56,8 @@ export class ProfileEditBasicInfoComponent implements OnInit {
 
   ngOnInit() {
 
-    this.enumSexKeys = Object.keys(this.enumSexValues);
-    this.enumGenderKeys = Object.keys(this.enumGenderValues);
+    this.enumSexKeys = Object.keys(this.enumSexValues).filter(e => isNaN(+e));
+    this.enumGenderKeys = Object.keys(this.enumGenderValues).filter(e => isNaN(+e));
 
     this.GetCountries();
   }

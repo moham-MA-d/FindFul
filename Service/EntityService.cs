@@ -25,10 +25,7 @@ namespace Service
             _repository.Update(entity);
             SaveChanges();
         }
-        public Task SoftDeleteAsync(T entity)
-        {
-            throw new NotImplementedException();
-        }
+        
         public async Task RemoveAsync(T entity)
         {
             if (entity == null) throw new ArgumentNullException("entity");

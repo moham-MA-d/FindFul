@@ -13,7 +13,6 @@ export class ProfileHeaderComponent implements OnInit {
 
   @Output() user = new EventEmitter();
   member: Member = new Member();
-  
 
   constructor(private memberService: MemberService, private route: ActivatedRoute, private compService: ComponentService) { }
 
@@ -21,10 +20,10 @@ export class ProfileHeaderComponent implements OnInit {
     this.compService.setChatBlockEnable(false);
     this.loadMember();
   }
-  ngOnDestroy()	{
-    this.compService.setChatBlockEnable(true); 
-  }
 
+  ngOnDestroy()	{
+    this.compService.setChatBlockEnable(true);
+  }
 
   loadMember(){
     let username = this.route.snapshot.paramMap.get("username");
@@ -32,10 +31,21 @@ export class ProfileHeaderComponent implements OnInit {
       this.member = mem;
       if (mem.userName == username) {
         this.memberService.currentMember = mem;
-      }else{
+      } else {
         this.memberService.currentMember = undefined;
       }
       this.user.emit(this.member);
+    });
+  }
+
+  followUnfollow() {
+    let username = this.route.snapshot.paramMap.get("username");
+    this.memberService.follow(username).subscribe((r:any) => {
+      if (r.data == "follow") {
+        this.member.isFollowed = false;
+      } else {
+        this.member.isFollowed = true;
+      }
     });
   }
 }

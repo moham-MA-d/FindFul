@@ -18,6 +18,7 @@ export class Member {
   sex: UserEnums.Sex;
   gender: number;
   isActive: boolean;
+  isFollowed: boolean;
   info: string;
   city: string;
   country: string;

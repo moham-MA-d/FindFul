@@ -93,6 +93,18 @@ namespace Data.Repositories.User
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<AppUser> GetUserByIdAsync(int id, IQueryable<AppUser> query)
+        {
+            var finalQuery = _context.Users.AsQueryable();
+            
+            finalQuery = query;
+
+             var result = await finalQuery.Include(x => x.TheUserPhotosList)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        
+            return result;
+        }
+
         //public async Task<int> Update(AppUser entity)
         //{
         //    var catalogue = await _context.Users.FindAsync(entity);

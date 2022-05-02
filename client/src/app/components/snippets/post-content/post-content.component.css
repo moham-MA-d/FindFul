@@ -1,0 +1,24 @@
+.like{
+  margin-right: 5px;
+}
+
+
+.reaction a.btn.false{
+  color: gray;
+}
+
+.reaction a.btn.true{
+  color: red;
+}
+
+
+.reaction a i.fa-heart.true{
+  --fa-animation-duration: .4s;
+   --fa-animation-iteration-count: 2;
+}
+
+
+.reaction a i.fa-heart.false{
+  --fa-animation-duration: 0s;
+   --fa-animation-iteration-count: 0;
+}

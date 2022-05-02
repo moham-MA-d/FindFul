@@ -47,7 +47,6 @@ export class MemberService {
     let memberCacheKey = Object.values(userParameters).join('-');
     let cacheResponse = this.memberCache.get(memberCacheKey);
     if (cacheResponse) {
-      console.log(this.memberCache);
       return of(cacheResponse);
     }
 
@@ -101,6 +100,14 @@ export class MemberService {
     return this.http.delete(this.baseUrl + 'UserAlbum/DeleteAlbumPhoto/' + photoId);
   }
 
+  follow(username: string) {
+    return this.http.post(this.baseUrl + "Follow/FollowUser/" + username, {});
+  }
+
+  unFollow(username: string) {
+    return this.http.post(this.baseUrl + "/Follow/UnFollowUser/" + username, {});
+  }
+
   private getFilteredHeaders(param: HttpParams, userParamms: UserParameters) {
 
     param = param.append('minAge', userParamms.minAgeSlider.toString());
@@ -111,5 +118,6 @@ export class MemberService {
 
     return param;
   }
+
 
 }
