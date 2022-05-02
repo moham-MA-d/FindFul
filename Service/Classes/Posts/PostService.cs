@@ -17,9 +17,9 @@ namespace Service.Classes.Posts
             _postRepository = postRepository;
         }
 
-        public async Task<PagedListBase<PostsDTO>> GetAllPosts(PostParameters postParameters)
+        public async Task<PagedListBase<PostsDTO>> GetAllPosts(PostParameters postParameters, int? userId)
         {
-            return await _postRepository.GetAllPosts(postParameters);
+            return await _postRepository.GetAllPosts(postParameters, userId);
         }
     }
 }

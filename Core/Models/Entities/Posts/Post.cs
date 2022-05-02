@@ -9,11 +9,7 @@ namespace Core.Models.Entities.Posts
     public class Post : BaseId
     {
         public string Body { get; set; }
-        public DateTime CreateDateTime { get; set; } = DateTime.Now;
         public DateTime DeleteDateTime { get; set; }
-
-        public bool IsDeleted { get; set; } = false;
-
         public int LikesCount { get; set; } = 0;
         public int FavesCount { get; set; } = 0;
         public int DislikesCount { get; set; } = 0;
@@ -30,5 +26,6 @@ namespace Core.Models.Entities.Posts
         public AppUser TheAppUser { get; set; }
 
         public ICollection<Comment> TheCommentsList { get; set; }
+        public ICollection<PostLiked> ThePostLikedList { get; set; }
     }
 }

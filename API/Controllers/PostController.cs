@@ -38,7 +38,9 @@ namespace API.Controllers
         {
             ++postParameters.PageIndex;
 
-            var posts = await _postService.GetAllPosts(postParameters);
+            var userId = User.GetUserId();
+
+            var posts = await _postService.GetAllPosts(postParameters, userId);
 
             Response.AddPaginationHeader(posts.PageIndex, posts.PageSize, posts.TotalItems, posts.TotalPages);
 

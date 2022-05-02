@@ -22,10 +22,9 @@ namespace Data.Repositories.Posts
             _mapper = mapper;
         }
 
-        public async Task<PagedListBase<PostsDTO>> GetAllPosts(PostParameters postParameters)
+        public async Task<PagedListBase<PostsDTO>> GetAllPosts(PostParameters postParameters, int? userId)
         {
             var query = _context.Posts.AsQueryable();
-
 
             query = postParameters.OrderBy switch
             {
@@ -35,7 +34,7 @@ namespace Data.Repositories.Posts
             };
 
             return await PagedList<PostsDTO>.CreateAsync(
-                query.ProjectTo<PostsDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+                query.ProjectTo<PostsDTO>(_mapper.ConfigurationProvider, new { currentUserId = userId}).AsNoTracking(),
                 postParameters.PageIndex,
                 postParameters.PageSize);
 

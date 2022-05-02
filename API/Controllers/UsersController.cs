@@ -22,14 +22,12 @@ namespace API.Controllers
         private readonly IUserService _userService;
         private readonly IMapperService _mapperservice;
         private readonly IPhotoServiceAPI _photoServiceAPI;
-        private readonly IUserPhotoService _userPhotoService;
 
         public UsersController(IUserService userService, IMapperService mapperservice, IPhotoServiceAPI photoService, IUserPhotoService userPhotoService)
         {
             _userService = userService;
             _mapperservice = mapperservice;
             _photoServiceAPI = photoService;
-            _userPhotoService = userPhotoService;
         }
 
         [HttpGet]
@@ -70,20 +68,6 @@ namespace API.Controllers
 
             return NoContent();
         }
-
-        //[HttpPut]
-        //public ActionResult Update(MemberUpdateDTO memberUpdateDto)
-        //{
-        //    var memberDto = _userService.GetByUsername(User.GetUsername());
-
-        //    var appUser = _userService.GetById(memberDto.Id);
-
-        //    appUser = _mapperservice.MemberUpdateDtoToAppUser(memberUpdateDto, appUser);
-        //    _userService.Update(appUser);
-
-        //    return NoContent();
-        //}
-
 
 
         [HttpPost("AddProfilePhoto")]

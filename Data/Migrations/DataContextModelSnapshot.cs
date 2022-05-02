@@ -32,13 +32,13 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeleteDateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("GuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<int>("PostId")
@@ -54,6 +54,27 @@ namespace Data.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.Follows.Follow", b =>
+                {
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowingId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CereateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("FollowerId", "FollowingId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
@@ -91,7 +112,10 @@ namespace Data.Migrations
                     b.Property<Guid>("GuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<int>("LaughsCount")
@@ -120,6 +144,27 @@ namespace Data.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.Posts.PostLiked", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("PostId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("PostsLiked");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.User.AppUser", b =>
@@ -168,6 +213,9 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastActivity")
@@ -224,8 +272,14 @@ namespace Data.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("GuId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
@@ -267,6 +321,25 @@ namespace Data.Migrations
                     b.Navigation("ThePost");
                 });
 
+            modelBuilder.Entity("Core.Models.Entities.Follows.Follow", b =>
+                {
+                    b.HasOne("Core.Models.Entities.User.AppUser", "Following")
+                        .WithMany("TheFollowerList")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Core.Models.Entities.User.AppUser", "Follower")
+                        .WithMany("TheFollowingList")
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
+                });
+
             modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
@@ -276,6 +349,25 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("TheAppUser");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.Posts.PostLiked", b =>
+                {
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                        .WithMany("ThePostLikedList")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Models.Entities.Posts.Post", "ThePost")
+                        .WithMany("ThePostLikedList")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TheAppUser");
+
+                    b.Navigation("ThePost");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
@@ -292,11 +384,19 @@ namespace Data.Migrations
             modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
                 {
                     b.Navigation("TheCommentsList");
+
+                    b.Navigation("ThePostLikedList");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.User.AppUser", b =>
                 {
                     b.Navigation("TheCommentsList");
+
+                    b.Navigation("TheFollowerList");
+
+                    b.Navigation("TheFollowingList");
+
+                    b.Navigation("ThePostLikedList");
 
                     b.Navigation("ThePostsList");
 

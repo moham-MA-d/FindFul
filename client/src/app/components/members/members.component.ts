@@ -66,8 +66,8 @@ export class MembersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.enumSexKeys = Object.keys(this.enumSexValues);
-    this.enumGenderKeys = Object.keys(this.enumGenderValues);
+    this.enumSexKeys = Object.keys(this.enumSexValues).filter(e => isNaN(+e));
+    this.enumGenderKeys = Object.keys(this.enumGenderValues).filter(e => isNaN(+e));
     this.enumSortKeys = Object.keys(this.enumSortValues);
     this.loadMembers();
     this.pageSizeOptions = this.pagination.pageSizeOptions;
@@ -102,4 +102,12 @@ export class MembersComponent implements OnInit {
 
     this.loadMembers();
   }
+
+
+   getEnumKeyByEnumValue(myEnum:any, enumValue: number | string): string {
+    let keys = Object.keys(myEnum).filter((x) => myEnum[x] == enumValue);
+    return keys.length > 0 ? keys[0] : '';
+  }
+
 }
+

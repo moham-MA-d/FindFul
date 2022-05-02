@@ -33,6 +33,14 @@ export class PostService {
     return this.pagination.getPaginationResult<Post[]>(this.baseUrl + 'Post/GetPosts', params, this.http);
   }
 
+  AddLike(postId: number) {
+    return this.http.post(this.baseUrl + 'like/' + postId , {});
+  }
+
+  AddDisLike(postId: number) {
+    return this.http.post(this.baseUrl + 'dislike/' + postId , {});
+  }
+
   private getFilteredHeaders(param:HttpParams, postParameters: PostParameters){
 
     param = param.append('orderBy', postParameters.orderBy.toString());

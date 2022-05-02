@@ -15,7 +15,6 @@ namespace Data.Configurations.User
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
             builder
                 .HasMany(x => x.TheUserPhotosList)
                 .WithOne(x => x.TheAppUser)
@@ -61,7 +60,6 @@ namespace Data.Configurations.User
                 .HasColumnType("varchar")
                 .HasMaxLength(15);
             #endregion
-
 
         }
     }

@@ -10,8 +10,9 @@ namespace DTO.Posts
 
         [Required]
         public string Body { get; set; }
-        public DateTime CreateDateTime { get; set; }
-
+        public bool IsLiked { get; set; } = false;
+        public int LikesCount { get; set; }
+        public DateTime CreateDateTime { get; set; } = DateTime.Now;
         public MemberDTO TheAppUser { get; set; }
     }
 }

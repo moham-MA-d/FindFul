@@ -15,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(private router: Router, private toast: ToastrService) { }
 
-  // interceptors are going to be initialized when we start the application because they are part of app module 
+  // interceptors are going to be initialized when we start the application because they are part of app module
   //    and we add them the Providers and they're always going to be around until we close our application
   // we can intercept the request that goes out
   // next: is response that is backed
@@ -33,23 +33,25 @@ export class ErrorInterceptor implements HttpInterceptor {
                   }
                 }
                 throw modalStateErrors;
+              } else if(typeof(error.error) === 'object') {
+                this.toast.error(error.statusText, error.statusText);
               } else {
-                this.toast.error(error.statusText, error.status);
+                this.toast.error(error.error, error.status);
               }
               break;
-              
-              case 401:
-                this.toast.error(error.statusText, error.status);
-                break;
 
-                case 404:
-                  this.router.navigateByUrl('/not-found');
-                  break;
-                  
-                case 500:
-                  const navigationExtras: NavigationExtras = {state: {error: error.error}}
-                  this.router.navigateByUrl('/server-error', navigationExtras);
-                  break;
+            case 401:
+              this.toast.error(error.statusText, error.status);
+              break;
+
+            case 404:
+              this.router.navigateByUrl('/not-found');
+              break;
+
+            case 500:
+              const navigationExtras: NavigationExtras = { state: { error: error.error } }
+              this.router.navigateByUrl('/server-error', navigationExtras);
+              break;
 
             default:
               this.toast.error("Something went wrong!");

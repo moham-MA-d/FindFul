@@ -35,7 +35,8 @@
               "./src/resources/js/bootstrap.min.js",
               "./src/resources/js/jquery.sticky-kit.min.js",
               "./src/resources/js/jquery.scrollbar.min.js",
-              "./src/resources/js/script.js"
+              "./src/resources/js/script.js",
+              "./src/resources/js/fontawesome.js"
             ]
           },
           "configurations": {

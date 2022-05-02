@@ -1,11 +1,11 @@
 ﻿using DTO._Enumarations;
+using DTO.Account.Base;
 
 namespace DTO.Account
 {
-    public class MemberUpdateDTO
+    public class MemberUpdateDTO : BaseMemberDTO
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        
         public string City { get; set; }
         public string Country { get; set; }
         public string DateOfBirth { get; set; }
