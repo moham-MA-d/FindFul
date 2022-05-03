@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { UploadPhoto } from 'src/app/models/photo/uploadPhoto';
 import { Member } from 'src/app/models/user/member';
 import { User } from 'src/app/models/user/user';
@@ -26,13 +26,13 @@ export class ProfileAlbumPhotoEditComponent implements OnInit {
   };
 
   constructor (private accountService: AccountService, private memberService: MemberService) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe(u => this.user = u); 
+    this.accountService.currentUser$.pipe(take(1)).subscribe(u => this.user = u);
   }
-  
+
   ngOnInit(): void {
     this.loadUserPhotos();
   }
-  
+
   loadUserPhotos(){
     this.photos = this.memberService.getMemberPhotos(this.user.userName);
   }
@@ -42,5 +42,5 @@ export class ProfileAlbumPhotoEditComponent implements OnInit {
       this.photos =  this.photos.pipe(map(x => x.filter(f => f.id !== photoId)))
     });
   }
-  
+
 }

@@ -5,8 +5,8 @@ import { User } from 'src/app/models/user/user';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-// Default Angular services are singleton. When we injected them into a component and it's initialized 
-//    it's available until our app disposed off 
+// Default Angular services are singleton. When we injected them into a component and it's initialized
+//    it's available until our app disposed off
 // @Injectable: It means service can be injected in other services or components in the application.
 // Srvices are used to make request to API
 @Injectable({
@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AccountService {
-  
+
   baseUrl = environment.apiUrl;
   isLoggedIn = false;
   // ReplaySubject: special type of Observables that act as buffer to store data.
@@ -49,11 +49,12 @@ export class AccountService {
     )
   }
 
-  
+
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.isLoggedIn = false;
+    environment.memberCache.clear();
   }
 
   //set user to observable

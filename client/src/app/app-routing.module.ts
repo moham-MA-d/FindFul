@@ -6,6 +6,8 @@ import { RegisterComponent } from './components/forms/register/register.componen
 import { HomeComponent } from './components/home/home.component';
 import { LandingRegisterComponent } from './components/landings/landing-register/landing-register.component';
 import { MembersComponent } from './components/members/members.component';
+import { FollowersComponent } from './components/members/Profile/followers/followers.component';
+import { FollowingComponent } from './components/members/Profile/following/following.component';
 import { ProfileAboutComponent } from './components/members/Profile/profileAbout/profileAbout.component';
 import { ProfileAlbumComponent } from './components/members/Profile/profileAlbum/profileAlbum.component';
 import { ProfileEditComponent } from './components/members/Profile/profileEdit/profileEdit.component';
@@ -33,6 +35,8 @@ const routes: Routes = [
           { path: 'members/:username/timeline', component: ProfileTimelineComponent },
           { path: 'members/:username/about', component: ProfileAboutComponent },
           { path: 'members/:username/album', component: ProfileAlbumComponent },
+          { path: 'members/:username/following', component: FollowingComponent },
+          { path: 'members/:username/followers', component: FollowersComponent },
           { path: 'messages', component: MessagesComponent }
         ]
       }

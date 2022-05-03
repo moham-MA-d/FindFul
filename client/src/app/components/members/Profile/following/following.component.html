@@ -1,0 +1,23 @@
+<div class="col-md-9">
+
+  <app-profileHeader (user)="getUserInfo($event)"></app-profileHeader>
+
+  <div class="row">
+    <div class="friend-list">
+      <div class="row">
+        <div class="col-xs-12 col-md-6" *ngFor="let member of members">
+          <app-member-card [member]="member"></app-member-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <mat-paginator [length]="pagination.totalItems" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex" (page)="onPageChanged($event)" aria-label="Select page">
+    </mat-paginator>
+
+  </div>
+
+</div>

@@ -5,6 +5,7 @@ namespace DTO.Pagination
     public class UserParameters : PageParameters  
     {
         public string CurrentUsername { get; set; }
+        public string Username { get; set; }
         public UserEnums.Gender Gender { get; set; }
         public UserEnums.Sex Sex { get; set; }
         public UserEnums.OrderBy OrderBy { get; set; }

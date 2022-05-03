@@ -2,6 +2,10 @@
 using Core.IRepositories.User;
 using Core.Models.Entities.Follows;
 using Core.Models.Entities.User;
+using Data.Helpers;
+using DTO.Account;
+using DTO.Pagination;
+using Extentions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,39 +15,68 @@ using System.Threading.Tasks;
 namespace Data.Repositories.Follows
 {
     public class FollowRepository : GenericRepository<Follow>, IFollowRepository
-	{
-        private readonly IUserRepository userRepository;
+    {
+        private readonly IUserRepository _userRepository;
 
         public FollowRepository(DataContext context, ILogger logger, IUserRepository userRepository) : base(context, logger)
-		{
-            this.userRepository = userRepository;
+        {
+            _userRepository = userRepository;
         }
 
-		public async Task<Follow> GetFollow(int userId, int recipientId)
-		{
-			return await _context.Follows.FirstOrDefaultAsync(u => u.FollowerId == userId && u.FollowingId == recipientId);
-		}
-
-        public async Task<IEnumerable<Follow>> GetFollowers(int userId)
+        public async Task<Follow> GetFollow(int userId, int recipientId)
         {
-             var user = await _context.Users
-                .Include(x => x.TheFollowerList)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-
-
-                return user.TheFollowerList.Where(x => x.FollowerId == userId);
+            return await _context.Follows.FirstOrDefaultAsync(u => u.FollowerId == userId && u.FollowingId == recipientId);
         }
 
-        public async Task<AppUser> GetUserWithFollwers(int userId)
+
+        public async Task<PagedListBase<MemberDTO>> GetFollowing(UserParameters userParameters)
         {
-            var q = _context.Users.Include(x => x.TheFollowerList);
-            var r = await userRepository.GetUserByIdAsync(userId, q);
-            return r;
+            var targetUser = await _userRepository.GetUserByUsernameAsync(userParameters.Username);
+            
+            var users = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
+            var following = _context.Follows.Where(x => x.FollowerId == targetUser.Id).AsQueryable();
+
+            users = following.Select(x => x.TheFollower);
+
+            var followingUsers = users.Select(user => new MemberDTO
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Age = user.DateOfBirth.CalculateAge(),
+                City = user.City,
+                Id = user.Id,
+                Sex = (DTO._Enumarations.UserEnums.Sex)user.Sex,
+                Gender = (DTO._Enumarations.UserEnums.Gender)user.Gender,
+                ProfilePhotoUrl = user.ProfilePhotoUrl
+            });
+
+            return await PagedList<MemberDTO>.CreateAsync(followingUsers, userParameters.PageIndex, userParameters.PageSize);
         }
 
-        public Task<IEnumerable<Follow>> GetFollowing(int userId)
+        public async Task<PagedListBase<MemberDTO>> GetFollowers(UserParameters userParameters)
         {
-            throw new System.NotImplementedException();
+            var targetUser = await _userRepository.GetUserByUsernameAsync(userParameters.Username);
+
+            var users = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
+            var following = _context.Follows.Where(x => x.FollowingId == targetUser.Id).AsQueryable();
+
+            users = following.Select(x => x.TheFollowing);
+
+            var followingUsers = users.Select(user => new MemberDTO
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Age = user.DateOfBirth.CalculateAge(),
+                City = user.City,
+                Id = user.Id,
+                Sex = (DTO._Enumarations.UserEnums.Sex)user.Sex,
+                Gender = (DTO._Enumarations.UserEnums.Gender)user.Gender,
+                ProfilePhotoUrl = user.ProfilePhotoUrl
+            });
+
+            return await PagedList<MemberDTO>.CreateAsync(followingUsers, userParameters.PageIndex, userParameters.PageSize);
         }
     }
 }

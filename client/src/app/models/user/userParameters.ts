@@ -7,6 +7,7 @@ export class UserParameters extends PageParameters {
   gender: UserEnums.Gender;
   sex: UserEnums.Sex;
   orderBy: UserEnums.OrderBy;
+  username: string = "";
 
   minAgeSlider = 10;
   maxAgeSlider = 99;
@@ -14,7 +15,7 @@ export class UserParameters extends PageParameters {
 
   constructor(user: User) {
     super();
-    this.gender = user.gender;
+    this.gender = UserEnums.Gender.All;
     this.orderBy = UserEnums.OrderBy.Newest;
 
     switch (user.sex)

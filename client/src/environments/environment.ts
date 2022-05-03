@@ -6,7 +6,9 @@ import { GlobalConstants } from "src/app/common/global";
 
 export const environment = {
   production: false,
-  apiUrl: GlobalConstants.APIURL
+  apiUrl: GlobalConstants.APIURL,
+  //Map() is used like a dictionary with key, value parameters and have set() and get() methods.
+  memberCache: new Map()
 };
 
 /*

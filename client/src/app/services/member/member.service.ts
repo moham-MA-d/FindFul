@@ -23,7 +23,7 @@ export class MemberService {
   userPhotos: userPhoto[] = [];
 
   //Map() is used like a dictionary with key, value parameters and have set() and get() methods.
-  memberCache = new Map();
+  memberCache = environment.memberCache;
   user: User;
   private _userParams: UserParameters;
   public get userParams(): UserParameters {
@@ -59,6 +59,22 @@ export class MemberService {
         return response;
       }))
   }
+
+  getFollowing(userParameters: UserParameters) {
+    let params = this.pagination.getPaginationHeaders(userParameters.pageIndex, userParameters.pageSize);
+    params = this.getFilteredHeaders(params, userParameters);
+
+    return this.pagination.getPaginationResult<Member[]>(this.baseUrl + 'follow/getfollowing', params, this.http);
+  }
+
+  getFollowers(userParameters: UserParameters) {
+    let params = this.pagination.getPaginationHeaders(userParameters.pageIndex, userParameters.pageSize);
+    params = this.getFilteredHeaders(params, userParameters);
+
+    return this.pagination.getPaginationResult<Member[]>(this.baseUrl + 'follow/getfollowers', params, this.http);
+  }
+
+
 
   getMember(userName: string) {
 
@@ -115,6 +131,9 @@ export class MemberService {
     param = param.append('sex', userParamms.sex.toString());
     param = param.append('gender', userParamms.gender.toString());
     param = param.append('orderBy', userParamms.orderBy.toString());
+    if (userParamms.username !== "") {
+      param = param.append('username', userParamms.username.toString());
+    }
 
     return param;
   }

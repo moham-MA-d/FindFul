@@ -13,8 +13,8 @@
           <li><a routerLink="/members/{{member.userName}}/timeline">Timeline</a></li>
           <li><a routerLink="/members/{{member.userName}}/about">About</a></li>
           <li><a routerLink="/members/{{member.userName}}/album">Album</a></li>
-          <li><a routerLink="/members/{{member.userName}}/Followings">Followings</a></li>
-          <li><a routerLink="/members/{{member.userName}}/Followers">Followers</a></li>
+          <li><a routerLink="/members/{{member.userName}}/following">Following</a></li>
+          <li><a routerLink="/members/{{member.userName}}/followers">Followers</a></li>
         </ul>
       </div>
     </div>
@@ -22,8 +22,8 @@
       <div class="col-xs-12">
         <ul class="follow-me list-inline">
           <li>
-            <button *ngIf="member.isFollowed" class="btn-primary" (click)="followUnfollow() ">Unfollow</button>
-            <button *ngIf="!member.isFollowed" class="btn-primary" (click)="followUnfollow() ">Follow</button>
+            <button *ngIf="member.isFollowed" class="btn-primary" (click)="followUnfollow()">Unfollow</button>
+            <button *ngIf="!member.isFollowed" class="btn-primary" (click)="followUnfollow()">Follow</button>
           </li>
         </ul>
       </div>
@@ -42,8 +42,8 @@
         <li><a routerLink="/members/{{member.userName}}/timeline">Timeline</a></li>
         <li><a routerLink="/members/{{member.userName}}/about">About</a></li>
         <li><a routerLink="/members/{{member.userName}}/album">Album</a></li>
-        <li><a routerLink="/members/{{member.userName}}/Followings">Followings</a></li>
-        <li><a routerLink="/members/{{member.userName}}/Followers">Followers</a></li>
+        <li><a routerLink="/members/{{member.userName}}/following">Following</a></li>
+        <li><a routerLink="/members/{{member.userName}}/followers">Followers</a></li>
       </ul>
     </div>
     <div>

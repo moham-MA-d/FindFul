@@ -11,7 +11,7 @@ export class Pagination {
 
   constructor() {}
 
-  public getPaginationHeaders(pageIndex: number, pageSize: number) {
+  public getPaginationHeaders(pageIndex: number, pageSize: number, username: string = "") {
 
     // HttpParams: gives us the ability to serialize the parameters and add them to query string.
     let params = new HttpParams();
@@ -21,6 +21,7 @@ export class Pagination {
       params = params.append('pageIndex', pageIndex.toString());
       params = params.append('pageSize', pageSize.toString());
     }
+
     return params;
   }
 
