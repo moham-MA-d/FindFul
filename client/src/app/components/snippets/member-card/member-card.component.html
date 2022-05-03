@@ -1,0 +1,24 @@
+<div class="friend-card">
+  <div class="card-info">
+    <ul class="card-main-info">
+      <li>
+        <a routerLink="/members/{{member.userName}}/timeline" class="profile-link">
+          <img src="{{member.profilePhotoUrl}}" alt="user" class="profile-photo-lg">
+        </a>
+      </li>
+      <li class="main-details">
+        <h5><a routerLink="/members/{{member.userName}}/timeline" class="profile-link">{{member.firstName +member.lastName}}</a></h5>
+        <p >{{member.city}}</p>
+      </li>
+    </ul>
+    <div class="friend-info">
+      <p>
+        <span [innerHtml]="getEnumKeyByEnumValue(enumGenderValues, member.gender)"></span>
+        <span> | </span>
+        <span>{{member.age}}</span>
+        <button (click)="followUnfollow(member)" class="pull-right btn-follow" *ngIf="member.isFollowed" mat-button color="primary" type="submit">Unfollow</button>
+        <button (click)="followUnfollow(member)" class="pull-right btn-follow" *ngIf="!member.isFollowed" mat-button color="primary" type="submit">Follow</button>
+      </p>
+    </div>
+  </div>
+</div>

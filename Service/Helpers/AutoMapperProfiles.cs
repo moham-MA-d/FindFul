@@ -15,9 +15,10 @@ namespace Service.Helpers
         public AutoMapperProfiles()
         {
             int currentUserId = 0;
+            string currentUsername = string.Empty;
 
             CreateMap<AppUser, MemberDTO>()
-                .ForMember(dst => dst.IsFollowed, opt => opt.MapFrom(src => src.TheFollowingList.Any(x => x.TheFollower.UserName == src.UserName && x.IsActive == true)))
+                .ForMember(dst => dst.IsFollowed, opt => opt.MapFrom(src => src.TheFollowingList.Any(x => x.TheFollowing.UserName == currentUsername && x.IsActive == true)))
                 //.ForMember(dst => dst.ProfilePhotoUrl, opt => opt.MapFrom(src => src.TheUserPhotosList.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dst => dst.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
 

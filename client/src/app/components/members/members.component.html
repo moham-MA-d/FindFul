@@ -53,24 +53,7 @@
     <div class="friend-list">
       <div class="row">
         <div class="col-xs-12 col-md-6" *ngFor="let member of members">
-          <div class="friend-card">
-            <div class="card-info">
-              <ul class="card-main-info">
-                <li>
-                  <a routerLink="/members/{{member.userName}}/timeline" class="profile-link">
-                    <img src="{{member.profilePhotoUrl}}" alt="user" class="profile-photo-lg">
-                  </a>
-                </li>
-                <li class="main-details">
-                  <h5><a routerLink="/members/{{member.userName}}/timeline" class="profile-link">{{member.firstName +member.lastName}}</a></h5>
-                  <p >{{member.city}}</p>
-                </li>
-              </ul>
-              <div class="friend-info">
-                <p [innerHtml]="getEnumKeyByEnumValue(enumSexValues, member.sex)"></p>
-              </div>
-            </div>
-          </div>
+          <app-member-card [member]="member"></app-member-card>
         </div>
       </div>
     </div>

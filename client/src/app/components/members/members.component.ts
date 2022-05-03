@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { take } from 'rxjs/operators';
 import { UserEnums } from 'src/app/enum/userEnums';
 import { Pagination } from 'src/app/models/helper/pagination';
 import { Member } from 'src/app/models/user/member';
 import { User } from 'src/app/models/user/user';
 import { UserParameters } from 'src/app/models/user/userParameters';
-import { AccountService } from 'src/app/services/account/account.service';
 import { MemberService } from 'src/app/services/member/member.service';
 
 @Component({
@@ -26,20 +24,16 @@ export class MembersComponent implements OnInit {
 
   pageIndex = 0;
   pageSize = 10;
-  // MatPaginator Output
-  // MatPaginator Output
-  pageEvent: PageEvent = new PageEvent;
   pageSizeOptions: number[] = [];
 
+
+  //Filter
   enumSexValues = UserEnums.Sex;
   enumSexKeys=[];
-
   enumGenderValues = UserEnums.Gender;
   enumGenderKeys=[];
-
   enumSortValues = UserEnums.OrderBy;
   enumSortKeys=[];
-
   //Age Slider Configuration
   autoTicks = false;
   invert = false;
@@ -75,14 +69,10 @@ export class MembersComponent implements OnInit {
   }
 
   loadMembers() {
-    //this.userParams.minAgeSlider = this.sliderValue?.min ?? this.value;
-    //this.userParams.maxAgeSlider = this.sliderValue?.max ?? this.max;
-
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
     })
-
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -104,10 +94,8 @@ export class MembersComponent implements OnInit {
   }
 
 
-   getEnumKeyByEnumValue(myEnum:any, enumValue: number | string): string {
-    let keys = Object.keys(myEnum).filter((x) => myEnum[x] == enumValue);
-    return keys.length > 0 ? keys[0] : '';
-  }
+
+
 
 }
 

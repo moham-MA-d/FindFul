@@ -48,7 +48,7 @@ namespace Data.Repositories.User
             try
             {
                 var query = _context.Users.AsQueryable();
-                
+
                 query = query.Where(x => x.UserName != userParameters.CurrentUsername);
 
                 if (userParameters.Sex != UserEnums.Sex.All)
@@ -74,7 +74,7 @@ namespace Data.Repositories.User
 
                 //We used `AsNoTracking()` Because We only going to read the data and we are not going to to anything else with the data
                 return await PagedList<MemberDTO>.CreateAsync(
-                    query.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+                    query.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider, new {currentUsername = userParameters.CurrentUsername}).AsNoTracking(),
                     userParameters.PageIndex,
                     userParameters.PageSize);
 
@@ -95,13 +95,10 @@ namespace Data.Repositories.User
 
         public async Task<AppUser> GetUserByIdAsync(int id, IQueryable<AppUser> query)
         {
-            var finalQuery = _context.Users.AsQueryable();
-            
-            finalQuery = query;
+            var result = await query.FirstOrDefaultAsync(x => x.Id == id);
 
-             var result = await finalQuery.Include(x => x.TheUserPhotosList)
-                .FirstOrDefaultAsync(x => x.Id == id);
-        
+            var ss = result.TheFollowerList.Select(x => x.TheFollower);
+
             return result;
         }
 

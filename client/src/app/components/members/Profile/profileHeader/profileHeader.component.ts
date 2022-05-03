@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Member } from 'src/app/models/user/member';
 import { MemberService } from 'src/app/services/member/member.service';
 import { ComponentService } from 'src/app/services/component/component.service';
+import { UserParameters } from 'src/app/models/user/userParameters';
 
 @Component({
   selector: 'app-profileHeader',
@@ -42,9 +43,9 @@ export class ProfileHeaderComponent implements OnInit {
     let username = this.route.snapshot.paramMap.get("username");
     this.memberService.follow(username).subscribe((r:any) => {
       if (r.data == "follow") {
-        this.member.isFollowed = false;
-      } else {
         this.member.isFollowed = true;
+      } else {
+        this.member.isFollowed = false;
       }
     });
   }
