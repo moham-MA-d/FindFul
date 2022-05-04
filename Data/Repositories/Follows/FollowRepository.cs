@@ -31,7 +31,7 @@ namespace Data.Repositories.Follows
 
         public async Task<PagedListBase<MemberDTO>> GetFollowing(UserParameters userParameters)
         {
-            var targetUser = await _userRepository.GetUserByUsernameAsync(userParameters.Username);
+            var targetUser = await _userRepository.GetMemberByUsernameAsync(userParameters.Username);
             
             var users = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
             var following = _context.Follows.Where(x => x.FollowerId == targetUser.Id).AsQueryable();
@@ -56,7 +56,7 @@ namespace Data.Repositories.Follows
 
         public async Task<PagedListBase<MemberDTO>> GetFollowers(UserParameters userParameters)
         {
-            var targetUser = await _userRepository.GetUserByUsernameAsync(userParameters.Username);
+            var targetUser = await _userRepository.GetMemberByUsernameAsync(userParameters.Username);
 
             var users = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
             var following = _context.Follows.Where(x => x.FollowingId == targetUser.Id).AsQueryable();

@@ -172,11 +172,29 @@ section .wrapper{
   border-radius: 30px;
 }
 
+
 .btn-primary:hover{
   background: #149AC9;
   transition: all 1s;
 }
 
+.btn-default{
+  background-color: #e3e3e3;
+  color: #5a5a5a;
+	padding: 7px 25px;
+	border: none;
+	font-size: 14px;
+	border-radius: 4px;
+	position: relative;
+  font-weight: 600;
+  outline: none;
+  border-radius: 30px;
+}
+
+.btn-default:hover{
+  background: #cdcdcd;
+  transition: all 1s;
+}
 .btn-secondary{
 	background: linear-gradient(to bottom, rgba(109,110,113,1), rgba(0,0,0,1));
 	padding: 0 40px;
@@ -1644,7 +1662,7 @@ ul.online-users li span.online-dot{
 }
 
 .timeline-cover .timeline-nav-bar .follow-me li{
-  padding: 6px 15px;
+  padding: 6px 10px;
   color: #fff;
 }
 
@@ -2844,6 +2862,14 @@ ul.list-unstyled li{
 .sort-filter .mat-button-toggle-checked{
   background-color: #f1f1f1;
   color: rgb(39 170 225);
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary{
+  color: #FFF;
+  border-radius: 100px;
+}
+.mat-raised-button:not(.mat-button-disabled):active:not([class*='mat-elevation-z']){
+  box-shadow: none !important;
 }
 
 

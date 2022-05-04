@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Core.IServices.Mapper;
+using Core.Models.Entities.Messages;
 using Core.Models.Entities.Posts;
 using Core.Models.Entities.User;
 using DTO.Account;
 using DTO.Account.Photo;
+using DTO.Messages;
 using DTO.Posts;
 
 namespace Service.Classes.Mapper
@@ -30,6 +32,11 @@ namespace Service.Classes.Mapper
         public Post PostsDtoToPost(PostsDTO postsDTO)
         {
             return _mapper.Map<Post>(postsDTO);
+        }
+
+        public MessageDTO MessageToMessageDTO(Message message)
+        {
+            return _mapper.Map<MessageDTO>(message);
         }
     }
 }

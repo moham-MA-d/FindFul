@@ -10,7 +10,8 @@ namespace Core.IRepositories.User
     {
         Task<MemberDTO> GetUserByEmailAsync(string email);
         MemberDTO GetUserByUsername(string username);
-        Task<MemberDTO> GetUserByUsernameAsync(string username);
+        Task<MemberDTO> GetMemberByUsernameAsync(string username);
+        Task<AppUser> GetUserByUsernameAsync(string username);
         Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters);
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByIdAsync(int id, IQueryable<AppUser> query);

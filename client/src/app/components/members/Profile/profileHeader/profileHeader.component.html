@@ -22,8 +22,11 @@
       <div class="col-xs-12">
         <ul class="follow-me list-inline">
           <li>
-            <button *ngIf="member.isFollowed" class="btn-primary" (click)="followUnfollow()">Unfollow</button>
-            <button *ngIf="!member.isFollowed" class="btn-primary" (click)="followUnfollow()">Follow</button>
+            <button mat-button color="primary" (click)="openDialog()">Send Message</button>
+          </li>
+          <li>
+            <button *ngIf="member.isFollowed" mat-raised-button color="primary" (click)="followUnfollow()">Unfollow</button>
+            <button *ngIf="!member.isFollowed"  mat-raised-button color="primary" (click)="followUnfollow()">Follow</button>
           </li>
         </ul>
       </div>

@@ -8,6 +8,11 @@ import { PhotoUpload2Component } from '../components/snippets/photo-upload2/phot
 import { MatRangeSliderComponent } from '../components/snippets/mat-range-slider/mat-range-slider.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogComponent } from '../components/snippets/mat-dialog/mat-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from './shared.module';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -18,7 +23,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FileUploadModule,
     MatSliderModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    SharedModule,
+    MatInputModule
   ],
 
   declarations: [
@@ -26,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     StickySidebarRComponent,
     PhotoUploadComponent,
     PhotoUpload2Component,
-    MatRangeSliderComponent
+    MatRangeSliderComponent,
+    MatDialogComponent
   ],
 
   exports:[
@@ -35,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PhotoUploadComponent,
     PhotoUpload2Component,
     FileUploadModule,
-    MatRangeSliderComponent
+    MatRangeSliderComponent,
+    MatDialogComponent
   ]
 })
 export class SnippetComponentsModule { }

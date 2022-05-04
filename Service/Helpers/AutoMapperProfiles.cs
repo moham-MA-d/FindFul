@@ -7,6 +7,8 @@ using DTO.Account.Photo;
 using DTO.Posts;
 using Core.Models.Entities.Posts;
 using DTO.Account.Base;
+using Core.Models.Entities.Messages;
+using DTO.Messages;
 
 namespace Service.Helpers
 {
@@ -36,6 +38,11 @@ namespace Service.Helpers
                 .ForMember(dst => dst.IsLiked, opt => opt.MapFrom(src => src.ThePostLikedList.Any(x => x.AppUserId == currentUserId && x.IsActive == true)));
 
             CreateMap<PostsDTO, Post>().ForMember(dst => dst.CreateDateTime, act => act.Ignore());
+
+
+            CreateMap<Message, MessageDTO>()
+                .ForMember(dst => dst.SenderPhotoUrl, opt => opt.MapFrom(src => src.TheSender.ProfilePhotoUrl))
+                .ForMember(dst => dst.RecieverPhotoUrl, opt => opt.MapFrom(src => src.TheReciever.ProfilePhotoUrl));
         }
     }
 }
