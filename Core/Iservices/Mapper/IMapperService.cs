@@ -1,7 +1,9 @@
-﻿using Core.Models.Entities.Posts;
+﻿using Core.Models.Entities.Messages;
+using Core.Models.Entities.Posts;
 using Core.Models.Entities.User;
 using DTO.Account;
 using DTO.Account.Photo;
+using DTO.Messages;
 using DTO.Posts;
 
 namespace Core.IServices.Mapper
@@ -12,5 +14,7 @@ namespace Core.IServices.Mapper
         MemberPhotoDTO UserPhotoToMemberPhotoDto(UserPhoto userPhoto);
         
         Post PostsDtoToPost(PostsDTO postsDTO); 
+
+        MessageDTO MessageToMessageDTO(Message message);
     }
 }

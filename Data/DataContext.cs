@@ -8,6 +8,8 @@ using Data.Configurations.Posts;
 using Data.Configurations.Comments;
 using Core.Models.Entities.Follows;
 using Data.Configurations.Follows;
+using Core.Models.Entities.Messages;
+using Data.Configurations.Messages;
 
 namespace Data
 {
@@ -15,7 +17,7 @@ namespace Data
     {
         public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration) : base(options)
         {
-            //ChangeTracker.LazyLoadingEnabled = false;
+            ChangeTracker.LazyLoadingEnabled = false;
         }
 
         public DbSet<AppUser> Users { get; set; }
@@ -24,6 +26,7 @@ namespace Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<PostLiked> PostsLiked { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
         //This is the method that is called when an entity is created.
@@ -35,6 +38,7 @@ namespace Data
             modelBuilder.ApplyConfiguration(new CommentConfig());
             modelBuilder.ApplyConfiguration(new FollowConfig());
             modelBuilder.ApplyConfiguration(new PostLikedConfig());
+            modelBuilder.ApplyConfiguration(new MessageConfig());
         }
     }
 }

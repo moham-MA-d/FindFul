@@ -1,17 +1,15 @@
 ﻿using Core;
-using Core.IRepositories;
 using Core.IRepositories.Follows;
 using Core.IService;
 using Core.IServices.Follows;
 using Core.Models.Entities.Follows;
 using DTO.Account;
 using DTO.Pagination;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Service.Classes.Follows
 {
-	public class FollowService : EntityService<Follow>, IFollowService, IEntityService<Follow>
+    public class FollowService : EntityService<Follow>, IFollowService, IEntityService<Follow>
 	{
 		private readonly IFollowRepository _followRepository;
 

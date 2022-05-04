@@ -37,10 +37,15 @@ namespace Data.Repositories.User
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
                 .SingleOrDefault(x => x.UserName == username);
         }
-        public async Task<MemberDTO> GetUserByUsernameAsync(string username)
+        public async Task<MemberDTO> GetMemberByUsernameAsync(string username)
         {
             return await _context.Users
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync(x => x.UserName == username);
+        }
+        public async Task<AppUser> GetUserByUsernameAsync(string username)
+        {
+            return await _context.Users
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
         public async Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters)

@@ -1,5 +1,6 @@
 using Core.Models.Entities.Comments;
 using Core.Models.Entities.Follows;
+using Core.Models.Entities.Messages;
 using Core.Models.Entities.Posts;
 using System;
 using System.Collections.Generic;
@@ -36,5 +37,7 @@ namespace Core.Models.Entities.User
 		public ICollection<Follow> TheFollowerList { get; set; }
 		public ICollection<Follow> TheFollowingList { get; set; }
 		public ICollection<PostLiked> ThePostLikedList { get; set; }
+		public ICollection<Message> TheSentMessagesList { get; set; }
+		public ICollection<Message> TheRecievedMessagesList { get; set; }
 	}
 }

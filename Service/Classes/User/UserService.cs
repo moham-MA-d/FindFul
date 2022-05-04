@@ -36,7 +36,7 @@ namespace Service.Classes.User
         }
         public async Task<MemberDTO> GetByUsernameAsync(string username)
         {
-            return await _userRepository.GetUserByUsernameAsync(username);
+            return await _userRepository.GetMemberByUsernameAsync(username);
         }
         public async Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters)
         {
