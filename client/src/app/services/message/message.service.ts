@@ -20,4 +20,18 @@ export class MessageService {
     }))
   }
 
+  GetChats(){
+    return this.http.get(this.baseUrl + 'message/getchats')
+    .pipe(map((response: any) => {
+      return response;
+    }))
+  }
+
+  GetMessages(userId: number){
+    return this.http.get(this.baseUrl + 'message/getmessages/' + userId)
+    .pipe(map((response: any) => {
+      return response;
+    }))
+  }
+
 }

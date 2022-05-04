@@ -5,6 +5,9 @@ using Core.IRepositories.Messages;
 using Core.Models.Entities.Messages;
 using Core.Models.Entities.User;
 using DTO.Messages;
+using System.Collections.Generic;
+using DTO.Member;
+using System.Threading.Tasks;
 
 namespace Service.Classes.Messages
 {
@@ -29,6 +32,16 @@ namespace Service.Classes.Messages
                 RecieverUsername = reciever.UserName,
                 Body = createMessageDTO.Body,
             };
+        }
+
+        public async Task<List<MemberChatDTO>> GetChats(int userId)
+        {
+           return await _messageRepository.GetChats(userId);
+        }
+
+        public async Task<bool> HasChatAsync(int currentUserId, int targetUserId)
+        {
+            return await _messageRepository.HasChat(currentUserId, targetUserId);
         }
     }
 }

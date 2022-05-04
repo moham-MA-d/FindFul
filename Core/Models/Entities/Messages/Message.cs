@@ -8,7 +8,7 @@ namespace Core.Models.Entities.Messages
         public string Body { get; set; }
         public DateTime? DateRecieved { get; set; }
         public DateTime? DateReaded { get; set; }
-        public DateTime? DateDeleted { get; set; }
+        //public DateTime? DateDeleted { get; set; }
         
         public bool SnderDeleted { get; set; }
         public bool RecieverDeleted { get; set; }

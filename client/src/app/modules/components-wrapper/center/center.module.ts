@@ -30,6 +30,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MemberCardComponent } from 'src/app/components/snippets/member-card/member-card.component';
 import { FollowingComponent } from 'src/app/components/members/Profile/following/following.component';
 import { FollowersComponent } from 'src/app/components/members/Profile/followers/followers.component';
+import { MessagesComponent } from 'src/app/components/messages/messages.component';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { FollowersComponent } from 'src/app/components/members/Profile/followers
     ProfileAlbumPhotoEditComponent,
     ProfilePhotoEditComponent,
     ProfileEditBasicInfoComponent,
+    MessagesComponent,
     EnumToArrayPipe
   ],
   exports: [
@@ -82,6 +84,7 @@ import { FollowersComponent } from 'src/app/components/members/Profile/followers
     ProfileAlbumPhotoEditComponent,
     ProfilePhotoEditComponent,
     ProfileEditBasicInfoComponent,
+    MessagesComponent,
     EnumToArrayPipe,
     TimeagoModule
 
