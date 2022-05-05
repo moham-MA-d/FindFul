@@ -14,6 +14,8 @@ import { DefaultModule } from './layouts/default/default.module';
 import { FullWidthModule } from './layouts/fullWidth/fullWidth.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './Interceptors/loading.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 
 //Main and necessary Module of Angular project which is called in main.ts
@@ -32,7 +34,9 @@ import { LoadingInterceptor } from './Interceptors/loading.interceptor';
     ReactiveFormsModule,
     DefaultModule,
     FullWidthModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

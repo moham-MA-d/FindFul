@@ -8,8 +8,8 @@ namespace Core.IRepositories.Messages
 {
     public interface IMessageRepository : IGenericRepository<Message>
     {
-       Task<List<MemberChatDTO>> GetChats(int userId);
-       Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId);
+        Task<List<MemberChatDTO>> GetChats(int userId);
+        Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip);
         Task<bool> HasChat(int currentUserId, int targetUserId);
 
     }

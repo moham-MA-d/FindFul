@@ -1,4 +1,6 @@
-﻿using Core.IRepositories.Messages;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Core.IRepositories.Messages;
 using Core.Models.Entities.Messages;
 using DTO.Member;
 using DTO.Messages;
@@ -12,20 +14,28 @@ namespace Data.Repositories.Messages
 {
     public class MessageRepository : GenericRepository<Message>, IMessageRepository
     {
-        public MessageRepository(DataContext context, ILogger logger) : base(context, logger)
+        private readonly IMapper _mapper;
+
+        public MessageRepository(DataContext context, ILogger logger, IMapper mapper) : base(context, logger)
         {
+            _mapper = mapper;
         }
+
 
         public async Task<List<MemberChatDTO>> GetChats(int userId)
         {
             var senderUsers = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
             var recieverUsers = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
 
-            var senderChats = _context.Messages.Where(x => x.SenderId == userId).Include(x => x.TheReciever.TheRecievedMessagesList).AsQueryable();
-            var recieverChats = _context.Messages.Where(x => x.RecieverId == userId).Include(x => x.TheReciever.TheSentMessagesList).AsQueryable();
+            var sentChats = _context.Messages.Where(x => x.SenderId == userId)
+                .Include(x => x.TheReciever.TheSentMessagesList)
+                .Include(x => x.TheReciever.TheRecievedMessagesList).AsQueryable();
+            var recievedChats = _context.Messages.Where(x => x.RecieverId == userId)
+                .Include(x => x.TheSender.TheRecievedMessagesList)
+                .Include(x => x.TheSender.TheSentMessagesList).AsQueryable();
 
-            senderUsers = recieverChats.Select(y => y.TheSender);
-            recieverUsers = senderChats.Select(x => x.TheReciever);
+            senderUsers = recievedChats.Select(y => y.TheSender);
+            recieverUsers = sentChats.Select(x => x.TheReciever);
 
             var senders = await senderUsers.ToListAsync();
             var recievers = await recieverUsers.ToListAsync();
@@ -33,11 +43,24 @@ namespace Data.Repositories.Messages
             List<MemberChatDTO> chats = new();
 
             //TODO: Fix : Remove Repeated users in senders and recievers withing query
-            var listSenderIds = new List<int>();
+            var listRelatedUserIds = new List<int>();
+
             foreach (var item in senders)
             {
-                if (!listSenderIds.Contains(item.Id))
+                if (!listRelatedUserIds.Contains(item.Id))
                 {
+                    var lastMessage = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
+                                           .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
+                    if (item.TheRecievedMessagesList != null)
+                    {
+                        var lastMessageRecieved = item.TheRecievedMessagesList.Where(x => x.SenderId == userId)
+                                           .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
+                        if (lastMessageRecieved != null && lastMessageRecieved.CreateDateTime > lastMessage.CreateDateTime)
+                        {
+                            lastMessage = lastMessageRecieved;
+                        }
+                    }
+
                     MemberChatDTO chat = new()
                     {
                         Id = item.Id,
@@ -45,23 +68,33 @@ namespace Data.Repositories.Messages
                         LastName = item.LastName,
                         UserName = item.UserName,
                         ProfilePhotoUrl = item.ProfilePhotoUrl,
-                        LastMessage = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
-                                           .OrderByDescending(x => x.CreateDateTime).FirstOrDefault().Body,
-                        LastMessageDateTime = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
-                                          .OrderByDescending(x => x.CreateDateTime).FirstOrDefault().CreateDateTime
+                        LastMessage = lastMessage.Body,
+                        LastMessageDateTime = lastMessage.CreateDateTime
                     };
 
                     chats.Add(chat);
 
-                    listSenderIds.Add(item.Id);
+                    listRelatedUserIds.Add(item.Id);
                 }
             }
 
-            var listRecieverIds = new List<int>();
             foreach (var item in recievers)
             {
-                if (!listRecieverIds.Contains(item.Id))
+                if (!listRelatedUserIds.Contains(item.Id))
                 {
+                    var lastMessage = item.TheRecievedMessagesList.Where(x => x.SenderId == userId)
+                                               .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
+
+                    if (item.TheSentMessagesList != null)
+                    {
+                        var lastMessagSender = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
+                                          .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
+                        if (lastMessagSender!= null && lastMessagSender.CreateDateTime > lastMessage.CreateDateTime)
+                        {
+                            lastMessage = lastMessagSender;
+                        }
+                    }
+
                     MemberChatDTO chat = new()
                     {
                         Id = item.Id,
@@ -69,15 +102,13 @@ namespace Data.Repositories.Messages
                         LastName = item.LastName,
                         UserName = item.UserName,
                         ProfilePhotoUrl = item.ProfilePhotoUrl,
-                        LastMessage = item.TheRecievedMessagesList.Where(x => x.SenderId == userId)
-                        .OrderByDescending(x => x.CreateDateTime).FirstOrDefault().Body,
-                        LastMessageDateTime = item.TheRecievedMessagesList.Where(x => x.SenderId == userId)
-                       .OrderByDescending(x => x.CreateDateTime).FirstOrDefault().CreateDateTime
+                        LastMessage = lastMessage.Body,
+                        LastMessageDateTime = lastMessage.CreateDateTime
                     };
 
                     chats.Add(chat);
 
-                    listRecieverIds.Add(item.Id);
+                    listRelatedUserIds.Add(item.Id);
                 }
             }
 
@@ -87,9 +118,41 @@ namespace Data.Repositories.Messages
 
         }
 
-        public Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId)
+
+        public async Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip)
         {
-            throw new System.NotImplementedException();
+            var messagesQuery = _context.Messages
+                .Where(x => (x.SenderId == currentUserId && x.RecieverId == targetUserId) || (x.SenderId == targetUserId && x.RecieverId == currentUserId))
+                .OrderByDescending(x => x.CreateDateTime)
+                .Include(x => x.TheSender)
+                .Include(x => x.TheReciever)
+                .Select(x => new MessageDTO
+                {
+                    SenderId = x.SenderId,
+                    RecieverId = x.RecieverId,
+                    Body = x.Body,
+                    CreateDateTime = x.CreateDateTime,
+                    SenderPhotoUrl = x.TheSender.ProfilePhotoUrl,
+                    RecieverPhotoUrl = x.TheReciever.ProfilePhotoUrl,
+                    SenderUsername = x.TheSender.UserName,
+                    RecieverUsername = x.TheReciever.UserName,
+                });
+
+            var messagesCount = await messagesQuery.CountAsync();
+            
+            var diff = messagesCount - skip;
+            if (diff < 0 || skip >= messagesCount)
+                return null;
+
+            if (messagesCount <= skip)
+                skip = 0;
+
+            messagesQuery = messagesQuery.Skip(skip);
+            messagesQuery = messagesQuery.Take(20);
+
+            var messages = await messagesQuery.OrderBy(x => x.CreateDateTime).ToListAsync();
+            
+            return messages;
         }
 
         public async Task<bool> HasChat(int currentUserId, int targetUserId)

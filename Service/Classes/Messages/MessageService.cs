@@ -39,6 +39,11 @@ namespace Service.Classes.Messages
            return await _messageRepository.GetChats(userId);
         }
 
+        public async Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip)
+        {
+            return await _messageRepository.GetMessages(currentUserId, targetUserId, skip);
+        }
+
         public async Task<bool> HasChatAsync(int currentUserId, int targetUserId)
         {
             return await _messageRepository.HasChat(currentUserId, targetUserId);

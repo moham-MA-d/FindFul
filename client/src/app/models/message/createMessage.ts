@@ -1,4 +1,5 @@
 export class CreateMessage{
   body: string;
-  recieverUsername: string;
+  recieverUsername?: string;
+  recieverId?: number;
 }

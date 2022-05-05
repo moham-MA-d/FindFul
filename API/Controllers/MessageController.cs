@@ -5,13 +5,17 @@ using Core.IService.User;
 using Core.IServices.Mapper;
 using Core.IServices.Messages;
 using Core.Models.Entities.Messages;
+using Core.Models.Entities.User;
 using DTO.Member;
 using DTO.Messages;
+using DTO.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class MessageController : BaseApiController
     {
         private readonly IUserService _userService;
@@ -29,11 +33,22 @@ namespace API.Controllers
         [HttpPost("AddMessage")]
         public async Task<ActionResult<MessageDTO>> AddMessage(CreateMessageDTO createMessageDTO)
         {
+            if (string.IsNullOrWhiteSpace(createMessageDTO.Body)) return BadRequest("You cannot send empty message!");
+
             var sender = await _userService.GetByIdAsync(User.GetUserId());
-            
-            var recieverUsername = createMessageDTO.RecieverUsername.ToLower();
-            var recieverUser = await _userService.GetByUsernameAsync(recieverUsername);
-            var reciever = await _userService.GetByIdAsync(recieverUser.Id);
+
+            AppUser reciever;
+            if (!string.IsNullOrEmpty(createMessageDTO.RecieverUsername))
+            {
+                var recieverUsername = createMessageDTO.RecieverUsername.ToLower();
+                var recieverUser = await _userService.GetByUsernameAsync(recieverUsername);
+                reciever = await _userService.GetByIdAsync(recieverUser.Id);
+            }
+            else
+            {
+                reciever = await _userService.GetByIdAsync(createMessageDTO.RecieverId);
+            }
+
 
             if (reciever == null) return NotFound("No user found!");
 
@@ -57,16 +72,18 @@ namespace API.Controllers
             return Ok(chats);
         }
 
-        [HttpGet("GetMessages/{userId}")]
-        public async Task<ActionResult<MessageDTO>> GetMessages(int userId)
+        [HttpGet("GetMessages")]
+        public async Task<ActionResult<MessageDTO>> GetMessages(int userId, int skip)
         {
             var targetUser = await _userService.GetUserByIdAsync(userId);
             if (targetUser == null) return BadRequest("No User Found!");
 
+            var currentUserId = User.GetUserId();
+
             var isAnyChat = await _messageService.HasChatAsync(User.GetUserId(), targetUser.Id);
             if (!isAnyChat) return BadRequest("There is no chat!");
 
-            var chats = _messageService.GetChats(userId);
+            var chats = await _messageService.GetMessages(currentUserId, targetUser.Id, skip);
 
             return Ok(chats);
         }
