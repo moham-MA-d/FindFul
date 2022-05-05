@@ -10,16 +10,17 @@ namespace Core.Models.Entities.Messages
         public DateTime? DateReaded { get; set; }
         //public DateTime? DateDeleted { get; set; }
         
-        public bool SnderDeleted { get; set; }
-        public bool RecieverDeleted { get; set; }
 
 
         public int SenderId { get; set; }
         public string SenderUsername { get; set; }
         public AppUser TheSender { get; set; }
+        public bool SnderDeleted { get; set; }
 
         public int RecieverId { get; set; }
         public string RecieverUsername { get; set; }
         public AppUser TheReciever { get; set; }
+        public bool RecieverDeleted { get; set; }
+
     }
 }

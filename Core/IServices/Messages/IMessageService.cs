@@ -13,6 +13,7 @@ namespace Core.IServices.Messages
         Message Create(CreateMessageDTO createMessageDTO, AppUser sender, AppUser Reciever);
         Task<List<MemberChatDTO>> GetChats(int userId);
         Task<bool> HasChatAsync(int currentUserId, int targetUserId);
+        Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip);
 
     }
 }
