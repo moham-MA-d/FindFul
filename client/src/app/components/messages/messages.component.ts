@@ -14,7 +14,7 @@ import { MessageService } from 'src/app/services/message/message.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-  @ViewChild('chatBox') private myScrollContainer: ElementRef;
+  @ViewChild('chatBox') private chatBox: ElementRef;
   memberChat: MemberChat[];
   messages: Message[];
   user: User;
@@ -22,6 +22,7 @@ export class MessagesComponent implements OnInit {
   messageText: string;
   selectedMember: Member;
   skip = 0;
+  tmpDisableScroll: boolean = false;
 
   constructor(private messageService: MessageService, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
@@ -35,13 +36,18 @@ export class MessagesComponent implements OnInit {
 
 
   GetChats() {
+
     this.messageService.GetChats()
       .subscribe((r: MemberChat[]) => {
-        this.memberChat = r;//r.concat(this.memberChat);
+        this.memberChat = r;
+        this.skip = 0;
       });
+
+
   }
 
   GetMessages(userId: number) {
+    this.tmpDisableScroll = true;
     if (this.chatId != userId) {
       this.messages = [];
       this.skip = 0;
@@ -50,16 +56,21 @@ export class MessagesComponent implements OnInit {
     this.messageService.GetMessages(userId, this.skip).subscribe(
       {
         next: (r: Message[]) => {
-          if (this.messages != null) {
-            this.messages = r.concat(this.messages);
-          } else {
-            this.messages = r;
+          if (r) {
+            if (this.messages != null) {
+              this.messages = r.concat(this.messages);
+            } else {
+              this.messages = r;
+            }
           }
-         },
+        },
         complete: () => {
-          this.myScrollContainer.nativeElement.scrollTop = 4;
-           this.skip += 20;
-          },
+          this.chatBox.nativeElement.scrollTop = 4;
+          this.skip += 20;
+          setTimeout(() => {
+            this.tmpDisableScroll = false;
+          }, 10);
+        },
         error() { console.log("Erorr in getting message"); }
       })
   }
@@ -79,17 +90,19 @@ export class MessagesComponent implements OnInit {
   }
 
   onScroll(event: any) {
-    // visible height + pixel scrolled >= total height
-    if (event.target.scrollTop < 1) {
-      this.GetMessages(this.chatId)
+    if (this.tmpDisableScroll === false) {
+      // visible height + pixel scrolled >= total height
+      if (event.target.scrollTop == 0) {
+        this.GetMessages(this.chatId);
+      }
     }
     //End Of The Chat
-    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {}
+    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) { }
   }
 
   scrollToBottom() {
     try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight + 220;
+      this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
     } catch (err) { }
   }
 

@@ -6,6 +6,7 @@ using DTO.Member;
 using DTO.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -89,7 +90,7 @@ namespace Data.Repositories.Messages
                     {
                         var lastMessagSender = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
                                           .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
-                        if (lastMessagSender!= null && lastMessagSender.CreateDateTime > lastMessage.CreateDateTime)
+                        if (lastMessagSender != null && lastMessagSender.CreateDateTime > lastMessage.CreateDateTime)
                         {
                             lastMessage = lastMessagSender;
                         }
@@ -117,8 +118,6 @@ namespace Data.Repositories.Messages
             return chats;
 
         }
-
-
         public async Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip)
         {
             var messagesQuery = _context.Messages
@@ -126,20 +125,10 @@ namespace Data.Repositories.Messages
                 .OrderByDescending(x => x.CreateDateTime)
                 .Include(x => x.TheSender)
                 .Include(x => x.TheReciever)
-                .Select(x => new MessageDTO
-                {
-                    SenderId = x.SenderId,
-                    RecieverId = x.RecieverId,
-                    Body = x.Body,
-                    CreateDateTime = x.CreateDateTime,
-                    SenderPhotoUrl = x.TheSender.ProfilePhotoUrl,
-                    RecieverPhotoUrl = x.TheReciever.ProfilePhotoUrl,
-                    SenderUsername = x.TheSender.UserName,
-                    RecieverUsername = x.TheReciever.UserName,
-                });
+                .AsQueryable();
 
             var messagesCount = await messagesQuery.CountAsync();
-            
+
             var diff = messagesCount - skip;
             if (diff < 0 || skip >= messagesCount)
                 return null;
@@ -151,10 +140,32 @@ namespace Data.Repositories.Messages
             messagesQuery = messagesQuery.Take(20);
 
             var messages = await messagesQuery.OrderBy(x => x.CreateDateTime).ToListAsync();
-            
-            return messages;
-        }
 
+            var unreadMessages = messages.Where(x => x.DateReaded == null && x.RecieverId == currentUserId).ToList();
+            if (unreadMessages.Any())
+            {
+                foreach (var message in unreadMessages)
+                {
+                    message.DateReaded = DateTime.Now;
+                }
+            }
+
+            var messagesDTO = messages.Select(x => new MessageDTO
+            {
+                SenderId = x.SenderId,
+                RecieverId = x.RecieverId,
+                Body = x.Body,
+                CreateDateTime = x.CreateDateTime,
+                SenderPhotoUrl = x.TheSender.ProfilePhotoUrl,
+                RecieverPhotoUrl = x.TheReciever.ProfilePhotoUrl,
+                SenderUsername = x.TheSender.UserName,
+                RecieverUsername = x.TheReciever.UserName,
+                DateReaded = x.DateReaded,
+            }).ToList();
+
+
+            return messagesDTO;
+        }
         public async Task<bool> HasChat(int currentUserId, int targetUserId)
         {
 

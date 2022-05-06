@@ -39,6 +39,7 @@
               "./src/resources/js/jquery.scrollbar.min.js",
               "./src/resources/js/script.js",
               "./src/resources/js/fontawesome.js"
+
             ]
           },
           "configurations": {
