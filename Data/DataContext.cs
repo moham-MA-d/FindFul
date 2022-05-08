@@ -10,17 +10,22 @@ using Core.Models.Entities.Follows;
 using Data.Configurations.Follows;
 using Core.Models.Entities.Messages;
 using Data.Configurations.Messages;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int, 
+        IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
+        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
         }
 
-        public DbSet<AppUser> Users { get; set; }
+
         public DbSet<UserPhoto> UserPhotos { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -33,12 +38,15 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AppUserConfig());
+            modelBuilder.ApplyConfiguration(new AppRoleConfig());
             modelBuilder.ApplyConfiguration(new UserPhotoConfig());
             modelBuilder.ApplyConfiguration(new PostConfig());
             modelBuilder.ApplyConfiguration(new CommentConfig());
             modelBuilder.ApplyConfiguration(new FollowConfig());
             modelBuilder.ApplyConfiguration(new PostLikedConfig());
             modelBuilder.ApplyConfiguration(new MessageConfig());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

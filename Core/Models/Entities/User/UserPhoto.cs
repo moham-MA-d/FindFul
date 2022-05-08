@@ -7,7 +7,7 @@ namespace Core.Models.Entities.User
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
 
-        public int AppUserId { get; set; }
+        public int UserId { get; set; }
         public AppUser TheAppUser { get; set; }
     }
 }

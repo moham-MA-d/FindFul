@@ -22,7 +22,7 @@ namespace Core.Models.Entities.Posts
         public int ViewsUsersCount { get; set; } = 0;
         public int ViewsTotalCount { get; set; } = 0;
 
-        public int AppUserId { get; set; }
+        public int UserId { get; set; }
         public AppUser TheAppUser { get; set; }
 
         public ICollection<Comment> TheCommentsList { get; set; }

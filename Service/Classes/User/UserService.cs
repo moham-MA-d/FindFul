@@ -51,26 +51,14 @@ namespace Service.Classes.User
         {
             var user = await GetByIdAsync(userId);
 
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i])
-                    return false;
-            }
-
             return true;
         }
         public AppUser CreateAppUserForRegisteration(RegisterDTO registerDTO)
         {
-            using var hmac = new HMACSHA512();
 
             var user = new AppUser
             {
                 UserName = registerDTO.UserName,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
-                PasswordSalt = hmac.Key
             };
 
             return user;

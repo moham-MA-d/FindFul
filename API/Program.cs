@@ -1,6 +1,8 @@
+using Core.Models.Entities.User;
 using Data;
 using Data.Seed;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,16 +17,17 @@ namespace API
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            
+
             // create a scope for services that we need.
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             try
             {
-                 var context = services.GetRequiredService<DataContext>();
-                 // apply pending migrations to the database. and create database if it dose not alraedy exist
-                 await context.Database.MigrateAsync();
-                 await Seed.SeedUsers(context);
+                var context = services.GetRequiredService<DataContext>();
+                var userManagerService = services.GetRequiredService<UserManager<AppUser>>();
+                // apply pending migrations to the database. and create database if it dose not alraedy exist
+                await context.Database.MigrateAsync();
+                await Seed.SeedUsers(userManagerService);
             }
             catch (System.Exception ex)
             {

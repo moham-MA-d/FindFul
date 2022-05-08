@@ -36,7 +36,6 @@ namespace API
             services.AddIdentityServices(_config);
 
             services.AddSingleton(_ => _config);
-
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // All things in here are midleware (is a software to interact with request during http pipeline)

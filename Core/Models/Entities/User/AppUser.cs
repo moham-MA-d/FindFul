@@ -2,19 +2,21 @@ using Core.Models.Entities.Comments;
 using Core.Models.Entities.Follows;
 using Core.Models.Entities.Messages;
 using Core.Models.Entities.Posts;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
 namespace Core.Models.Entities.User
 {
-    public class AppUser : BaseId
+    public class AppUser : IdentityUser<int>
     {
-        public string UserName { get; set; } = new string("user" + new Random(14));
-        public string Email { get; set; }
+        public Guid GuId { get; set; } = Guid.NewGuid();
+        public bool IsDelete { get; set; } = false;
+        public bool IsActive { get; set; } = true;
+        public DateTime CreateDateTime { get; set; } = DateTime.Now;
+
         public string Phone { get; set; }
         public string ReferalCode { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -39,5 +41,7 @@ namespace Core.Models.Entities.User
 		public ICollection<PostLiked> ThePostLikedList { get; set; }
 		public ICollection<Message> TheSentMessagesList { get; set; }
 		public ICollection<Message> TheRecievedMessagesList { get; set; }
-	}
+        public ICollection<AppUserRole> TheUserRolesList { get; set; }
+
+    }
 }

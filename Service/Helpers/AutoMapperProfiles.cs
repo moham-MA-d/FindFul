@@ -35,7 +35,7 @@ namespace Service.Helpers
 
 
             CreateMap<Post, PostsDTO>()
-                .ForMember(dst => dst.IsLiked, opt => opt.MapFrom(src => src.ThePostLikedList.Any(x => x.AppUserId == currentUserId && x.IsActive == true)));
+                .ForMember(dst => dst.IsLiked, opt => opt.MapFrom(src => src.ThePostLikedList.Any(x => x.UserId == currentUserId && x.IsActive == true)));
 
             CreateMap<PostsDTO, Post>().ForMember(dst => dst.CreateDateTime, act => act.Ignore());
 

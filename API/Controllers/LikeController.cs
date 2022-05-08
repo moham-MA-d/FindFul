@@ -30,7 +30,7 @@ namespace API.Controllers
 
             if (post == null) return NotFound();
 
-            if (post.AppUserId == userId) return BadRequest("You cannot like your post!");
+            if (post.UserId == userId) return BadRequest("You cannot like your post!");
 
             var postLiked = await _postedLikedService.GetPostLike(postId, userId);
 
@@ -62,7 +62,7 @@ namespace API.Controllers
                 postLiked = new PostLiked
                 {
                     PostId = postId,
-                    AppUserId = userId,
+                    UserId = userId,
                     IsActive = true,
                 };
                 await _postedLikedService.AddAsync(postLiked);

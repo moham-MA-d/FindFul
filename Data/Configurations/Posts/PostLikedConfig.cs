@@ -13,11 +13,11 @@ namespace Data.Configurations.Posts
 	{
 		public void Configure(EntityTypeBuilder<PostLiked> builder)
 		{
-			builder.HasKey(x => new { x.PostId, x.AppUserId });
+			builder.HasKey(x => new { x.PostId, x.UserId });
 
 			builder.HasOne(x => x.TheAppUser)
 				.WithMany(x => x.ThePostLikedList)
-				.HasForeignKey(x => x.AppUserId);
+				.HasForeignKey(x => x.UserId);
 
 			builder.HasOne(x => x.ThePost)
 				.WithMany(x => x.ThePostLikedList)

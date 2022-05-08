@@ -16,11 +16,13 @@ namespace Data.Configurations.Messages
             builder
                 .HasOne(m => m.TheSender)
                 .WithMany(u => u.TheSentMessagesList)
+                .HasForeignKey(u => u.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
                .HasOne(m => m.TheReciever)
                .WithMany(u => u.TheRecievedMessagesList)
+               .HasForeignKey(u => u.RecieverId)
                .OnDelete(DeleteBehavior.Restrict);
         }
     }

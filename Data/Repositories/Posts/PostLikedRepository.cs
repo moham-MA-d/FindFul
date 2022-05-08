@@ -31,7 +31,7 @@ namespace Data.Repositories.Posts
         public async Task<IEnumerable<PostsDTO>> GetPostsLikedByUser(int userId, PostParameters postParameters)
         {
             var posts = _context.Posts.OrderByDescending(x => x.CreateDateTime).AsQueryable();
-            var likes = _context.PostsLiked.Where(x => x.AppUserId == userId);
+            var likes = _context.PostsLiked.Where(x => x.UserId == userId);
 
             posts = likes.Select(x => x.ThePost);
 

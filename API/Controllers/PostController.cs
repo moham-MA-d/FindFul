@@ -27,7 +27,7 @@ namespace API.Controllers
         public async Task<ActionResult<PostsDTO>> AddPost(PostsDTO postDto)
         {
             var post = _mapperService.PostsDtoToPost(postDto);
-            post.AppUserId = User.GetUserId();
+            post.UserId = User.GetUserId();
             await _postService.AddAsync(post);
 
             return Ok(postDto);
