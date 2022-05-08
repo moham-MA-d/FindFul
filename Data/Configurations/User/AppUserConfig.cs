@@ -8,17 +8,22 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+            builder
+                .HasMany(x => x.TheUserRolesList)
+                .WithOne(x => x.TheUser)
+                .HasForeignKey(x => x.UserId)
+                .IsRequired();
 
             builder
                 .HasMany(x => x.ThePostsList)
                 .WithOne(x => x.TheAppUser)
-                .HasForeignKey(x => x.AppUserId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.TheUserPhotosList)
                 .WithOne(x => x.TheAppUser)
-                .HasForeignKey(x => x.AppUserId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
 

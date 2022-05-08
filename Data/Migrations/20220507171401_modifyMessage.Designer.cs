@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220507171401_modifyMessage")]
+    partial class modifyMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +27,9 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
@@ -44,17 +49,11 @@ namespace Data.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TheAppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("AppUserId");
 
-                    b.HasIndex("TheAppUserId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("Comments");
                 });
@@ -114,14 +113,8 @@ namespace Data.Migrations
                     b.Property<bool>("RecieverDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RecieverId")
-                        .HasColumnType("int");
-
                     b.Property<string>("RecieverUsername")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SenderUsername")
                         .HasColumnType("nvarchar(max)");
@@ -129,11 +122,17 @@ namespace Data.Migrations
                     b.Property<bool>("SnderDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("TheRecieverId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TheSenderId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RecieverId");
+                    b.HasIndex("TheRecieverId");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex("TheSenderId");
 
                     b.ToTable("Messages");
                 });
@@ -146,6 +145,9 @@ namespace Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AngersCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Body")
@@ -185,9 +187,6 @@ namespace Data.Migrations
                     b.Property<int>("SadsCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ViewsIpCount")
                         .HasColumnType("int");
 
@@ -202,7 +201,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Posts");
                 });
@@ -212,7 +211,7 @@ namespace Data.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDateTime")
@@ -221,9 +220,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.HasKey("PostId", "UserId");
+                    b.HasKey("PostId", "AppUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("PostsLiked");
                 });
@@ -425,6 +424,9 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
@@ -448,12 +450,9 @@ namespace Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("UserPhotos");
                 });
@@ -546,15 +545,17 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.Comments.Comment", b =>
                 {
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                        .WithMany("TheCommentsList")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Models.Entities.Posts.Post", "ThePost")
                         .WithMany("TheCommentsList")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
-                        .WithMany("TheCommentsList")
-                        .HasForeignKey("TheAppUserId");
 
                     b.Navigation("TheAppUser");
 
@@ -584,15 +585,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheReciever")
                         .WithMany("TheRecievedMessagesList")
-                        .HasForeignKey("RecieverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TheRecieverId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheSender")
                         .WithMany("TheSentMessagesList")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TheSenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("TheReciever");
 
@@ -603,7 +602,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
                         .WithMany("ThePostsList")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -612,15 +611,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.Posts.PostLiked", b =>
                 {
-                    b.HasOne("Core.Models.Entities.Posts.Post", "ThePost")
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
                         .WithMany("ThePostLikedList")
-                        .HasForeignKey("PostId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                    b.HasOne("Core.Models.Entities.Posts.Post", "ThePost")
                         .WithMany("ThePostLikedList")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -660,7 +659,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
                         .WithMany("TheUserPhotosList")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

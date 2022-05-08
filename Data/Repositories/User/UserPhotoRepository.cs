@@ -23,7 +23,7 @@ namespace Data.Repositories.User
 
         public async Task<IEnumerable<MemberPhotoDTO>> GetAllUserPhotos(int userId)
         {
-            return await _context.UserPhotos.Where(x => x.AppUserId == userId)
+            return await _context.UserPhotos.Where(x => x.UserId == userId)
                 .ProjectTo<MemberPhotoDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
