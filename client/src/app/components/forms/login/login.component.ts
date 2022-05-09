@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user/user';
@@ -12,11 +13,19 @@ import { AccountService } from 'src/app/services/account/account.service';
 export class LoginComponent implements OnInit {
 
   model: any = {};
-
-  constructor(private accountService: AccountService, private router: Router, private toastrService: ToastrService) { }
+  loginForm: FormGroup;
+  constructor(private accountService: AccountService, private router: Router, private toastrService: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.setCurrentUser()
+    this.InitializeForm();
+  }
+
+  InitializeForm() {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(22)]],
+    });
   }
 
   login() {
@@ -28,7 +37,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  
+
   setCurrentUser() {
     var localUser = localStorage.getItem('user');
     if (localUser) {

@@ -22,6 +22,7 @@ export class TextInputComponent implements OnInit {
   @Input() classNames: string;
   @Input() hasLalbelTag: boolean = false;
   @Input() errorColor: string = 'red';
+  @Input() placeHolderColor: string = '';
   @Input() type: string = 'text';
   @Input() data: any;
   @Input() autoCompleteOptions: string[];
@@ -34,7 +35,9 @@ export class TextInputComponent implements OnInit {
     this.ngCongrol.valueAccessor = this;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.classNames += " " + this.placeHolderColor;
+   }
 
 
   ngOnChanges() {

@@ -15,13 +15,14 @@
 
 
 <mat-form-field class="{{classNamesParent}}" appearance="fill">
-  <mat-label>{{label}}</mat-label>
+  <mat-label [ngClass]="errorColor">{{label}}</mat-label>
 
   <textarea *ngIf="isTextArea" cdkAutosizeMinRows="1" [formControl]="ngCongrol.control"
         cdkAutosizeMaxRows="5" matInput placeholder="{{placeholder}}"> value="{{data}}"</textarea>
 
   <input *ngIf="!isTextArea" type="{{type}}" matInput [formControl]="ngCongrol.control"
-    value="{{data}}" placeholder="Please enter {{label}}" [matAutocomplete]="auto" >
+    value="{{data}}" placeholder="Please enter {{label}}" [matAutocomplete]="auto"
+    [ngClass]="classNames" >
 
   <!-- <span *ngIf="autoCompleteOptions"> -->
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)='autoCompleteSelected($event.option.value, ngCongrol)'>
@@ -34,8 +35,8 @@
   <!-- <mat-error *ngIf="ngCongrol.control.errors?.required">
     Please enter a valid email address
   </mat-error> -->
-  <mat-error *ngIf="ngCongrol.control.errors?.required"> {{label}} is required </mat-error>
-  <mat-error *ngIf="ngCongrol.control.errors?.minlength"> {{label}} is {{label}} must be at least {{ngCongrol.control.errors.minlength['requiredLength']}}</mat-error>
-  <mat-error *ngIf="ngCongrol.control.errors?.maxlength"> {{label}} is  {{label}} must be at most {{ngCongrol.control.errors.maxlength['requiredLength']}}</mat-error>
-  <mat-error *ngIf="ngCongrol.control.errors?.isMatching"> {{label}} do not match </mat-error>
+  <mat-error [ngClass]="errorColor" *ngIf="ngCongrol.control.errors?.required"> {{label}} is required </mat-error>
+  <mat-error [ngClass]="errorColor" *ngIf="ngCongrol.control.errors?.minlength"> {{label}} is {{label}} must be at least {{ngCongrol.control.errors.minlength['requiredLength']}}</mat-error>
+  <mat-error [ngClass]="errorColor" *ngIf="ngCongrol.control.errors?.maxlength"> {{label}} is  {{label}} must be at most {{ngCongrol.control.errors.maxlength['requiredLength']}}</mat-error>
+  <mat-error [ngClass]="errorColor" *ngIf="ngCongrol.control.errors?.isMatching"> {{label}} do not match </mat-error>
 </mat-form-field>

@@ -16,7 +16,7 @@ namespace Core.IService.User
 
         Task<bool> IsPasswordCurrect(int userId, string password);
         AppUser CreateAppUserForRegisteration(RegisterDTO registerDTO);
-        LoginInputType CheckUserInputForLogin(string input);
+        LoginInputType DetectUserInputTypeForLogin(string input);
         bool IsInputEmail(string email);
         bool IsInputPhone(string phone);
 

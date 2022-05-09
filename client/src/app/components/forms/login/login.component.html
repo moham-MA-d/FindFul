@@ -9,22 +9,16 @@
             <div class="line-divider"></div>
             <div class="form-wrapper">
                 <p class="signup-text">Signup now and meet awesome people around the world</p>
-                <form #loginForm="ngForm" (submit)="login()" action="#">
-                    <fieldset class="form-group">
-                        <input name="UserName" [(ngModel)]="model.UserName" type="text" class="form-control"
-                            id="example-name" placeholder="Enter name">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <input name="Password" [(ngModel)]="model.Password" type="password" class="form-control"
-                            id="example-email" placeholder="Enter password">
-                    </fieldset>
+                <form [formGroup]="loginForm" (submit)="login()" >
+                  <app-text-input [formControlName]='"username"' name="username" [label]='"username"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
+                  <app-text-input [formControlName]='"password"' password="password" [label]='"password"' [type]='"password"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
                     <fieldset class="form-group">
                         <button class="btn-secondary" type="submit">Sign in</button>
                     </fieldset>
                 </form>
                 <p>By signning up you agree to the terms</p>
             </div>
-            <a href="#">Already have an account?</a>
+            <a routerLink="/register">Become a member</a>
             <img class="form-shadow" src="" alt="">
         </div><!-- Sign Up Form End -->
 
