@@ -59,11 +59,12 @@ namespace Service.Classes.User
             var user = new AppUser
             {
                 UserName = registerDTO.UserName,
+                ProfilePhotoUrl = "/assets/images/user.png"
             };
 
             return user;
         }
-        public LoginInputType CheckUserInputForLogin(string input)
+        public LoginInputType DetectUserInputTypeForLogin(string input)
         {
             if (IsInputEmail(input))
                 return LoginInputType.Email;

@@ -5,4 +5,39 @@
   color: aliceblue !important;
 }
 
+.lightOrange{
+  color: #ffd94f;
+}
+
+.lightOrange::placeholder {
+  color: #ffd94f;
+  opacity: 1; /* Firefox */
+}
+
+.lightOrange:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color: #ffd94f;
+}
+
+.lightOrange::-ms-input-placeholder { /* Microsoft Edge */
+ color: #ffd94f;
+}
+
+
+
+.lightRed::placeholder {
+  color: #f9823d;
+  opacity: 1; /* Firefox */
+}
+
+.lightRed:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color: #f9823d;
+}
+
+.lightRed::-ms-input-placeholder { /* Microsoft Edge */
+ color: #f9823d;
+}
+
+
+
+
 

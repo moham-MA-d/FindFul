@@ -10,18 +10,36 @@ namespace Data.Seed
     public static class Seed
     {
         // We get UserManager From Identity so we can pass it here
-        public static async Task SeedUsers(UserManager<AppUser> userManager)
+        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             if (await userManager.Users.AnyAsync()) return;
 
             var userSeedData = await System.IO.File.ReadAllTextAsync(@"D:\dotnet Core\Findful\Data\Seed\UserSeedData.json");
             var users = JsonSerializer.Deserialize<List<AppUser>>(userSeedData);
 
+            var roles = new List<AppRole>()
+            {
+                new AppRole {Name = "Admin", NormalizedName = "ADMIN"},
+                new AppRole {Name = "Moderator", NormalizedName = "MODERATOR"},
+                new AppRole {Name = "Member", NormalizedName = "MEMBER"}
+            };
+
+            foreach (var item in roles)
+                await roleManager.CreateAsync(item);
+
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
                 await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user, "Member");
             }
+
+            var admin = new AppUser
+            {
+                UserName = "Admin",
+            };
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
         }
     }
 }

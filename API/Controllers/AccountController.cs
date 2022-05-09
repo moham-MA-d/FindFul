@@ -6,6 +6,10 @@ using API.Services.Interfaces;
 using Core.IService.User;
 using Extentions.Common;
 using DTO._Enumarations;
+using Microsoft.AspNetCore.Identity;
+using Core.Models.Entities.User;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -13,24 +17,30 @@ namespace API.Controllers
     {
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(ITokenService tokenService, IUserService userService)
+        public AccountController(ITokenService tokenService, IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _tokenService = tokenService;
             _userService = userService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost("register")]
         // If paramaters have sent in a body of the request we need Object to recieve them (Findful.DTOs) not just string parameters
-        public async Task<ActionResult<UserSessionDTO>> Register(RegisterDTO register)
+        public async Task<ActionResult<UserSessionDTO>> Register(RegisterDTO registerDTO)
         {
            
-            if (await _userService.GetByUsernameAsync(register.UserName) != null)
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDTO.UserName.ToLower()))
                 return BadRequest("Username is Taken");
 
-            var user = _userService.CreateAppUserForRegisteration(register);
+            var user = _userService.CreateAppUserForRegisteration(registerDTO);
             
-            await _userService.AddAsync(user);
+            var result = await _userManager.CreateAsync(user, registerDTO.Password);
+
+            if (!result.Succeeded) return BadRequest(result.Errors); 
 
             return new UserSessionDTO
             {
@@ -50,37 +60,37 @@ namespace API.Controllers
             if (loginDTO.UserName.IsNullOrEmptyOrWhiteSpace())
                 return BadRequest("Username or Emnail is empty");
 
-            var inputType = _userService.CheckUserInputForLogin(loginDTO.UserName);
+            //for example: email, phone, username
+            var inputType = _userService.DetectUserInputTypeForLogin(loginDTO.UserName); 
             
-            var user = new MemberDTO();
+            var user = new AppUser();
             switch (inputType)
             {
                 case UserEnums.LoginInputType.Email:
-                    user = await _userService.GetByEmail(loginDTO.UserName);
+                    user =  await _userManager.Users.SingleOrDefaultAsync(x => x.Email == loginDTO.UserName);
                     break;
                 case UserEnums.LoginInputType.Phone:
-                    user = await _userService.GetByUsernameAsync(loginDTO.UserName);
+                    user = await _userManager.Users.SingleOrDefaultAsync(x => x.Phone == loginDTO.UserName);
                     break;
                 case UserEnums.LoginInputType.Username:
                 case UserEnums.LoginInputType.None:
-                    user = await _userService.GetByUsernameAsync(loginDTO.UserName);
+                    user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDTO.UserName);
                     break;
             }
             
-            if (user == null)
-                return Unauthorized("Invalid Username");
+            if (user == null) return Unauthorized("Invalid Username");
 
-            var isPasswordCurrect = await _userService.IsPasswordCurrect(user.Id, loginDTO.Password);
-            if(!isPasswordCurrect)
-                return Unauthorized("Invalid Password");
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDTO.Password, false);
+
+            if (!result.Succeeded) return Unauthorized();
 
             return new UserSessionDTO
             {
                 UserName = user.UserName,
                 Token = _tokenService.CreateToken(user.UserName, user.Id),
                 PhotoUrl = user.ProfilePhotoUrl,
-                Gender = user.Gender,
-                Sex = user.Sex,
+                Gender = (UserEnums.Gender)user.Gender,
+                Sex = (UserEnums.Sex)user.Sex,
                 Id = user.Id,
             };
         }

@@ -3,21 +3,19 @@
     <!-- Sign Up Form
     ================================================= -->
     <div class="sign-up-form">
-        <a href="index.html" class="logo"><img src="images/logo.png" alt="Friend Finder"></a>
-        <h2 class="text-white">Find My Friends</h2>
+        <a routerLink="/home" class="logo"><img src="/assets/images/Findful-logo-white.png" alt="Findful"></a>
+        <h2 class="text-white mt-1">Findful Registeration</h2>
         <div class="line-divider"></div>
         <div class="form-wrapper">
             <p class="signup-text">Signup now and meet awesome people around the world</p>
-            <form [formGroup]="registerForm" autocomplete="off" >
-              <app-text-input [formControl]='registerForm.controls["username"]' [label]='"username"' [errorColor]='"white"'></app-text-input>
-              <app-text-input [formControl]='registerForm.controls["email"]' [label]='"email"' [errorColor]='"white"'></app-text-input>
-              <app-text-input [formControl]='registerForm.controls["password"]' [label]='"password"' [type]='"password"' [errorColor]='"white"'></app-text-input>
-              <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm password"' [type]='"password"' [errorColor]='"white"'></app-text-input>
+            <form [formGroup]="registerForm" autocomplete="off" (submit)="register()" autocomplete="off" >
+              <app-text-input [formControlName]='"username"' name="username" [label]='"username"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
+              <app-text-input [formControlName]='"email"' email="email" [label]='"email"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
+              <app-text-input [formControlName]='"password"' password="password" [label]='"password"' [type]='"password"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
+              <app-text-input [formControlName]='"confirmPassword"' name="confirmPassword" [label]='"Confirm password"' [type]='"password"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
+              <p>By signning up you agree to the terms</p>
+              <button type="submit" class="btn-secondary">Signup</button>
             </form>
-            <p>Form value {{registerForm.value | json}}</p>
-            <p>Form status {{registerForm.status | json}}</p>
-            <p>By signning up you agree to the terms</p>
-            <button class="btn-secondary">Signup</button>
         </div>
         <a routerLink="/login">Already have an account?</a>
         <img class="form-shadow" src="images/bottom-shadow.png" alt="">

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AccountService } from 'src/app/services/account/account.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -9,13 +13,13 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  baseUrl = environment.apiUrl;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.InitializeForm();
   }
-
 
   InitializeForm() {
     this.registerForm = this.fb.group({
@@ -37,6 +41,12 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-
+  register() {
+    return this.accountService.register(this.registerForm.value).subscribe({
+      next: (n) => { this.router.navigateByUrl('/home'); },
+      error: (e) => { this.toastrService.error(e.error) },
+      complete : () => {this.accountService.isLoggedIn = true;}
+    });
+  }
 
 }
