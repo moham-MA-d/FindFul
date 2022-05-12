@@ -74,8 +74,6 @@ export class MemberService {
     return this.pagination.getPaginationResult<Member[]>(this.baseUrl + 'follow/getfollowers', params, this.http);
   }
 
-
-
   getMember(userName: string) {
 
     const member = [...this.memberCache.values()]

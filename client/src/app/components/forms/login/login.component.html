@@ -1,31 +1,29 @@
-<div id="page-contents">
+<div class="container">
 
-    <div class="container">
-        <!-- Sign Up Form
+  <!-- Sign in Form
     ================================================= -->
-        <div class="sign-up-form">
-            <a href="index.html" class="logo"><img src="" alt="Friend Finder"></a>
-            <h2 class="text-white">Find My Friends</h2>
-            <div class="line-divider"></div>
-            <div class="form-wrapper">
-                <p class="signup-text">Signup now and meet awesome people around the world</p>
-                <form [formGroup]="loginForm" (submit)="login()" >
-                  <app-text-input [formControlName]='"username"' name="username" [label]='"username"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
-                  <app-text-input [formControlName]='"password"' password="password" [label]='"password"' [type]='"password"' [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
-                    <fieldset class="form-group">
-                        <button class="btn-secondary" type="submit">Sign in</button>
-                    </fieldset>
-                </form>
-                <p>By signning up you agree to the terms</p>
-            </div>
-            <a routerLink="/register">Become a member</a>
-            <img class="form-shadow" src="" alt="">
-        </div><!-- Sign Up Form End -->
-
-        <svg class="arrows hidden-xs hidden-sm">
-            <path class="a1" d="M0 0 L30 32 L60 0"></path>
-            <path class="a2" d="M0 20 L30 52 L60 20"></path>
-            <path class="a3" d="M0 40 L30 72 L60 40"></path>
-        </svg>
+  <div class="sign-up-form">
+    <a routerLink="/home" class="logo"><img src="/assets/images/Findful-logo-white.png" alt="Findful"></a>
+    <h2 class="text-white mt-1">Findful Login</h2>
+    <div class="line-divider"></div>
+    <div class="form-wrapper">
+      <p class="signup-text">Sign in now and meet awesome people around the world!</p>
+      <form [formGroup]="loginForm" (submit)="login()">
+        <app-text-input [formControlName]='"username"' name="username" [label]='"username"' [errorColor]='"lightOrange"'
+          [placeHolderColor]='"lightRed"'></app-text-input>
+        <app-text-input [formControlName]='"password"' password="password" [label]='"password"' [type]='"password"'
+          [errorColor]='"lightOrange"' [placeHolderColor]='"lightRed"'></app-text-input>
+          <p>By signning up you agree to the terms</p>
+          <button class="btn-secondary" type="submit">Sign in</button>
+      </form>
     </div>
+    <a routerLink="/register">Become a member</a>
+    <img class="form-shadow" src="" alt="">
+  </div><!-- Sign Up Form End -->
+
+  <svg class="arrows hidden-xs hidden-sm">
+    <path class="a1" d="M0 0 L30 32 L60 0"></path>
+    <path class="a2" d="M0 20 L30 52 L60 20"></path>
+    <path class="a3" d="M0 40 L30 72 L60 40"></path>
+  </svg>
 </div>

@@ -30,13 +30,13 @@ const routes: Routes = [
         children: [
           { path: 'home', component: HomeComponent },
           { path: 'members', component: MembersComponent },
-          { path: 'members/:username', component: ProfileTimelineComponent },
           { path: 'members/:username/edit', component: ProfileEditComponent, canDeactivate: [PreventUnsavedChangesGuard],  runGuardsAndResolvers: 'always', },
           { path: 'members/:username/timeline', component: ProfileTimelineComponent },
           { path: 'members/:username/about', component: ProfileAboutComponent },
           { path: 'members/:username/album', component: ProfileAlbumComponent },
           { path: 'members/:username/following', component: FollowingComponent },
           { path: 'members/:username/followers', component: FollowersComponent },
+          { path: 'members/:username', component: ProfileTimelineComponent },
           { path: 'messages', component: MessagesComponent }
         ]
       }
