@@ -20,7 +20,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <ul class="follow-me list-inline">
+        <ul *ngIf="currentUser.userName !== member.userName" class="follow-me list-inline">
           <li>
             <button mat-button color="primary" (click)="openDialog()">Send Message</button>
           </li>

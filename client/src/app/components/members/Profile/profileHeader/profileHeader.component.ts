@@ -3,13 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Member } from 'src/app/models/user/member';
 import { MemberService } from 'src/app/services/member/member.service';
 import { ComponentService } from 'src/app/services/component/component.service';
-import { UserParameters } from 'src/app/models/user/userParameters';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDialogComponent } from 'src/app/components/snippets/mat-dialog/mat-dialog.component';
 import { MessageService } from 'src/app/services/message/message.service';
 import { CreateMessage } from 'src/app/models/message/createMessage';
 import { ToastrService } from 'ngx-toastr';
-import { data } from 'jquery';
+import { AccountService } from 'src/app/services/account/account.service';
+import { User } from 'src/app/models/user/user';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profileHeader',
@@ -20,15 +21,16 @@ export class ProfileHeaderComponent implements OnInit {
 
   @Output() user = new EventEmitter();
   member: Member = new Member();
-
+  currentUser: User;
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private memberService: MemberService,
     private compService: ComponentService,
     private messageService: MessageService,
-    private tosterService: ToastrService
-  ) { }
+    private tosterService: ToastrService,
+    private accountService: AccountService
+  ) { this.accountService.currentUser$.pipe(take(1)).subscribe(u => this.currentUser = u) }
 
   ngOnInit() {
     this.compService.setChatBlockEnable(false);

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.accountService.login(this.model)
+    this.accountService.login(this.loginForm.value)
     .subscribe({
       next: (n) => { this.router.navigateByUrl('/home'); },
       error: (e) => { this.toastrService.error(e.error) },
