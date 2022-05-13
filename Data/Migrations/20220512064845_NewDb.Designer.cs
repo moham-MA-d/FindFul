@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220507203949_ChangeTableNamesFix")]
-    partial class ChangeTableNamesFix
+    [Migration("20220512064845_NewDb")]
+    partial class NewDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Core.Models.Entities.Comments.Comment", b =>
@@ -256,7 +256,7 @@ namespace Data.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.User.AppUser", b =>
@@ -294,8 +294,8 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(70)
+                        .HasColumnType("varchar(70)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -379,8 +379,8 @@ namespace Data.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -392,7 +392,7 @@ namespace Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.User.AppUserRole", b =>
@@ -403,21 +403,11 @@ namespace Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TheRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TheUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("TheRoleId");
-
-                    b.HasIndex("TheUserId");
-
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
@@ -480,7 +470,7 @@ namespace Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -503,7 +493,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
@@ -524,7 +514,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -543,7 +533,7 @@ namespace Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.Comments.Comment", b =>
@@ -603,13 +593,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.Posts.Post", b =>
                 {
-                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheUser")
                         .WithMany("ThePostsList")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("TheAppUser");
+                    b.Navigation("TheUser");
                 });
 
             modelBuilder.Entity("Core.Models.Entities.Posts.PostLiked", b =>
@@ -633,22 +623,14 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.User.AppUserRole", b =>
                 {
-                    b.HasOne("Core.Models.Entities.User.AppRole", null)
-                        .WithMany()
+                    b.HasOne("Core.Models.Entities.User.AppRole", "TheRole")
+                        .WithMany("TheUserRolesList")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Models.Entities.User.AppRole", "TheRole")
-                        .WithMany("TheUserRolesList")
-                        .HasForeignKey("TheRoleId");
-
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheUser")
                         .WithMany("TheUserRolesList")
-                        .HasForeignKey("TheUserId");
-
-                    b.HasOne("Core.Models.Entities.User.AppUser", null)
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -660,13 +642,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
                 {
-                    b.HasOne("Core.Models.Entities.User.AppUser", "TheAppUser")
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheUser")
                         .WithMany("TheUserPhotosList")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("TheAppUser");
+                    b.Navigation("TheUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

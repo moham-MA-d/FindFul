@@ -43,7 +43,7 @@ namespace Data.Repositories.Posts
 
         public async Task<IEnumerable<BaseMemberDTO>> GetUsersLikedPost(int postId)
         {
-            var posts = _context.Posts.Where(x => x.Id == postId).Select(x => x.TheAppUser);
+            var posts = _context.Posts.Where(x => x.Id == postId).Select(x => x.TheUser);
             var users = await posts.ProjectTo<BaseMemberDTO>(_mapper.ConfigurationProvider).ToListAsync();
 
             return users;

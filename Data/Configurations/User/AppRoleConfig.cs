@@ -8,6 +8,7 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<AppRole> builder)
         {
+            builder.ToTable("Roles");
             builder
                 .HasMany(x => x.TheUserRolesList)
                 .WithOne(x => x.TheRole)
