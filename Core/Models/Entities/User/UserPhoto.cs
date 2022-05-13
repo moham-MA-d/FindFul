@@ -8,6 +8,6 @@ namespace Core.Models.Entities.User
         public string PublicId { get; set; }
 
         public int UserId { get; set; }
-        public AppUser TheAppUser { get; set; }
+        public AppUser TheUser { get; set; }
     }
 }

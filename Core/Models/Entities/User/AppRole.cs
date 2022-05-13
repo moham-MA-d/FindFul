@@ -5,6 +5,6 @@ namespace Core.Models.Entities.User
 {
     public class AppRole : IdentityRole<int>
     {
-        public ICollection<AppUserRole> TheUserRolesList { get; set; }
+        public virtual ICollection<AppUserRole> TheUserRolesList { get; set; }
     }
 }

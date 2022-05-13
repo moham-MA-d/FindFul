@@ -8,6 +8,8 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+            builder.ToTable("Users");
+
             builder
                 .HasMany(x => x.TheUserRolesList)
                 .WithOne(x => x.TheUser)
@@ -16,13 +18,13 @@ namespace Data.Configurations.User
 
             builder
                 .HasMany(x => x.ThePostsList)
-                .WithOne(x => x.TheAppUser)
+                .WithOne(x => x.TheUser)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.TheUserPhotosList)
-                .WithOne(x => x.TheAppUser)
+                .WithOne(x => x.TheUser)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 

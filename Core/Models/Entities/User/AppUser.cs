@@ -41,7 +41,7 @@ namespace Core.Models.Entities.User
 		public ICollection<PostLiked> ThePostLikedList { get; set; }
 		public ICollection<Message> TheSentMessagesList { get; set; }
 		public ICollection<Message> TheRecievedMessagesList { get; set; }
-        public ICollection<AppUserRole> TheUserRolesList { get; set; }
+        public virtual ICollection<AppUserRole> TheUserRolesList { get; set; }
 
     }
 }

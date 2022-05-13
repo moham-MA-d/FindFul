@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Configurations.User
 {
@@ -14,7 +9,7 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<IdentityUserClaim<int>> builder)
         {
-            builder.ToTable(name: "UserClaims", "dbo");
+            builder.ToTable(name: "UserClaims");
         }
     }
 
@@ -22,7 +17,7 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<AppUserRole> builder)
         {
-            builder.ToTable(name: "UserRoles", "dbo");
+            builder.ToTable(name: "UserRoles");
         }
     }
 
@@ -30,7 +25,7 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<IdentityUserLogin<int>> builder)
         {
-            builder.ToTable(name: "UserLogins", "dbo");
+            builder.ToTable(name: "UserLogins");
         }
     }
 
@@ -38,7 +33,7 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<IdentityRoleClaim<int>> builder)
         {
-            builder.ToTable(name: "RoleClaims", "dbo");
+            builder.ToTable(name: "RoleClaims");
         }
     }
 
@@ -46,7 +41,7 @@ namespace Data.Configurations.User
     {
         public void Configure(EntityTypeBuilder<IdentityUserToken<int>> builder)
         {
-            builder.ToTable(name: "UserTokens", "dbo");
+            builder.ToTable(name: "UserTokens");
         }
     }
 }

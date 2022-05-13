@@ -37,8 +37,15 @@ namespace Data
         //This is the method that is called when an entity is created.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+         
             modelBuilder.ApplyConfiguration(new AppUserConfig());
             modelBuilder.ApplyConfiguration(new AppRoleConfig());
+            modelBuilder.ApplyConfiguration(new AppUserRoleConfig());
+            modelBuilder.ApplyConfiguration(new IdentityUserClaimConfig());
+            modelBuilder.ApplyConfiguration(new IdentityUserLoginConfig());
+            modelBuilder.ApplyConfiguration(new IdentityRoleClaimConfig());
+            modelBuilder.ApplyConfiguration(new IdentityUserTokenConfig());
             modelBuilder.ApplyConfiguration(new UserPhotoConfig());
             modelBuilder.ApplyConfiguration(new PostConfig());
             modelBuilder.ApplyConfiguration(new CommentConfig());
@@ -46,7 +53,6 @@ namespace Data
             modelBuilder.ApplyConfiguration(new PostLikedConfig());
             modelBuilder.ApplyConfiguration(new MessageConfig());
 
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
