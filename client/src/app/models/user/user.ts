@@ -7,4 +7,5 @@ export class User {
     photoUrl: string;
     gender: UserEnums.Gender;
     sex: UserEnums.Sex;
+    roles: string[];
 }

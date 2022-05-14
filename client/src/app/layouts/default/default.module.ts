@@ -6,6 +6,7 @@ import { DefaultComponent } from './default.component';
 import { SharedModule } from 'src/app/modules/shared.module';
 import { CenterModule } from 'src/app/modules/components-wrapper/center/center.module';
 import { SnippetComponentsModule } from 'src/app/modules/snippet-components.module';
+import { AdminMainModule } from 'src/app/modules/admin/adminMain/adminMain.module';
 
 
 
@@ -19,7 +20,8 @@ import { SnippetComponentsModule } from 'src/app/modules/snippet-components.modu
     SharedModule,
     LeftModule,
     CenterModule,
-    SnippetComponentsModule
+    SnippetComponentsModule,
+    AdminMainModule
 
   ]
 })

@@ -37,6 +37,7 @@ namespace Data.Seed
             var admin = new AppUser
             {
                 UserName = "Admin",
+                ProfilePhotoUrl = "/assets/images/user.png"
             };
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });

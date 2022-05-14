@@ -15,13 +15,13 @@ namespace API.Helpers
         //next: what's going to happen after the action is executed.
             //we use it to execute the action and do sth after this is executed.
 
-        //In this Senario we are going to access `context` after `next` is executed
+        //In this Scenario we are going to access `context` after `next` is executed
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             //resultContext: It is the context when the action is executed
             var resultContext = await next();
 
-            if (!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
+            if (resultContext.HttpContext.User.Identity is { IsAuthenticated: false }) return;
 
             var userId = resultContext.HttpContext.User.GetUserId();
             var userService = resultContext.HttpContext.RequestServices.GetService<IUserService>();

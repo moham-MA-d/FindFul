@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Data
 {
-    public class DataContext : IdentityDbContext<AppUser, AppRole, int, 
+    public sealed class DataContext : IdentityDbContext<AppUser, AppRole, int, 
         IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
         IdentityRoleClaim<int>, IdentityUserToken<int>>
     {

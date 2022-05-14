@@ -16,6 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './Interceptors/loading.interceptor';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { HasRoleDirective } from './directives/role/has-role.directive';
 
 
 //Main and necessary Module of Angular project which is called in main.ts
@@ -23,7 +24,8 @@ import { EffectsModule } from '@ngrx/effects';
   declarations: [
     AppComponent,
     NotFoundComponent,
-    TestErrorsComponent
+    TestErrorsComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule, //basic modulde to show our code in SPA.
