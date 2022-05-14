@@ -20,13 +20,13 @@ namespace API.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IUserService _userService;
-        private readonly IMapperService _mapperservice;
+        private readonly IMapperService _mapperService;
         private readonly IPhotoServiceAPI _photoServiceAPI;
 
-        public UsersController(IUserService userService, IMapperService mapperservice, IPhotoServiceAPI photoService, IUserPhotoService userPhotoService)
+        public UsersController(IUserService userService, IMapperService mapperService, IPhotoServiceAPI photoService, IUserPhotoService userPhotoService)
         {
             _userService = userService;
-            _mapperservice = mapperservice;
+            _mapperService = mapperService;
             _photoServiceAPI = photoService;
         }
 
@@ -46,29 +46,23 @@ namespace API.Controllers
             return Ok(members);
         }
        
-
         [HttpGet("GetUser/{username}", Name ="GetUser")]
         public async Task<ActionResult<MemberDTO>> GetUser(string username)
         {
-            var member = await _userService.GetByUsernameAsync(username);
-            if (member == null)
-                member = await _userService.GetByEmail(username);
-
+            var member = await _userService.GetByUsernameAsync(username) ?? await _userService.GetByEmail(username);
             return Ok(member);
         }
          
-
         [HttpPut]
         public async Task<ActionResult> Update(MemberUpdateDTO memberUpdateDto)
         {
             var appUser = await _userService.GetByIdAsync(User.GetUserId());
 
-            appUser = _mapperservice.MemberUpdateDtoToAppUser(memberUpdateDto, appUser);
+            appUser = _mapperService.MemberUpdateDtoToAppUser(memberUpdateDto, appUser);
             _userService.Update(appUser);
 
             return NoContent();
         }
-
 
         [HttpPost("AddProfilePhoto")]
         public async Task<ActionResult<MemberPhotoDTO>> AddProfilePhoto(IFormFile file)
@@ -86,7 +80,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-
         [HttpDelete("DeleteProfilePhoto")]
         public async Task<ActionResult> DeleteProfilePhoto()
         {
@@ -99,8 +92,6 @@ namespace API.Controllers
 
             return NoContent();
         }
-
-
 
 
     }

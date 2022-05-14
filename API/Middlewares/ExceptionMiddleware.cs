@@ -27,7 +27,7 @@ namespace API.Middlewares
         {
             try
             {
-                // pass httpContext to the next piece of middleware and it's goiing to be at the very top of our middleware.
+                // pass httpContext to the next piece of middleware and it's going to be at the very top of our middleware.
                 await _next(httpContext);
             }
             catch (Exception ex)

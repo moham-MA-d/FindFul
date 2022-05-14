@@ -28,8 +28,8 @@ namespace API.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost("register")]
-        // If paramaters have sent in a body of the request we need Object to recieve them (Findful.DTOs) not just string parameters
+        [HttpPost("Register")]
+        // If parameters have sent in a body of the request we need Object to receive them (.DTOs) not just string parameters
         public async Task<ActionResult<UserSessionDTO>> Register(RegisterDTO registerDTO)
         {
            
@@ -40,12 +40,17 @@ namespace API.Controllers
             
             var result = await _userManager.CreateAsync(user, registerDTO.Password);
 
-            if (!result.Succeeded) return BadRequest(result.Errors); 
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
+
+
 
             return new UserSessionDTO
             {
                 UserName = user.UserName,
-                Token = _tokenService.CreateToken(user.UserName, user.Id),
+                Token = await _tokenService.CreateToken(user),
                 Gender = (UserEnums.Gender)user.Gender,
                 Sex = (UserEnums.Sex)user.Sex,
                 Id = user.Id
@@ -58,7 +63,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserSessionDTO>> Login(LoginDTO loginDTO)
         {
             if (loginDTO.UserName.IsNullOrEmptyOrWhiteSpace())
-                return BadRequest("Username or Emnail is empty");
+                return BadRequest("Username or Email is empty");
 
             //for example: email, phone, username
             var inputType = _userService.DetectUserInputTypeForLogin(loginDTO.UserName); 
@@ -87,7 +92,7 @@ namespace API.Controllers
             return new UserSessionDTO
             {
                 UserName = user.UserName,
-                Token = _tokenService.CreateToken(user.UserName, user.Id),
+                Token = await _tokenService.CreateToken(user),
                 PhotoUrl = user.ProfilePhotoUrl,
                 Gender = (UserEnums.Gender)user.Gender,
                 Sex = (UserEnums.Sex)user.Sex,
