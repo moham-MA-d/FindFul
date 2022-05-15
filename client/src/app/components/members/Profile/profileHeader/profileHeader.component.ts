@@ -80,16 +80,18 @@ export class ProfileHeaderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let username = this.route.snapshot.paramMap.get("username");
-      const createMessage : CreateMessage = {
-        body: result,
-        recieverUsername: username
-      }
-      this.messageService.SendMessage(createMessage).subscribe(r => {
-        if (r) {
-          this.tosterService.success("your message succesfully sent to " + this.member.firstName)
+      if (result) {
+        let username = this.route.snapshot.paramMap.get("username");
+        const createMessage: CreateMessage = {
+          body: result,
+          recieverUsername: username
         }
-      });
+        this.messageService.SendMessage(createMessage).subscribe(r => {
+          if (r) {
+            this.tosterService.success("your message succesfully sent to " + this.member.firstName)
+          }
+        });
+      }
     });
   }
 }

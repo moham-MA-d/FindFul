@@ -25,6 +25,9 @@ namespace API.Helpers
 
             var userId = resultContext.HttpContext.User.GetUserId();
             var userService = resultContext.HttpContext.RequestServices.GetService<IUserService>();
+            if (userService == null)
+                return;
+
             var user = await userService.GetUserByIdAsync(userId);
 
             user.LastActivity = System.DateTime.Now;
