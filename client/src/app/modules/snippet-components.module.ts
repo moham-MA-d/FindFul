@@ -13,7 +13,9 @@ import { MatDialogComponent } from '../components/snippets/mat-dialog/mat-dialog
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from './shared.module';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatDialogPureComponent } from '../components/snippets/mat-dialog-pure/mat-dialog-pure.component';
+import { AdminRoleHtmlComponent } from '../components/modals/admin-role-html/admin-role-html.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogModule,
     MatButtonModule,
     SharedModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ],
 
   declarations: [
@@ -36,7 +39,9 @@ import { MatInputModule } from '@angular/material/input';
     PhotoUploadComponent,
     PhotoUpload2Component,
     MatRangeSliderComponent,
-    MatDialogComponent
+    MatDialogComponent,
+    MatDialogPureComponent,
+    AdminRoleHtmlComponent
   ],
 
   exports:[
@@ -46,7 +51,9 @@ import { MatInputModule } from '@angular/material/input';
     PhotoUpload2Component,
     FileUploadModule,
     MatRangeSliderComponent,
-    MatDialogComponent
+    MatDialogComponent,
+    MatDialogPureComponent,
+    AdminRoleHtmlComponent
   ]
 })
 export class SnippetComponentsModule { }
