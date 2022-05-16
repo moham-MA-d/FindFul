@@ -1,12 +1,12 @@
 <mat-dialog-content>
-	<p style="min-width: 400px;">
+	<h3 style="min-width: 400px;">
 		{{dialogMessage}}
-	</p>
+	</h3>
   <div>
     <app-admin-role-html></app-admin-role-html>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions >
-	<button mat-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+	<button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
 	<button mat-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
 </mat-dialog-actions>
