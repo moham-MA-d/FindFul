@@ -8,7 +8,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class MatDialogPureComponent  {
 
-
   message: string;
   dialogMessage: string = "Are you sure?";
   confirmButtonText = "Yes";
@@ -26,6 +25,7 @@ export class MatDialogPureComponent  {
         this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
         this.label = data.label;
         this.example = data.example;
+        this.dialogMessage = data.dialogMessage;
       }
     }
   }
