@@ -18,4 +18,8 @@ export class AdminUserService {
       return response;
     }));
   }
+
+  updateRoles(username: string, roles: string[]) {
+    return this.http.post(this.baseUrl, 'adminmain/editroles/' + username + '?roles=' + roles, {});
+  }
 }
