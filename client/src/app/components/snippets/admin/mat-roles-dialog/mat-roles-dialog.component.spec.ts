@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { AdminRoleHtmlComponent } from './admin-role-html.component';
+import { MatRolesDialogComponent } from './mat-roles-dialog.component';
 
-describe('AdminRoleHtmlComponent', () => {
-  let component: AdminRoleHtmlComponent;
-  let fixture: ComponentFixture<AdminRoleHtmlComponent>;
+describe('MatRolesDialogComponent', () => {
+  let component: MatRolesDialogComponent;
+  let fixture: ComponentFixture<MatRolesDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminRoleHtmlComponent ]
+      declarations: [ MatRolesDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminRoleHtmlComponent);
+    fixture = TestBed.createComponent(MatRolesDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

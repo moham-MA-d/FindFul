@@ -1,0 +1,20 @@
+<mat-dialog-content>
+	<p style="min-width: 400px;">
+		{{dialogMessage}}
+	</p>
+  <div>
+    <form [formGroup]="showClassGrp">
+
+      <div *ngFor="let role of roles">
+        <mat-checkbox [ngModel]="role.checked" id="{{role.name}}" class="{{role.name}}" color="primary" formControlName="{{role.name}}">{{role.name}}</mat-checkbox>
+      </div>
+
+
+      <mat-dialog-actions >
+        <button type="submit" mat-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+        <button mat-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+      </mat-dialog-actions>
+
+    </form>
+  </div>
+</mat-dialog-content>

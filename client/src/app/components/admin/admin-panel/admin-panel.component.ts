@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Roles } from 'src/app/models/admin/roles';
 import { User } from 'src/app/models/user/user';
 import { AdminUserService } from 'src/app/services/admin/adminUser.service';
-import { MatDialogPureComponent } from '../../snippets/mat-dialog-pure/mat-dialog-pure.component';
+import { MatRolesDialogComponent } from '../../snippets/admin/mat-roles-dialog/mat-roles-dialog.component';
 
 @Component({
   selector: 'app-admin-panel',
@@ -12,9 +13,9 @@ import { MatDialogPureComponent } from '../../snippets/mat-dialog-pure/mat-dialo
 export class AdminPanelComponent implements OnInit {
 
   users: Partial<User[]>;
+  @Output() roles;
 
-
-    constructor(private adminUserService: AdminUserService, private dialog: MatDialog) { }
+  constructor(private adminUserService: AdminUserService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getUsersWithRoles();
@@ -24,22 +25,45 @@ export class AdminPanelComponent implements OnInit {
     this.adminUserService.getUsersWithRoles().subscribe(u => this.users = u);
   }
 
+  private getRolesArray(user: User) {
+    const roles = [];
+    const userRoles = user.roles;
+    const avilableRoles = new Roles().roles;
 
-  openDialog() {
-    let dialogRef = this.dialog.open(MatDialogPureComponent, {
+    avilableRoles.forEach(role => {
+      let isMatch = false;
+      for (const userRole of userRoles) {
+        if (role.name == userRole) {
+          isMatch = true;
+          role.checked = true;
+          roles.push(role);
+          break;
+        }
+      }
+      if (!isMatch) {
+        role.checked = false;
+        roles.push(role);
+      }
+    });
+    return roles;
+  }
+
+  openDialog(user: User) {
+    let dialogRef = this.dialog.open(MatRolesDialogComponent, {
       data: {
         dialogMessage: 'Choose the roles',
         buttonText: {
           ok: 'Save',
           cancel: 'Cancel'
         },
-        label: 'Leave a message',
+        roles: this.getRolesArray(user),
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
+        console.log("rrrr : ", this.roles);
+        console.log("sssss : ", result);
       }
     });
   }

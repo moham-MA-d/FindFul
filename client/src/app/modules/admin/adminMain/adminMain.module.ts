@@ -2,19 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminMainComponent } from './adminMain.component';
 import { AdminPanelComponent } from 'src/app/components/admin/admin-panel/admin-panel.component';
-import {MatButtonModule} from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatRolesDialogComponent } from 'src/app/components/snippets/admin/mat-roles-dialog/mat-roles-dialog.component';
+import { MaterialModule } from '../../material/materialModule/material.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    MatButtonModule
+    ReactiveFormsModule,
+    MaterialModule
   ],
   declarations: [
     AdminMainComponent,
     AdminPanelComponent,
+    MatRolesDialogComponent
   ],
   exports: [
-    AdminPanelComponent
+    AdminPanelComponent,
+    MatRolesDialogComponent
   ]
 })
 export class AdminMainModule { }
