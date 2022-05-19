@@ -6,9 +6,8 @@
     <form [formGroup]="showClassGrp">
 
       <div *ngFor="let role of roles">
-        <mat-checkbox [ngModel]="role.checked" id="{{role.name}}" class="{{role.name}}" color="primary" formControlName="{{role.name}}">{{role.name}}</mat-checkbox>
+        <mat-checkbox [(ngModel)]="role.checked" id="{{role.name}}" class="{{role.name}}" color="primary" formControlName="{{role.name}}">{{role.name}}</mat-checkbox>
       </div>
-
 
       <mat-dialog-actions >
         <button type="submit" mat-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>

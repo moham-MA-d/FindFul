@@ -35,7 +35,6 @@ export class MatRolesDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any) {
     if (data) {
       this.roles = data.roles;
-      console.log("Roes : ", this.roles);
       this.dialogMessage = data.message || this.dialogMessage;
       if (data.buttonText) {
         this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
@@ -46,15 +45,7 @@ export class MatRolesDialogComponent implements OnInit {
     }
   }
 
-  // onSubmit(){
-  //   console.log(this.showClassGrp.value);
-  //   this.showClassGrp.patchValue({amateur: false});
-  //   console.log(this.showClassGrp.value);
-  // }
-
-
   onConfirmClick(): void {
-    this.UpdateSelectedRoles.emit(this.roles);
     this.dialogRef.close(this.roles);
   }
 }
