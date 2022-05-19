@@ -1,5 +1,4 @@
 ﻿using Core;
-using Core.IService;
 using Core.IServices.Messages;
 using Core.IRepositories.Messages;
 using Core.Models.Entities.Messages;
@@ -8,6 +7,7 @@ using DTO.Messages;
 using System.Collections.Generic;
 using DTO.Member;
 using System.Threading.Tasks;
+using Core.IServices;
 
 namespace Service.Classes.Messages
 {

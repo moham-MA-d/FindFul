@@ -6,7 +6,6 @@ using Core.IRepositories.Follows;
 using Core.IRepositories.Messages;
 using Core.IRepositories.Posts;
 using Core.IRepositories.User;
-using Core.IService.User;
 using Core.IServices.Follows;
 using Core.IServices.Mapper;
 using Core.IServices.Messages;
@@ -28,7 +27,7 @@ using Service.Classes.Posts;
 using Service.Classes.User;
 using Service.Helpers;
 
-namespace API.Findful.Extensions
+namespace API.Extensions
 {
     public static class ApplicationServiceExtensions
     {

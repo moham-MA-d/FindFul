@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Core.Models.Entities.User;
-using Core.IService;
 using DTO.Account;
-using Core.IService.User;
 using Core;
 using Core.IRepositories.User;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using Core.IServices;
+using Core.IServices.User;
 using DTO.Pagination;
-using static DTO._Enumarations.UserEnums;
+using static DTO.Enumerations.UserEnums;
 
 namespace Service.Classes.User
 {

@@ -1,9 +1,8 @@
 ﻿using Core;
 using Core.IRepositories;
-using Core.IService;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.IServices;
 
 namespace Service
 {

@@ -1,5 +1,4 @@
-﻿using Core.IService;
-using Core.Models.Entities.Posts;
+﻿using Core.Models.Entities.Posts;
 using DTO.Account.Base;
 using DTO.Pagination;
 using DTO.Posts;

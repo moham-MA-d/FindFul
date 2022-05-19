@@ -1,10 +1,10 @@
-﻿using DTO.Account;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Core.Models.Entities.User;
+using DTO.Account;
 using DTO.Pagination;
-using static DTO._Enumarations.UserEnums;
+using static DTO.Enumerations.UserEnums;
 
-namespace Core.IService.User
+namespace Core.IServices.User
 {
     public interface IUserService : IEntityService<AppUser>
     {

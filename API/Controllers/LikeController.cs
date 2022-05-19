@@ -1,6 +1,5 @@
 ﻿using API.Controllers.Base;
 using API.Extensions;
-using Core.IService.User;
 using Core.IServices.Posts;
 using Core.Models.Entities.Posts;
 using Microsoft.AspNetCore.Authorization;

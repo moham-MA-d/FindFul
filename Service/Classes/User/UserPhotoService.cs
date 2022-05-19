@@ -1,11 +1,11 @@
 ﻿using Core;
 using Core.IRepositories.User;
-using Core.IService;
 using Core.IServices.User;
 using Core.Models.Entities.User;
 using DTO.Account.Photo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.IServices;
 
 namespace Service.Classes.User
 {

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Core.Models.Entities.User;
-using Microsoft.Extensions.Configuration;
 using Data.Configurations.User;
 using Core.Models.Entities.Posts;
 using Core.Models.Entities.Comments;
@@ -12,7 +11,6 @@ using Core.Models.Entities.Messages;
 using Data.Configurations.Messages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace Data
 {
