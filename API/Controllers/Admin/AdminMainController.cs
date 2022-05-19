@@ -38,7 +38,7 @@ namespace API.Controllers.Admin
             return Ok(users);
         }
 
-        [HttpPost("EditRoles")]
+        [HttpPost("EditRoles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {
             var selectedRoles = roles.Split(",").ToArray();

@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { Roles } from 'src/app/models/admin/roles';
 import { User } from 'src/app/models/user/user';
 import { AdminUserService } from 'src/app/services/admin/adminUser.service';
@@ -15,7 +16,7 @@ export class AdminPanelComponent implements OnInit {
   users: Partial<User[]>;
   @Output() roles;
 
-  constructor(private adminUserService: AdminUserService, private dialog: MatDialog) { }
+  constructor(private adminUserService: AdminUserService, private dialog: MatDialog, private toast: ToastrService) { }
 
   ngOnInit() {
     this.getUsersWithRoles();
@@ -62,8 +63,15 @@ export class AdminPanelComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log("rrrr : ", this.roles);
-        console.log("sssss : ", result);
+        const selectedRoles = [...result.filter(x => x.checked == true).map(x => x.name)];
+        if (selectedRoles) {
+          this.adminUserService.updateRoles(user.userName, selectedRoles).subscribe((response: string[]) => {
+            if (response) {
+              user.roles = response;
+              this.toast.success("Roled added for " + user.userName);
+            }
+          });
+        }
       }
     });
   }
