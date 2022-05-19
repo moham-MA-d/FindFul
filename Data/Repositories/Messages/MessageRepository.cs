@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Core.IRepositories.Messages;
 using Core.Models.Entities.Messages;
 using DTO.Member;

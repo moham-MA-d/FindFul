@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DTO.Account.Base
+﻿namespace DTO.Account.Base
 {
     public class BaseMemberDTO
     {

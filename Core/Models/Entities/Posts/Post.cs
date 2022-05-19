@@ -1,7 +1,6 @@
 ﻿using Core.Models.Entities.Comments;
 using Core.Models.Entities.User;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Core.Models.Entities.Posts

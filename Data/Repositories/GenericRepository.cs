@@ -1,5 +1,4 @@
 ﻿using Core.IRepositories;
-using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;

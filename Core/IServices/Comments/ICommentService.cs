@@ -1,5 +1,4 @@
-﻿using Core.IService;
-using Core.Models.Entities.Comments;
+﻿using Core.Models.Entities.Comments;
 
 namespace Core.IServices.Comments
 {

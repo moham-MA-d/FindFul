@@ -1,6 +1,5 @@
 ﻿using API.Controllers.Base;
 using API.Extensions;
-using Core.IService.User;
 using Core.IServices.Follows;
 using Core.Models.Entities.Follows;
 using DTO.Account;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.IServices.User;
 
 namespace API.Controllers
 {

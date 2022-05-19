@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,7 +10,7 @@ using Core.IRepositories.User;
 using System.Linq;
 using DTO.Pagination;
 using Data.Helpers;
-using DTO._Enumarations;
+using DTO.Enumerations;
 
 namespace Data.Repositories.User
 {

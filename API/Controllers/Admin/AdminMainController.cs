@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using API.Controllers.Base;
 using Core.Models.Entities.User;
-using DTO.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +37,6 @@ namespace API.Controllers.Admin
 
             return Ok(users);
         }
-
 
         [HttpPost("EditRoles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)

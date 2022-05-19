@@ -3,12 +3,11 @@ using DTO.Account;
 using API.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using API.Services.Interfaces;
-using Core.IService.User;
-using Extentions.Common;
-using DTO._Enumarations;
+using DTO.Enumerations;
 using Microsoft.AspNetCore.Identity;
 using Core.Models.Entities.User;
-using System.Linq;
+using Core.IServices.User;
+using Extensions.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers

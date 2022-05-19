@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DTO._Enumarations
+namespace DTO.Enumerations
 {
     public class UserEnums
     {

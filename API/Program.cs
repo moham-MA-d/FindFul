@@ -36,6 +36,7 @@ namespace API
                 logger.LogError(ex, "An error occurred during migration");
             }
 
+            // It calls InvokeAsync() in ExceptionMiddleware.cs
             await host.RunAsync();
         }
 

@@ -1,4 +1,4 @@
-﻿namespace DTO._Enumarations
+﻿namespace DTO.Enumerations
 {
     public class PostEnums
     {

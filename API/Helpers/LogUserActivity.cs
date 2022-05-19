@@ -1,9 +1,8 @@
 ﻿using API.Extensions;
-using Core.IRepositories.User;
-using Core.IService.User;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using Core.IServices.User;
 
 namespace API.Helpers
 {

@@ -1,11 +1,11 @@
 ﻿using Core;
 using Core.IRepositories.Follows;
-using Core.IService;
 using Core.IServices.Follows;
 using Core.Models.Entities.Follows;
 using DTO.Account;
 using DTO.Pagination;
 using System.Threading.Tasks;
+using Core.IServices;
 
 namespace Service.Classes.Follows
 {
