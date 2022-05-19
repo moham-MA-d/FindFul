@@ -1,5 +1,4 @@
-﻿using Core.IService;
-using Core.Models.Entities.User;
+﻿using Core.Models.Entities.User;
 using DTO.Account.Photo;
 using System.Collections.Generic;
 using System.Threading.Tasks;

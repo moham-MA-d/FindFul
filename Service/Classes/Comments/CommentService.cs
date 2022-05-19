@@ -1,6 +1,6 @@
 ﻿using Core;
 using Core.IRepositories;
-using Core.IService;
+using Core.IServices;
 using Core.IServices.Comments;
 using Core.Models.Entities.Comments;
 

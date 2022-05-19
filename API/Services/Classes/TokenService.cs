@@ -1,6 +1,5 @@
 ﻿using API.Services.Interfaces;
 using Core.Models.Entities.User;
-using DTO.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

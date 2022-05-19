@@ -1,15 +1,14 @@
-﻿using Core.Models.Entities.User;
+﻿using System.Text;
+using Core.Models.Entities.User;
 using Data;
+using DTO.Admin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using DTO.Admin;
 
-namespace API.Findful.Extensions
+namespace API.Extensions
 {
     public static class IdentityServiceExtension
     {

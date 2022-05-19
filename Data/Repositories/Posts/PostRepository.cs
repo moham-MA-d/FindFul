@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Core.IRepositories.Posts;
 using Core.Models.Entities.Posts;
 using Data.Helpers;
-using DTO._Enumarations;
+using DTO.Enumerations;
 using DTO.Pagination;
 using DTO.Posts;
 using Microsoft.EntityFrameworkCore;

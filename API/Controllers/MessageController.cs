@@ -1,17 +1,14 @@
 ﻿using API.Controllers.Base;
 using API.Extensions;
-using Core.IRepositories.User;
-using Core.IService.User;
 using Core.IServices.Mapper;
 using Core.IServices.Messages;
-using Core.Models.Entities.Messages;
 using Core.Models.Entities.User;
 using DTO.Member;
 using DTO.Messages;
-using DTO.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Core.IServices.User;
 
 namespace API.Controllers
 {

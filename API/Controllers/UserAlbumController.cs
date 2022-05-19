@@ -1,6 +1,5 @@
 ﻿using API.Extensions;
 using API.Services.Interfaces;
-using Core.IService.User;
 using Core.IServices.Mapper;
 using Core.IServices.User;
 using Core.Models.Entities.User;

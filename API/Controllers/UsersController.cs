@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.IService.User;
 using Core.IServices.Mapper;
 using API.Extensions;
 using API.Services.Interfaces;
@@ -30,7 +29,7 @@ namespace API.Controllers
             _photoServiceAPI = photoService;
         }
 
-        [HttpGet]
+        [HttpGet("GetUsers")]
         public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] UserParameters userParameters)
         {
             ++userParameters.PageIndex;

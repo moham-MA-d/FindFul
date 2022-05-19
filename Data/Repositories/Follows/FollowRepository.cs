@@ -1,16 +1,14 @@
 ﻿using Core.IRepositories.Follows;
 using Core.IRepositories.User;
 using Core.Models.Entities.Follows;
-using Core.Models.Entities.User;
 using Data.Helpers;
 using DTO.Account;
 using DTO.Pagination;
-using Extentions.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Extensions.Common;
 
 namespace Data.Repositories.Follows
 {
@@ -46,8 +44,8 @@ namespace Data.Repositories.Follows
                 Age = user.DateOfBirth.CalculateAge(),
                 City = user.City,
                 Id = user.Id,
-                Sex = (DTO._Enumarations.UserEnums.Sex)user.Sex,
-                Gender = (DTO._Enumarations.UserEnums.Gender)user.Gender,
+                Sex = (DTO.Enumerations.UserEnums.Sex)user.Sex,
+                Gender = (DTO.Enumerations.UserEnums.Gender)user.Gender,
                 ProfilePhotoUrl = user.ProfilePhotoUrl
             });
 
@@ -71,8 +69,8 @@ namespace Data.Repositories.Follows
                 Age = user.DateOfBirth.CalculateAge(),
                 City = user.City,
                 Id = user.Id,
-                Sex = (DTO._Enumarations.UserEnums.Sex)user.Sex,
-                Gender = (DTO._Enumarations.UserEnums.Gender)user.Gender,
+                Sex = (DTO.Enumerations.UserEnums.Sex)user.Sex,
+                Gender = (DTO.Enumerations.UserEnums.Gender)user.Gender,
                 ProfilePhotoUrl = user.ProfilePhotoUrl
             });
 

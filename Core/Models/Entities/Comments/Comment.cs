@@ -1,6 +1,5 @@
 ﻿using Core.Models.Entities.Posts;
 using Core.Models.Entities.User;
-using System;
 
 namespace Core.Models.Entities.Comments
 {

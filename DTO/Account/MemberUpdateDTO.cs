@@ -1,4 +1,4 @@
-﻿using DTO._Enumarations;
+﻿using DTO.Enumerations;
 using DTO.Account.Base;
 
 namespace DTO.Account

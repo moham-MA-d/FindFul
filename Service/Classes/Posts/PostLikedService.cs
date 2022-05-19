@@ -1,7 +1,5 @@
 ﻿using Core;
-using Core.IRepositories;
 using Core.IRepositories.Posts;
-using Core.IService;
 using Core.IServices.Posts;
 using Core.Models.Entities.Posts;
 using DTO.Account.Base;
@@ -9,6 +7,7 @@ using DTO.Pagination;
 using DTO.Posts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.IServices;
 
 namespace Service.Classes.Posts
 {
