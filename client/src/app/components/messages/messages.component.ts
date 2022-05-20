@@ -76,6 +76,7 @@ export class MessagesComponent implements OnInit {
   }
 
   SendMessage() {
+    console.log("11111");
     const createMessage: CreateMessage = {
       body: this.messageText,
       recieverId: this.chatId

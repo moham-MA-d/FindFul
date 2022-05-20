@@ -2,7 +2,7 @@
 
 namespace DTO.Account
 {
-    public class UserSessionDTO
+    public class DtoUserSession
     {
         public int Id { get; set; }
         public string UserName { get; set; }

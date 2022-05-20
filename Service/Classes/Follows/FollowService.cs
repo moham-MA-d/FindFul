@@ -23,12 +23,12 @@ namespace Service.Classes.Follows
 			return await _followRepository.GetFollow(userId, recipientId);
 		}
 
-        public async Task<PagedListBase<MemberDTO>> GetFollowers(UserParameters userParameters)
+        public async Task<PagedListBase<DtoMember>> GetFollowers(UserParameters userParameters)
         {
            return await _followRepository.GetFollowers(userParameters);
         }
 
-		public async Task<PagedListBase<MemberDTO>> GetFollowings(UserParameters userParameters)
+		public async Task<PagedListBase<DtoMember>> GetFollowings(UserParameters userParameters)
         {
 			return await _followRepository.GetFollowing(userParameters);
 		}

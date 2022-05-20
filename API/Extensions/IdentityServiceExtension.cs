@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using API.Helpers;
 using Core.Models.Entities.User;
 using Data;
 using DTO.Admin;
@@ -25,17 +26,33 @@ namespace API.Extensions
             .AddRoleValidator<RoleValidator<AppRole>>()
             .AddEntityFrameworkStores<DataContext>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            var jwtSettings = new JwtSettings();
+            configuration.Bind(nameof(jwtSettings), jwtSettings);
+            services.AddSingleton(jwtSettings); 
+
+            services
+                .AddAuthentication(option =>
+                {
+                    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                // It show that how our token look like and how system should use it.
                 .AddJwtBearer(options =>
                 {
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         // two below lines are for authenticate users with a valid token
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey)),
 
-                        ValidateIssuer = false, //Our Findfull.API server
-                        ValidateAudience = false // Our Angular Application
+                        ValidateIssuer = false, //Our Findful.API server
+                        ValidateAudience = false, // Our Angular Application
+
+                        //RequireExpirationTime = true,
+                        //ValidateLifetime = true
+
                     };
                 });
 

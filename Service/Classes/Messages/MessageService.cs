@@ -20,7 +20,7 @@ namespace Service.Classes.Messages
             _messageRepository = messageRepository;
         }
 
-        public Message Create(CreateMessageDTO createMessageDTO, AppUser sender, AppUser reciever)
+        public Message Create(DtoCreateMessage dtoCreateMessage, AppUser sender, AppUser reciever)
         {
             return new Message
             {
@@ -30,16 +30,16 @@ namespace Service.Classes.Messages
                 RecieverId = reciever.Id,
                 TheReciever = reciever,
                 RecieverUsername = reciever.UserName,
-                Body = createMessageDTO.Body,
+                Body = dtoCreateMessage.Body,
             };
         }
 
-        public async Task<List<MemberChatDTO>> GetChats(int userId)
+        public async Task<List<DtoMemberChat>> GetChats(int userId)
         {
            return await _messageRepository.GetChats(userId);
         }
 
-        public async Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip)
+        public async Task<List<DtoMessageResponse>> GetMessages(int currentUserId, int targetUserId, int skip)
         {
             return await _messageRepository.GetMessages(currentUserId, targetUserId, skip);
         }

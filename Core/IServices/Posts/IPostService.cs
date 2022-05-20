@@ -7,7 +7,6 @@ namespace Core.IServices.Posts
 {
     public interface IPostService : IEntityService<Post>
     {
-        Task<PagedListBase<PostsDTO>> GetAllPosts(PostParameters postParameters, int? userId);
-
+        Task<PagedListBase<DtoPostResponse>> GetAllPosts(PostParameters postParameters, int? userId);
     }
 }

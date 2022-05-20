@@ -25,7 +25,7 @@ export class ProfileAlbumComponent implements OnInit {
     this.member = event;
   }
 
-  loadUserPhotos(){
+  loadUserPhotos() {
     let username = this.route.snapshot.paramMap.get("username");
     this.photos = this.memberService.getMemberPhotos(username);
   }

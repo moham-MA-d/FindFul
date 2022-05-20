@@ -58,11 +58,11 @@
         </div>
         <!--Chat Messages in Right End-->
 
-        <form class="send-message" #sendForm="ngForm" (ngSubmit)="SendMessage()" autocomplete="off">
+        <form class="send-message" #sendForm="ngForm"  autocomplete="off">
           <div class="input-group">
             <input required="required" type="text" (keyup.enter)="SendMessage()" [(ngModel)]="messageText" name="messageText" class="form-control" placeholder="Type your message">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button" [disabled]="!sendForm.valid">Send</button>
+              <button class="btn btn-default" (click)="SendMessage()" type="button" [disabled]="!sendForm.valid">Send</button>
             </span>
           </div>
         </form>

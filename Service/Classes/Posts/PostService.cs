@@ -11,13 +11,13 @@ namespace Service.Classes.Posts
 {
     public class PostService : EntityService<Post>, IPostService, IEntityService<Post>
     {
-        IPostRepository _postRepository;
+        readonly IPostRepository _postRepository;
         public PostService(IUnitOfWork unitOfWork, IPostRepository postRepository) : base(unitOfWork, postRepository)
         {
             _postRepository = postRepository;
         }
 
-        public async Task<PagedListBase<PostsDTO>> GetAllPosts(PostParameters postParameters, int? userId)
+        public async Task<PagedListBase<DtoPostResponse>> GetAllPosts(PostParameters postParameters, int? userId)
         {
             return await _postRepository.GetAllPosts(postParameters, userId);
         }

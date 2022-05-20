@@ -2,15 +2,15 @@
 
 namespace DTO.Account.Base
 {
-    public class BaseAccountDTO
+    public class DtoBaseAccount
     {
-        private string username;
+        private string _username;
 
         [Required]
         public string UserName
         {
-            get { return username; }
-            set { username = value.ToLower(); }
+            get => _username;
+            set => _username = value.ToLower();
         }
 
         [Required]

@@ -24,17 +24,18 @@ namespace API.Controllers.Version1
 
 
         [HttpPost("AddPost")]
-        public async Task<ActionResult<PostsDTO>> AddPost(PostsDTO postDto)
+        public async Task<ActionResult<DtoPostResponse>> AddPost(DtoPostRequest dtoPostRequest)
         {
-            var post = _mapperService.PostsDtoToPost(postDto);
+            var post = _mapperService.DtoPostRequestToPost(dtoPostRequest);
             post.UserId = User.GetUserId();
             await _postService.AddAsync(post);
 
-            return Ok(postDto);
+            var dtoPostResponse = _mapperService.PostToDtoPostResponse(post);
+            return Ok(dtoPostResponse);
         }
 
         [HttpGet("GetPosts")]
-        public async Task<ActionResult<IEnumerable<PostsDTO>>> GetPosts([FromQuery] PostParameters postParameters)
+        public async Task<ActionResult<IEnumerable<DtoPostResponse>>> GetPosts([FromQuery] PostParameters postParameters)
         {
             ++postParameters.PageIndex;
 

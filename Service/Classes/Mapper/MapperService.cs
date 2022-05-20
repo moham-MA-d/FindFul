@@ -20,23 +20,28 @@ namespace Service.Classes.Mapper
         }
 
 
-        public AppUser MemberUpdateDtoToAppUser(MemberUpdateDTO memberUpdateDTO, AppUser appUser)
+        public AppUser DtoMemberUpdateToAppUser(DtoMemberUpdate dtoMemberUpdate, AppUser appUser)
         {
-            return _mapper.Map(memberUpdateDTO, appUser);
+            return _mapper.Map(dtoMemberUpdate, appUser);
         }
-        public MemberPhotoDTO UserPhotoToMemberPhotoDto(UserPhoto userPhoto)
+        public MemberPhotoDTO UserPhotoToDtoMemberPhoto(UserPhoto userPhoto)
         {
             return _mapper.Map<MemberPhotoDTO>(userPhoto);
         }
         
-        public Post PostsDtoToPost(PostsDTO postsDTO)
+        public Post DtoPostRequestToPost(DtoPostRequest dtoPostRequest)
         {
-            return _mapper.Map<Post>(postsDTO);
+            return _mapper.Map<Post>(dtoPostRequest);
         }
 
-        public MessageDTO MessageToMessageDTO(Message message)
+        public DtoPostResponse PostToDtoPostResponse(Post post)
         {
-            return _mapper.Map<MessageDTO>(message);
+            return _mapper.Map<DtoPostResponse>(post);
+        }
+
+        public DtoMessageResponse MessageToDtoMessage(Message message)
+        {
+            return _mapper.Map<DtoMessageResponse>(message);
         }
     }
 }

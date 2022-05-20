@@ -10,11 +10,12 @@ namespace Core.IServices.Mapper
 {
     public interface IMapperService
     {
-        AppUser MemberUpdateDtoToAppUser(MemberUpdateDTO memberUpdateDTO, AppUser appUser);
-        MemberPhotoDTO UserPhotoToMemberPhotoDto(UserPhoto userPhoto);
-        
-        Post PostsDtoToPost(PostsDTO postsDTO); 
+        AppUser DtoMemberUpdateToAppUser(DtoMemberUpdate dtoMemberUpdate, AppUser appUser);
+        MemberPhotoDTO UserPhotoToDtoMemberPhoto(UserPhoto userPhoto);
 
-        MessageDTO MessageToMessageDTO(Message message);
+        Post DtoPostRequestToPost(DtoPostRequest dtoPostRequest);
+        DtoPostResponse PostToDtoPostResponse(Post post); 
+
+        DtoMessageResponse MessageToDtoMessage(Message message);
     }
 }

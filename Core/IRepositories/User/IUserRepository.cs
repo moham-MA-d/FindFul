@@ -8,11 +8,11 @@ namespace Core.IRepositories.User
 {
     public interface IUserRepository : IGenericRepository<AppUser>
     {
-        Task<MemberDTO> GetUserByEmailAsync(string email);
-        MemberDTO GetUserByUsername(string username);
-        Task<MemberDTO> GetMemberByUsernameAsync(string username);
+        Task<DtoMember> GetUserByEmailAsync(string email);
+        DtoMember GetUserByUsername(string username);
+        Task<DtoMember> GetMemberByUsernameAsync(string username);
         Task<AppUser> GetUserByUsernameAsync(string username);
-        Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters);
+        Task<PagedListBase<DtoMember>> GetAllMembers(UserParameters userParameters);
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByIdAsync(int id, IQueryable<AppUser> query);
     }

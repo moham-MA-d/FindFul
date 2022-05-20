@@ -24,22 +24,22 @@ namespace Data.Repositories.User
         }
 
 
-        public async Task<MemberDTO> GetUserByEmailAsync(string email)
+        public async Task<DtoMember> GetUserByEmailAsync(string email)
         {
             return await _context.Users
-                .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
+                .ProjectTo<DtoMember>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(x => x.Email == email);
         }
-        public MemberDTO GetUserByUsername(string username)
+        public DtoMember GetUserByUsername(string username)
         {
             return _context.Users
-                .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
+                .ProjectTo<DtoMember>(_mapper.ConfigurationProvider)
                 .SingleOrDefault(x => x.UserName == username);
         }
-        public async Task<MemberDTO> GetMemberByUsernameAsync(string username)
+        public async Task<DtoMember> GetMemberByUsernameAsync(string username)
         {
             return await _context.Users
-                .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
+                .ProjectTo<DtoMember>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
         public async Task<AppUser> GetUserByUsernameAsync(string username)
@@ -47,7 +47,7 @@ namespace Data.Repositories.User
             return await _context.Users
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
-        public async Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters)
+        public async Task<PagedListBase<DtoMember>> GetAllMembers(UserParameters userParameters)
         {
             try
             {
@@ -77,8 +77,8 @@ namespace Data.Repositories.User
 
 
                 //We used `AsNoTracking()` Because We only going to read the data and we are not going to to anything else with the data
-                return await PagedList<MemberDTO>.CreateAsync(
-                    query.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider, new {currentUsername = userParameters.CurrentUsername}).AsNoTracking(),
+                return await PagedList<DtoMember>.CreateAsync(
+                    query.ProjectTo<DtoMember>(_mapper.ConfigurationProvider, new {currentUsername = userParameters.CurrentUsername}).AsNoTracking(),
                     userParameters.PageIndex,
                     userParameters.PageSize);
 

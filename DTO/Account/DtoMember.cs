@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DTO.Account
 {
-    public class MemberDTO : MemberUpdateDTO
+    public class DtoMember : DtoMemberUpdate
     {
         
         public string Email { get; set; }

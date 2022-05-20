@@ -10,13 +10,13 @@ using DTO.Account;
 using DTO.Account.Photo;
 using DTO.Pagination;
 using Extensions.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Version1
 {
-    [Authorize]
     public class UsersController : BaseApiController
     {
         private readonly IUserService _userService;
@@ -31,13 +31,14 @@ namespace API.Controllers.Version1
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetAll([FromQuery] UserParameters userParameters)
+        public async Task<ActionResult<IEnumerable<DtoMember>>> GetAll([FromQuery] UserParameters userParameters)
         {
             ++userParameters.PageIndex;
 
             var memberDto = await _userService.GetByUsernameAsync(User.GetUsername());
-            userParameters.CurrentUsername = memberDto.UserName;
-           
+            if (memberDto != null)
+                userParameters.CurrentUsername = memberDto.UserName;
+
             //Get All Users Except current user
             var members = await _userService.GetAllMembers(userParameters);
 
@@ -45,20 +46,21 @@ namespace API.Controllers.Version1
 
             return Ok(members);
         }
-       
-        [HttpGet("GetUser/{username}", Name ="GetUser")]
-        public async Task<ActionResult<MemberDTO>> GetUser(string username)
+
+        [HttpGet("GetUser/{username}", Name = "GetUser")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<DtoMember>> GetUser(string username)
         {
             var member = await _userService.GetByUsernameAsync(username) ?? await _userService.GetByEmail(username);
             return Ok(member);
         }
-         
+
         [HttpPut]
-        public async Task<ActionResult> Update(MemberUpdateDTO memberUpdateDto)
+        public async Task<ActionResult> Update(DtoMemberUpdate dtoMemberUpdate)
         {
             var appUser = await _userService.GetByIdAsync(User.GetUserId());
 
-            appUser = _mapperService.MemberUpdateDtoToAppUser(memberUpdateDto, appUser);
+            appUser = _mapperService.DtoMemberUpdateToAppUser(dtoMemberUpdate, appUser);
             _userService.Update(appUser);
 
             return NoContent();
