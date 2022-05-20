@@ -10,7 +10,7 @@ namespace Core.IServices.Posts
 	public interface IPostedLikedService : IEntityService<PostLiked>
 	{
 		Task<PostLiked> GetPostLike(int postId, int userId);
-		Task<IEnumerable<PostsDTO>> GetPostsLikedByUser(int userId, PostParameters postParameters);
+		Task<IEnumerable<DtoPostRequest>> GetPostsLikedByUser(int userId, PostParameters postParameters);
 		Task<IEnumerable<BaseMemberDTO>> GetUsersLikedPost(int postId);
 	}
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using API.Helpers;
 
 namespace API.Services.Classes
 {
@@ -23,15 +24,23 @@ namespace API.Services.Classes
 
         public TokenService(IConfiguration configuration, UserManager<AppUser> userManager)
         {
+            var jwtSettings = new JwtSettings();
+            configuration.Bind(nameof(jwtSettings), jwtSettings);
+
             _userManager = userManager;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
+            _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey));
         } 
         public async Task<string> CreateToken(AppUser user)
         {
+
+            // Claim: store some properties in out token about user and issued by server.
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                new Claim("Id", user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                //Used for Token Validation
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -43,7 +52,7 @@ namespace API.Services.Classes
             var tokeDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = cred
             };
 
@@ -53,8 +62,6 @@ namespace API.Services.Classes
 
             return tokenHandler.WriteToken(token);
 
-
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Service.Classes.Posts
            return await _postLikedRepository.GetPostLike(postId, userId);
         }
 
-        public async Task<IEnumerable<PostsDTO>> GetPostsLikedByUser(int userId, PostParameters postParameters)
+        public async Task<IEnumerable<DtoPostRequest>> GetPostsLikedByUser(int userId, PostParameters postParameters)
         {
             return await _postLikedRepository.GetPostsLikedByUser(userId, postParameters);
         }

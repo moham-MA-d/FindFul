@@ -2,7 +2,7 @@
 {
     public static class StaticPolicies
     {
-        public static readonly string AdminPolicy = "AdminPolicy";
-        public static readonly string ModeratorPolicy = "ModeratorPolicy";
+        public const string AdminPolicy = "AdminPolicy";
+        public const string ModeratorPolicy = "ModeratorPolicy";
     }
 }

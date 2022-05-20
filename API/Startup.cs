@@ -21,8 +21,8 @@ namespace API
 
         //access to appsetting.json
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // Dependence Injection Container (When we want to make a class or service available to other parts of the app)
+        // This method gets called by the runtime. This method add services to the container.
+        // Dependency Injection Container (When we want to make a class or service available to other parts of the app)
         // Ordering is not important in this function
         public void ConfigureServices(IServiceCollection services)
         {
@@ -34,6 +34,18 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            //it is only for development and has a lot of security issues.
+            //AllowAnyMethod(): get, post , put and ...
+            //AllowAnyHeader() : Authentication and ...
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()/*.WithOrigins("http://localhost:4200")*/);
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             if (env.IsDevelopment())
             {
@@ -49,18 +61,6 @@ namespace API
 
                 app.UseSwaggerUI(options => options.SwaggerEndpoint(swaggerOption.UIEndpoint, swaggerOption.Description));
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            //it is only for development and has a lot of security issues.
-            //AllowAnyMethod(): get, post , put and ...
-            //AllowAnyHeader() : Authentication and ...
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()/*.WithOrigins("http://localhost:4200")*/);
-
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             //map controller endpoint to application so our app knows how to route requests
             app.UseEndpoints(endpoints =>

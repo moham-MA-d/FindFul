@@ -10,8 +10,8 @@ namespace Core.IRepositories.Follows
 		//check if a User has already followed a particular User.
 		Task<Follow> GetFollow(int userId, int recipientId);
 
-		Task<PagedListBase<MemberDTO>> GetFollowing(UserParameters userParameters);
-		Task<PagedListBase<MemberDTO>> GetFollowers(UserParameters userParameters);
+		Task<PagedListBase<DtoMember>> GetFollowing(UserParameters userParameters);
+		Task<PagedListBase<DtoMember>> GetFollowers(UserParameters userParameters);
 
 
 	}

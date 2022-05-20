@@ -15,14 +15,14 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   SendMessage(model: CreateMessage) {
-    return this.http.post(this.baseUrl + 'message/addmessage', model)
+    return this.http.post(this.baseUrl + 'messages/addmessage', model)
     .pipe(map((response: Message) => {
       return response;
     }))
   }
 
   GetChats(){
-    return this.http.get(this.baseUrl + 'message/getchats')
+    return this.http.get(this.baseUrl + 'messages/getchats')
     .pipe(map((response: any) => {
       return response;
     }))
@@ -30,7 +30,7 @@ export class MessageService {
 
   GetMessages(userId: number, skip: number) {
     //const filter = this.turnFilterIntoUrl(filterDto);
-    return this.http.get(this.baseUrl + 'message/getmessages?userid=' + userId + "&&skip="+ skip)
+    return this.http.get(this.baseUrl + 'messages/getmessages?userid=' + userId + "&&skip="+ skip)
     .pipe(map((response: any) => {
       return response;
     }))

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using API.Controllers.Version1.Base;
 using API.Extensions;
 using API.Services.Interfaces;
 using Core.IServices.Mapper;
@@ -7,14 +8,14 @@ using Core.IServices.User;
 using Core.Models.Entities.User;
 using DTO.Account;
 using DTO.Account.Photo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Version1
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserAlbumController : ControllerBase
+    [Authorize]
+    public class UserAlbumController : BaseApiController
     {
         private readonly IUserService _userService;
         private readonly IMapperService _mapperservice;
@@ -31,7 +32,7 @@ namespace API.Controllers.Version1
 
 
         [HttpGet("GetUserPhotos/{username}")]
-        public async Task<ActionResult<MemberDTO>> GetUserPhotos(string username)
+        public async Task<ActionResult<DtoMember>> GetUserPhotos(string username)
         {
             var user = await _userService.GetByUsernameAsync(username);
 
@@ -66,7 +67,7 @@ namespace API.Controllers.Version1
             // When We create a resource on server we must return 201 response message or actually one of the Create() methods as follow.
             // And also we should have `Location Header` in response.
             // "GetUser" is the name of the route for the GetUser() method.
-            return CreatedAtRoute("GetUser", new { username = appUser.UserName }, _mapperservice.UserPhotoToMemberPhotoDto(userPhoto));
+            return CreatedAtRoute("GetUser", new { username = appUser.UserName }, _mapperservice.UserPhotoToDtoMemberPhoto(userPhoto));
 
         }
 

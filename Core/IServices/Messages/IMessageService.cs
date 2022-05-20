@@ -9,10 +9,10 @@ namespace Core.IServices.Messages
 {
     public interface IMessageService : IEntityService<Message>
     {
-        Message Create(CreateMessageDTO createMessageDTO, AppUser sender, AppUser Reciever);
-        Task<List<MemberChatDTO>> GetChats(int userId);
+        Message Create(DtoCreateMessage dtoCreateMessage, AppUser sender, AppUser Reciever);
+        Task<List<DtoMemberChat>> GetChats(int userId);
         Task<bool> HasChatAsync(int currentUserId, int targetUserId);
-        Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip);
+        Task<List<DtoMessageResponse>> GetMessages(int currentUserId, int targetUserId, int skip);
 
     }
 }

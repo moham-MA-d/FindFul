@@ -10,7 +10,7 @@ namespace Core.IRepositories.Posts
 	public interface IPostLikedRepository : IGenericRepository<PostLiked>
 	{
 		Task<PostLiked> GetPostLike(int postId, int userId);
-		Task<IEnumerable<PostsDTO>> GetPostsLikedByUser(int userId, PostParameters postParameters);
+		Task<IEnumerable<DtoPostRequest>> GetPostsLikedByUser(int userId, PostParameters postParameters);
 		Task<IEnumerable<BaseMemberDTO>> GetUsersLikedPost(int postId);
 
 

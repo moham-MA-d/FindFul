@@ -72,7 +72,7 @@ namespace API.Controllers.Version1
 
 
         [HttpGet("GetFollowing")]
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetFollowing([FromQuery] UserParameters userParameters)
+        public async Task<ActionResult<IEnumerable<DtoMember>>> GetFollowing([FromQuery] UserParameters userParameters)
         {
             ++userParameters.PageIndex;
 
@@ -85,7 +85,7 @@ namespace API.Controllers.Version1
 
 
         [HttpGet("GetFollowers")]
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetFollowers([FromQuery] UserParameters userParameters)
+        public async Task<ActionResult<IEnumerable<DtoMember>>> GetFollowers([FromQuery] UserParameters userParameters)
         {
             ++userParameters.PageIndex;
 

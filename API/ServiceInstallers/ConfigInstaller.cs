@@ -15,8 +15,8 @@ namespace API.ServiceInstallers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySettings"));
 
+            services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySettings"));
 
             // Useful for http request. It's is equal to http request lifetime.
             // The point which we used Interface is that it would be much easier to test the application. 
@@ -29,7 +29,8 @@ namespace API.ServiceInstallers
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            //connection string is defined in appsetting.json
+            // Connection string is defined in appsetting.json
+            // AddDbContext life time is Scoped
             services.AddDbContext<DataContext>(x => x.UseSqlServer(configuration.GetConnectionString("FindFulConnection")));
             //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
         }

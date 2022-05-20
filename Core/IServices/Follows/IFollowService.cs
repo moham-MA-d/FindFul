@@ -8,8 +8,8 @@ namespace Core.IServices.Follows
 	public interface IFollowService : IEntityService<Follow>
 	{
 		Task<Follow> GetFollow(int userId, int recipientId);
-		Task<PagedListBase<MemberDTO>> GetFollowings(UserParameters userParameters);
-		Task<PagedListBase<MemberDTO>> GetFollowers(UserParameters userParameters);
+		Task<PagedListBase<DtoMember>> GetFollowings(UserParameters userParameters);
+		Task<PagedListBase<DtoMember>> GetFollowers(UserParameters userParameters);
 
 	}
 }

@@ -23,10 +23,12 @@ using Service.Classes.User;
 
 namespace API.ServiceInstallers
 {
-    public class ServiceInstaller : IServiceInstaller
+    public class DataAccess : IServiceInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IMapperService, MapperService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
@@ -45,7 +47,6 @@ namespace API.ServiceInstallers
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMessageService, MessageService>();
 
-            services.AddScoped<IMapperService, MapperService>();
             services.AddScoped<IPhotoServiceAPI, PhotoServiceAPI>();
         }
     }

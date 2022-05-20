@@ -22,7 +22,7 @@ namespace Data.Repositories.Messages
         }
 
 
-        public async Task<List<MemberChatDTO>> GetChats(int userId)
+        public async Task<List<DtoMemberChat>> GetChats(int userId)
         {
             var senderUsers = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
             var recieverUsers = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
@@ -40,7 +40,7 @@ namespace Data.Repositories.Messages
             var senders = await senderUsers.ToListAsync();
             var recievers = await recieverUsers.ToListAsync();
 
-            List<MemberChatDTO> chats = new();
+            List<DtoMemberChat> chats = new();
 
             //TODO: Fix : Remove Repeated users in senders and recievers withing query
             var listRelatedUserIds = new List<int>();
@@ -61,7 +61,7 @@ namespace Data.Repositories.Messages
                         }
                     }
 
-                    MemberChatDTO chat = new()
+                    DtoMemberChat chat = new()
                     {
                         Id = item.Id,
                         FirstName = item.FirstName,
@@ -95,7 +95,7 @@ namespace Data.Repositories.Messages
                         }
                     }
 
-                    MemberChatDTO chat = new()
+                    DtoMemberChat chat = new()
                     {
                         Id = item.Id,
                         FirstName = item.FirstName,
@@ -117,7 +117,7 @@ namespace Data.Repositories.Messages
             return chats;
 
         }
-        public async Task<List<MessageDTO>> GetMessages(int currentUserId, int targetUserId, int skip)
+        public async Task<List<DtoMessageResponse>> GetMessages(int currentUserId, int targetUserId, int skip)
         {
             var messagesQuery = _context.Messages
                 .Where(x => (x.SenderId == currentUserId && x.RecieverId == targetUserId) || (x.SenderId == targetUserId && x.RecieverId == currentUserId))
@@ -149,7 +149,7 @@ namespace Data.Repositories.Messages
                 }
             }
 
-            var messagesDTO = messages.Select(x => new MessageDTO
+            var messagesDTO = messages.Select(x => new DtoMessageResponse
             {
                 SenderId = x.SenderId,
                 RecieverId = x.RecieverId,

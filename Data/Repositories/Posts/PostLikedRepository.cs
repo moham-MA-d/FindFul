@@ -28,15 +28,15 @@ namespace Data.Repositories.Posts
            return await _context.PostsLiked.FindAsync(postId, userId);
         }
 
-        public async Task<IEnumerable<PostsDTO>> GetPostsLikedByUser(int userId, PostParameters postParameters)
+        public async Task<IEnumerable<DtoPostRequest>> GetPostsLikedByUser(int userId, PostParameters postParameters)
         {
             var posts = _context.Posts.OrderByDescending(x => x.CreateDateTime).AsQueryable();
             var likes = _context.PostsLiked.Where(x => x.UserId == userId);
 
             posts = likes.Select(x => x.ThePost);
 
-            return await PagedList<PostsDTO>.CreateAsync(
-                posts.ProjectTo<PostsDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+            return await PagedList<DtoPostRequest>.CreateAsync(
+                posts.ProjectTo<DtoPostRequest>(_mapper.ConfigurationProvider).AsNoTracking(),
                 postParameters.PageIndex,
                 postParameters.PageSize);
         }

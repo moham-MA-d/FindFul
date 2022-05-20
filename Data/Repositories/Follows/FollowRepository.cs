@@ -27,7 +27,7 @@ namespace Data.Repositories.Follows
         }
 
 
-        public async Task<PagedListBase<MemberDTO>> GetFollowing(UserParameters userParameters)
+        public async Task<PagedListBase<DtoMember>> GetFollowing(UserParameters userParameters)
         {
             var targetUser = await _userRepository.GetMemberByUsernameAsync(userParameters.Username);
             
@@ -36,7 +36,7 @@ namespace Data.Repositories.Follows
 
             users = following.Select(x => x.TheFollower);
 
-            var followingUsers = users.Select(user => new MemberDTO
+            var followingUsers = users.Select(user => new DtoMember
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -49,10 +49,10 @@ namespace Data.Repositories.Follows
                 ProfilePhotoUrl = user.ProfilePhotoUrl
             });
 
-            return await PagedList<MemberDTO>.CreateAsync(followingUsers, userParameters.PageIndex, userParameters.PageSize);
+            return await PagedList<DtoMember>.CreateAsync(followingUsers, userParameters.PageIndex, userParameters.PageSize);
         }
 
-        public async Task<PagedListBase<MemberDTO>> GetFollowers(UserParameters userParameters)
+        public async Task<PagedListBase<DtoMember>> GetFollowers(UserParameters userParameters)
         {
             var targetUser = await _userRepository.GetMemberByUsernameAsync(userParameters.Username);
 
@@ -61,7 +61,7 @@ namespace Data.Repositories.Follows
 
             users = following.Select(x => x.TheFollowing);
 
-            var followingUsers = users.Select(user => new MemberDTO
+            var followingUsers = users.Select(user => new DtoMember
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -74,7 +74,7 @@ namespace Data.Repositories.Follows
                 ProfilePhotoUrl = user.ProfilePhotoUrl
             });
 
-            return await PagedList<MemberDTO>.CreateAsync(followingUsers, userParameters.PageIndex, userParameters.PageSize);
+            return await PagedList<DtoMember>.CreateAsync(followingUsers, userParameters.PageIndex, userParameters.PageSize);
         }
     }
 }

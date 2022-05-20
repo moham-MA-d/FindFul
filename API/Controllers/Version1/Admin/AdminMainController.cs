@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
 using Core.Models.Entities.User;
+using DTO.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers.Version1.Admin
 {
+    [Authorize(policy: StaticPolicies.AdminPolicy)]
     public class AdminMainController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
@@ -18,7 +20,6 @@ namespace API.Controllers.Version1.Admin
             _userManager = userManager;
         }
 
-        [Authorize(policy: "AdminPolicy")]
         [HttpGet("GetUsersWithRoles")]
         public async Task<ActionResult> GetUsersWithRoles()
         {
@@ -59,7 +60,6 @@ namespace API.Controllers.Version1.Admin
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        [Authorize(policy: "ModeratePolicy")]
         [HttpGet("UsersWithPhoto")]
         public ActionResult GetUsersWithPhoto()
         {

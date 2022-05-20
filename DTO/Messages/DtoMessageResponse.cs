@@ -2,7 +2,7 @@
 
 namespace DTO.Messages
 {
-    public class MessageDTO
+    public class DtoMessageResponse
     {
         public string Body { get; set; }
         public DateTime? CreateDateTime { get; set; }

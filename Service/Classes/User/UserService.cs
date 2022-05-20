@@ -24,19 +24,19 @@ namespace Service.Classes.User
         }
 
 
-        public async Task<MemberDTO> GetByEmail(string email)
+        public async Task<DtoMember> GetByEmail(string email)
         {
             return await _userRepository.GetUserByEmailAsync(email);
         }
-        public MemberDTO GetByUsername(string username)
+        public DtoMember GetByUsername(string username)
         {
             return  _userRepository.GetUserByUsername(username);
         }
-        public async Task<MemberDTO> GetByUsernameAsync(string username)
+        public async Task<DtoMember> GetByUsernameAsync(string username)
         {
             return await _userRepository.GetMemberByUsernameAsync(username);
         }
-        public async Task<PagedListBase<MemberDTO>> GetAllMembers(UserParameters userParameters)
+        public async Task<PagedListBase<DtoMember>> GetAllMembers(UserParameters userParameters)
         {
             return await _userRepository.GetAllMembers(userParameters);
         }
@@ -45,18 +45,19 @@ namespace Service.Classes.User
             return await _userRepository.GetUserByIdAsync(id);
         }
 
-        public async Task<bool> IsPasswordCurrect(int userId, string password)
+        public async Task<bool> IsPasswordCorrect(int userId, string password)
         {
             var user = await GetByIdAsync(userId);
 
             return true;
         }
-        public AppUser CreateAppUserForRegisteration(RegisterDTO registerDTO)
+        public AppUser CreateAppUserForRegistration(DtoRegister dtoRegister)
         {
 
             var user = new AppUser
             {
-                UserName = registerDTO.UserName,
+                UserName = dtoRegister.UserName,
+                Email= dtoRegister.Email,
                 ProfilePhotoUrl = "/assets/images/user.png"
             };
 
