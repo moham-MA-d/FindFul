@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
-using DTO.Account;
-using API.Controllers.Base;
-using Microsoft.AspNetCore.Mvc;
+using API.Controllers.Version1.Base;
 using API.Services.Interfaces;
-using DTO.Enumerations;
-using Microsoft.AspNetCore.Identity;
-using Core.Models.Entities.User;
 using Core.IServices.User;
+using Core.Models.Entities.User;
+using DTO.Account;
+using DTO.Enumerations;
 using Extensions.Common;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     public class AccountController : BaseApiController
     {

@@ -1,19 +1,20 @@
-using API.Controllers.Base;
-using DTO.Account;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.IServices.Mapper;
+using API.Contracts;
+using API.Controllers.Version1.Base;
 using API.Extensions;
 using API.Services.Interfaces;
+using Core.IServices.Mapper;
 using Core.IServices.User;
+using DTO.Account;
 using DTO.Account.Photo;
-using Microsoft.AspNetCore.Http;
 using DTO.Pagination;
 using Extensions.Common;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     [Authorize]
     public class UsersController : BaseApiController
@@ -29,8 +30,8 @@ namespace API.Controllers
             _photoServiceAPI = photoService;
         }
 
-        [HttpGet("GetUsers")]
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] UserParameters userParameters)
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetAll([FromQuery] UserParameters userParameters)
         {
             ++userParameters.PageIndex;
 

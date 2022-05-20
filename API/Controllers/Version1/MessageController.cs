@@ -1,16 +1,16 @@
-﻿using API.Controllers.Base;
+﻿using System.Threading.Tasks;
+using API.Controllers.Version1.Base;
 using API.Extensions;
 using Core.IServices.Mapper;
 using Core.IServices.Messages;
+using Core.IServices.User;
 using Core.Models.Entities.User;
 using DTO.Member;
 using DTO.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Core.IServices.User;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     [Authorize]
     public class MessageController : BaseApiController

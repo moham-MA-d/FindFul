@@ -1,4 +1,6 @@
-﻿using API.Controllers.Base;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using API.Controllers.Version1.Base;
 using API.Extensions;
 using Core.IServices.Mapper;
 using Core.IServices.Posts;
@@ -6,10 +8,8 @@ using DTO.Pagination;
 using DTO.Posts;
 using Extensions.Common;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     public class PostController : BaseApiController
     {

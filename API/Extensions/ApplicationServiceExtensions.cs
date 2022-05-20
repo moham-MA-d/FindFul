@@ -1,4 +1,7 @@
-﻿using API.Helpers;
+﻿using System;
+using System.Linq;
+using API.Helpers;
+using API.ServiceInstallers;
 using API.Services.Classes;
 using API.Services.Interfaces;
 using Core;
@@ -31,47 +34,15 @@ namespace API.Extensions
 {
     public static class ApplicationServiceExtensions
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySettings"));
-
-            // Useful for http request. It's is equal to http request lifetime.
-            // The point which we used Interface is that it would be much easier to test the application. 
-            services.AddScoped<ITokenService, TokenService>();
-
-            services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
-            
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IPostService, PostService>();
-
-            services.AddScoped<IUserPhotoRepository, UserPhotoRepository>();
-            services.AddScoped<IUserPhotoService, UserPhotoService>();
-
-            services.AddScoped<IFollowRepository, FollowRepository>();
-            services.AddScoped<IFollowService, FollowService>();
-
-            services.AddScoped<IPostLikedRepository, PostLikedRepository>();
-            services.AddScoped<IPostedLikedService, PostLikedService>();
-
-            services.AddScoped<IMessageRepository, MessageRepository>();
-            services.AddScoped<IMessageService, MessageService>();
-
-            services.AddScoped<LogUserActivity>();
-
-            services.AddScoped<IMapperService, MapperService>();
-            services.AddScoped<IPhotoServiceAPI, PhotoServiceAPI>();
-
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
-
-            //connection string is defined in appsetting.json
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(configuration.GetConnectionString("FindFulConnection")));
-            //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
-
-            return services;
+            var a = typeof(Startup);
+            var installers = typeof(Startup).Assembly.ExportedTypes
+                .Where(x => typeof(IServiceInstaller).IsAssignableFrom(x)
+                            && !x.IsAbstract && !x.IsInterface)
+                .Select(Activator.CreateInstance).Cast<IServiceInstaller>().ToList();
+                
+            installers.ForEach(installer => installer.InstallServices(services, configuration));
         }
     }
 }

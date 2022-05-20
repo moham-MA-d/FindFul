@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using API.Controllers.Base;
+using API.Controllers.Version1.Base;
 using Core.Models.Entities.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers.Admin
+namespace API.Controllers.Version1.Admin
 {
     public class AdminMainController : BaseApiController
     {

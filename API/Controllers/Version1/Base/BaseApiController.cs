@@ -1,11 +1,11 @@
 using API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.Base
+namespace API.Controllers.Version1.Base
 {
     [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class BaseApiController : ControllerBase
     {
         

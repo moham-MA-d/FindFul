@@ -1,17 +1,17 @@
-﻿using API.Controllers.Base;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using API.Controllers.Version1.Base;
 using API.Extensions;
 using Core.IServices.Follows;
+using Core.IServices.User;
 using Core.Models.Entities.Follows;
 using DTO.Account;
 using DTO.Pagination;
 using Extensions.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Core.IServices.User;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     [Authorize]
     public class FollowController : BaseApiController

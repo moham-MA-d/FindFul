@@ -27,18 +27,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(_config);
-
-            services.AddControllers();
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Findful API", Version = "v1" });
-                options.CustomSchemaIds(type => type.ToString());
-            });
-            services.AddCors();
-
-            services.AddIdentityServices(_config);
-
-            services.AddSingleton(_ => _config);
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // All things in here are middleware (is a software to interact with request during http pipeline)
@@ -56,7 +44,6 @@ namespace API
                 app.UseSwagger(option =>
                 {
                     option.RouteTemplate = swaggerOption.JsonRoute;
-
                 });
                 app.UseDeveloperExceptionPage();
 

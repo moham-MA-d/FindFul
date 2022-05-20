@@ -1,11 +1,11 @@
-using API.Controllers.Base;
+using API.Controllers.Version1.Base;
+using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Data;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
-    //it's purpose is to return error and we can see what we get back from varrious responses  
+    //it's purpose is to return error and we can see what we get back from various responses  
     public class BuggyController : BaseApiController
     {
         private readonly DataContext _dataContext;

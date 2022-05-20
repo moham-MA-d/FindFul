@@ -53,7 +53,7 @@ export class MemberService {
     let params = this.pagination.getPaginationHeaders(userParameters.pageIndex, userParameters.pageSize);
     params = this.getFilteredHeaders(params, userParameters);
 
-    return this.pagination.getPaginationResult<Member[]>(this.baseUrl + 'users/getusers', params, this.http)
+    return this.pagination.getPaginationResult<Member[]>(this.baseUrl + 'users/GetAll', params, this.http)
       .pipe(map(response => {
         this.memberCache.set(memberCacheKey, response);
         return response;

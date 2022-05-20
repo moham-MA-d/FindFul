@@ -1,12 +1,12 @@
-﻿using API.Controllers.Base;
+﻿using System.Threading.Tasks;
+using API.Controllers.Version1.Base;
 using API.Extensions;
 using Core.IServices.Posts;
 using Core.Models.Entities.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     [Authorize]
     public class LikeController : BaseApiController

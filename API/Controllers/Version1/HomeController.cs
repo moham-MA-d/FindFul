@@ -1,6 +1,6 @@
-﻿using API.Controllers.Base;
+﻿using API.Controllers.Version1.Base;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     public class HomeController : BaseApiController
     {

@@ -1,4 +1,6 @@
-﻿using API.Extensions;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using API.Extensions;
 using API.Services.Interfaces;
 using Core.IServices.Mapper;
 using Core.IServices.User;
@@ -7,10 +9,8 @@ using DTO.Account;
 using DTO.Account.Photo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace API.Controllers
+namespace API.Controllers.Version1
 {
     [Route("api/[controller]")]
     [ApiController]
