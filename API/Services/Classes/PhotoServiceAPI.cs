@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace API.Services.Classes
 {
-    public class PhotoServiceAPI : IPhotoServiceAPI
+    public class PhotoServiceApi : IPhotoServiceApi
     {
         private readonly Cloudinary _cloudinary;
-        public PhotoServiceAPI(IOptions<CloudinarySetting> setting)
+        public PhotoServiceApi(IOptions<CloudinarySetting> setting)
         {
             var account = new Account(
                     setting.Value.CloudName,
@@ -21,7 +21,7 @@ namespace API.Services.Classes
             _cloudinary = new Cloudinary(account);
         
         }
-        public async Task<ImageUploadResult> AddPhotoAsyncAPI(IFormFile file)
+        public async Task<ImageUploadResult> AddPhotoAsyncApi(IFormFile file)
         {
             ImageUploadResult uploadResult = new ImageUploadResult();
 
@@ -39,7 +39,7 @@ namespace API.Services.Classes
             return uploadResult;
         }
 
-        public async Task<DeletionResult> RemovePhotoAsyncAPI(string publicId)
+        public async Task<DeletionResult> RemovePhotoAsyncApi(string publicId)
         {
            var deleteParams = new DeletionParams(publicId);
 

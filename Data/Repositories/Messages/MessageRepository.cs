@@ -29,9 +29,9 @@ namespace Data.Repositories.Messages
 
             var sentChats = _context.Messages.Where(x => x.SenderId == userId)
                 .Include(x => x.TheReciever.TheSentMessagesList)
-                .Include(x => x.TheReciever.TheRecievedMessagesList).AsQueryable();
+                .Include(x => x.TheReciever.TheReceivedMessagesList).AsQueryable();
             var recievedChats = _context.Messages.Where(x => x.RecieverId == userId)
-                .Include(x => x.TheSender.TheRecievedMessagesList)
+                .Include(x => x.TheSender.TheReceivedMessagesList)
                 .Include(x => x.TheSender.TheSentMessagesList).AsQueryable();
 
             senderUsers = recievedChats.Select(y => y.TheSender);
@@ -51,9 +51,9 @@ namespace Data.Repositories.Messages
                 {
                     var lastMessage = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
                                            .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
-                    if (item.TheRecievedMessagesList != null)
+                    if (item.TheReceivedMessagesList != null)
                     {
-                        var lastMessageRecieved = item.TheRecievedMessagesList.Where(x => x.SenderId == userId)
+                        var lastMessageRecieved = item.TheReceivedMessagesList.Where(x => x.SenderId == userId)
                                            .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
                         if (lastMessageRecieved != null && lastMessageRecieved.CreateDateTime > lastMessage.CreateDateTime)
                         {
@@ -82,7 +82,7 @@ namespace Data.Repositories.Messages
             {
                 if (!listRelatedUserIds.Contains(item.Id))
                 {
-                    var lastMessage = item.TheRecievedMessagesList.Where(x => x.SenderId == userId)
+                    var lastMessage = item.TheReceivedMessagesList.Where(x => x.SenderId == userId)
                                                .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
 
                     if (item.TheSentMessagesList != null)

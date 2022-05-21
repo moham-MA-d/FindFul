@@ -47,7 +47,11 @@ namespace API.ServiceInstallers
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMessageService, MessageService>();
 
-            services.AddScoped<IPhotoServiceAPI, PhotoServiceAPI>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITokenServiceApi, TokenServiceApi>();
+
+            services.AddScoped<IPhotoServiceApi, PhotoServiceApi>();
         }
     }
 }

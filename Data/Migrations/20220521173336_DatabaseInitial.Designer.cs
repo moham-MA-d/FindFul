@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220512064845_NewDb")]
-    partial class NewDb
+    [Migration("20220521173336_DatabaseInitial")]
+    partial class DatabaseInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -410,6 +410,36 @@ namespace Data.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("Core.Models.Entities.User.RefreshToken", b =>
+                {
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpireDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsInvalidated")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JwtId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Core.Models.Entities.User.UserPhoto", b =>
                 {
                     b.Property<int>("Id")
@@ -575,7 +605,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Core.Models.Entities.Messages.Message", b =>
                 {
                     b.HasOne("Core.Models.Entities.User.AppUser", "TheReciever")
-                        .WithMany("TheRecievedMessagesList")
+                        .WithMany("TheReceivedMessagesList")
                         .HasForeignKey("RecieverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -636,6 +666,17 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("TheRole");
+
+                    b.Navigation("TheUser");
+                });
+
+            modelBuilder.Entity("Core.Models.Entities.User.RefreshToken", b =>
+                {
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheUser")
+                        .WithMany("TheRefreshTokensList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TheUser");
                 });
@@ -711,7 +752,9 @@ namespace Data.Migrations
 
                     b.Navigation("ThePostsList");
 
-                    b.Navigation("TheRecievedMessagesList");
+                    b.Navigation("TheReceivedMessagesList");
+
+                    b.Navigation("TheRefreshTokensList");
 
                     b.Navigation("TheSentMessagesList");
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Core.Models.Entities.User;
 using DTO.Account;
 using DTO.Pagination;
@@ -8,6 +9,7 @@ namespace Core.IServices.User
 {
     public interface IUserService : IEntityService<AppUser>
     {
+
         Task<DtoMember> GetByEmail(string email);
         DtoMember GetByUsername(string username);
         Task<DtoMember> GetByUsernameAsync(string username);
@@ -20,7 +22,5 @@ namespace Core.IServices.User
         bool IsInputEmail(string email);
         bool IsInputPhone(string phone);
 
-        string GenerateRandomUsername(string name);
-        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Core.IServices
 {
@@ -7,8 +8,8 @@ namespace Core.IServices
         Task<T> AddAsync(T entity);
         void Update(T entity);
         Task RemoveAsync(T entity);
-        T GetById(int Id);
-        Task<T> GetByIdAsync(int Id);
+        T GetById(int id);
+        Task<T> GetByIdAsync(int id);
 
         Task SaveChangesAsync();
         void SaveChanges();

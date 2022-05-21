@@ -5,3 +5,4 @@ WHERE u.Id = ur.UserId
 AND r.Id = ur.RoleId
 AND u.UserName = 'teresa';
 ;
+

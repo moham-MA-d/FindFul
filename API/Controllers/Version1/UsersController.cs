@@ -21,9 +21,9 @@ namespace API.Controllers.Version1
     {
         private readonly IUserService _userService;
         private readonly IMapperService _mapperService;
-        private readonly IPhotoServiceAPI _photoServiceAPI;
+        private readonly IPhotoServiceApi _photoServiceAPI;
 
-        public UsersController(IUserService userService, IMapperService mapperService, IPhotoServiceAPI photoService, IUserPhotoService userPhotoService)
+        public UsersController(IUserService userService, IMapperService mapperService, IPhotoServiceApi photoService, IUserPhotoService userPhotoService)
         {
             _userService = userService;
             _mapperService = mapperService;
@@ -71,7 +71,7 @@ namespace API.Controllers.Version1
         {
             var appUser = await _userService.GetUserByIdAsync(User.GetUserId());
 
-            var result = await _photoServiceAPI.AddPhotoAsyncAPI(file);
+            var result = await _photoServiceAPI.AddPhotoAsyncApi(file);
             if (result.Error != null) return BadRequest(result.Error.Message);
 
             appUser.ProfilePhotoUrl = result.SecureUrl.AbsoluteUri;
