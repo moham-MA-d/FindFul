@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
 using Core.Models.Entities.User;
 using DTO.Admin;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers.Version1.Admin
 {
-    [Authorize(policy: StaticPolicies.AdminPolicy)]
+    //[Authorize(policy: StaticPolicies.AdminPolicy)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AdminMainController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;

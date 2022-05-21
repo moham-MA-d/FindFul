@@ -35,12 +35,13 @@ namespace Core.Models.Entities.User
 
         public ICollection<UserPhoto> TheUserPhotosList { get; set; }
         public ICollection<Post> ThePostsList { get; set; }
+        public ICollection<RefreshToken> TheRefreshTokensList { get; set; }
         public ICollection<Comment> TheCommentsList { get; set; }
 		public ICollection<Follow> TheFollowerList { get; set; }
 		public ICollection<Follow> TheFollowingList { get; set; }
 		public ICollection<PostLiked> ThePostLikedList { get; set; }
 		public ICollection<Message> TheSentMessagesList { get; set; }
-		public ICollection<Message> TheRecievedMessagesList { get; set; }
+		public ICollection<Message> TheReceivedMessagesList { get; set; }
         public virtual ICollection<AppUserRole> TheUserRolesList { get; set; }
 
     }

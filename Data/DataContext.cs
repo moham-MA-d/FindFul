@@ -30,6 +30,7 @@ namespace Data
         public DbSet<Follow> Follows { get; set; }
         public DbSet<PostLiked> PostsLiked { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
         //This is the method that is called when an entity is created.
@@ -50,6 +51,7 @@ namespace Data
             modelBuilder.ApplyConfiguration(new FollowConfig());
             modelBuilder.ApplyConfiguration(new PostLikedConfig());
             modelBuilder.ApplyConfiguration(new MessageConfig());
+            //modelBuilder.ApplyConfiguration(new RefreshTokenConfig());
 
         }
     }

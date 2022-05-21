@@ -30,6 +30,22 @@ namespace API.Extensions
             configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings); 
 
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                // two below lines are for authenticate users with a valid token
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey)),
+
+                ValidateIssuer = false, //Our Findful.API server
+                ValidateAudience = false, // Our Angular Application
+
+                //RequireExpirationTime = true,
+                //ValidateLifetime = true
+
+            };
+
+            services.AddSingleton(tokenValidationParameters);
+
             services
                 .AddAuthentication(option =>
                 {
@@ -41,19 +57,7 @@ namespace API.Extensions
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        // two below lines are for authenticate users with a valid token
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey)),
-
-                        ValidateIssuer = false, //Our Findful.API server
-                        ValidateAudience = false, // Our Angular Application
-
-                        //RequireExpirationTime = true,
-                        //ValidateLifetime = true
-
-                    };
+                    options.TokenValidationParameters = tokenValidationParameters;
                 });
 
             services.AddAuthorization(opt =>

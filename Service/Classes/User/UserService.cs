@@ -6,17 +6,18 @@ using Core;
 using Core.IRepositories.User;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Security.Claims;
 using Core.IServices;
 using Core.IServices.User;
 using DTO.Pagination;
+using Microsoft.AspNetCore.Identity;
 using static DTO.Enumerations.UserEnums;
 
 namespace Service.Classes.User
 {
     public class UserService : EntityService<AppUser>, IUserService, IEntityService<AppUser>
     {
-        IUserRepository _userRepository;
-
+        readonly IUserRepository _userRepository;
         public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
             : base(unitOfWork, userRepository)
         {
@@ -104,7 +105,7 @@ namespace Service.Classes.User
             return Regex.Match(phone, @"^(\+[0-9]{9})$").Success;
         }
 
-        public string GenerateRandomUsername(string name)
+        private string GenerateRandomUsername(string name)
         {
             return name + new Random(11).ToString();
         }

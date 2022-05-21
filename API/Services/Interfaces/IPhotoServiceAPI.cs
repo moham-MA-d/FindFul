@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace API.Services.Interfaces
 {
-    public interface IPhotoServiceAPI
+    public interface IPhotoServiceApi
     {
-        Task<ImageUploadResult> AddPhotoAsyncAPI(IFormFile file);
-        Task<DeletionResult> RemovePhotoAsyncAPI(string publicId);
+        Task<ImageUploadResult> AddPhotoAsyncApi(IFormFile file);
+        Task<DeletionResult> RemovePhotoAsyncApi(string publicId);
     }
 }

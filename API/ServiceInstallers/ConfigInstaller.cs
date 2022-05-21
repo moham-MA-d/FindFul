@@ -2,11 +2,13 @@
 using API.Services.Classes;
 using API.Services.Interfaces;
 using Core;
+using Core.IServices.User;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Service.Classes.User;
 using Service.Helpers;
 
 namespace API.ServiceInstallers

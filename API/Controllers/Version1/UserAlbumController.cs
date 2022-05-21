@@ -19,10 +19,10 @@ namespace API.Controllers.Version1
     {
         private readonly IUserService _userService;
         private readonly IMapperService _mapperservice;
-        private readonly IPhotoServiceAPI _photoServiceAPI;
+        private readonly IPhotoServiceApi _photoServiceAPI;
         private readonly IUserPhotoService _userPhotoService;
 
-        public UserAlbumController(IUserService userService, IMapperService mapperservice, IPhotoServiceAPI photoService, IUserPhotoService userPhotoService)
+        public UserAlbumController(IUserService userService, IMapperService mapperservice, IPhotoServiceApi photoService, IUserPhotoService userPhotoService)
         {
             _userService = userService;
             _mapperservice = mapperservice;
@@ -47,7 +47,7 @@ namespace API.Controllers.Version1
             var user = await _userService.GetByUsernameAsync(User.GetUsername());
             var appUser = await _userService.GetUserByIdAsync(user.Id);
 
-            var result = await _photoServiceAPI.AddPhotoAsyncAPI(file);
+            var result = await _photoServiceAPI.AddPhotoAsyncApi(file);
 
             if (result.Error != null) return BadRequest(result.Error.Message);
 
@@ -82,7 +82,7 @@ namespace API.Controllers.Version1
 
             if (photo.PublicId != null)
             {
-                var result = await _photoServiceAPI.RemovePhotoAsyncAPI(photo.PublicId);
+                var result = await _photoServiceAPI.RemovePhotoAsyncApi(photo.PublicId);
                 if (result.Error != null) return BadRequest(result.Error.Message);
             }
 
