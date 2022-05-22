@@ -8,16 +8,16 @@ namespace API.Extensions
         {
             //ClaimTypes.Name : Represent `JwtRegisteredClaimNames.UniqueName`
             //  that we've set inside our token => `TokenService`
-            return user.FindFirst(ClaimTypes.Name)?.Value;
+            return user.FindFirst("UserName")?.Value;
         }
 
         public static int GetUserId(this ClaimsPrincipal user)
         {
             var sdf = user.FindFirst("Sex")?.Value;
             
-                //ClaimTypes.NameIdentifier : Represent `JwtRegisteredClaimNames.NameId`
-            //  that we've set inside our token => `TokenService`
-            var value = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+             // ClaimTypes.NameIdentifier : Represent `JwtRegisteredClaimNames.NameId`
+            // that we've set inside our token => `TokenService`
+            var value = user.FindFirst("Id")?.Value;
             return value != null ? int.Parse(value) : 0;
         }
     }

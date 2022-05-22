@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -31,7 +32,6 @@ namespace API.Services.Classes
 
         public TokenServiceApi(IConfiguration configuration, UserManager<AppUser> userManager, TokenValidationParameters validationParameters, JwtSettings jwtSettings, ITokenService tokenService)
         {
-
             _validationParameters = validationParameters;
             _jwtSettings = jwtSettings;
             _tokenService = tokenService;
@@ -48,22 +48,18 @@ namespace API.Services.Classes
             if (validatedToken == null)
                 return new DtoAuthenticationResult { Errors = new[] { "Invalid RefreshToken!" } };
 
-
             var claimType = validatedToken.Claims.SingleOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp)?.Value;
 
             long expiryDateUnix = 0;
             if (claimType != null)
                 expiryDateUnix = long.Parse(claimType);
 
-            // When Unix time has started
-            var expiryDateTimeUtc = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Utc)
-                    .AddSeconds(expiryDateUnix)
-                    //.Subtract(_jwtSettings.TokenLifeTime)
-                    ;
+            var expiryDateTimeUtc = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            expiryDateTimeUtc = expiryDateTimeUtc.AddSeconds(expiryDateUnix).ToUniversalTime();
 
 
             if (expiryDateTimeUtc > DateTime.UtcNow)
-                return new DtoAuthenticationResult { Errors = new[] { "Thi Token has not expired yet!" } };
+                return new DtoAuthenticationResult { Errors = new[] { "This Token has not expired yet!" } };
 
             // tokenId
             var jti = validatedToken.Claims.SingleOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
@@ -88,7 +84,7 @@ namespace API.Services.Classes
             storedRefreshToken.IsUsed = true;
             _tokenService.Update(storedRefreshToken);
 
-            var userId = validatedToken.Claims.SingleOrDefault(x => x.Type == JwtRegisteredClaimNames.NameId)?.Value;
+            var userId = validatedToken.Claims.SingleOrDefault(x => x.Type == "Id")?.Value;
             if (string.IsNullOrEmpty(userId))
                 return new DtoAuthenticationResult { Errors = new[] { "Please try again later" } }; //User was not found
 
@@ -103,11 +99,12 @@ namespace API.Services.Classes
             // Claim: store some properties in out token about user and issued by server.
             var claims = new List<Claim>
             {
-                new Claim("Sex", user.Sex.ToString()),
-                new Claim(JwtRegisteredClaimNames.Gender, user.Gender.ToString()),
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                new ("Email", user.Email),
+                new ("Id", user.Id.ToString()),
+                new ("UserName", user.UserName),
+                new ("Sex", user.Sex.ToString()),
+                new ("Gender", user.Gender.ToString()),
+                //new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddMonths(1).ToString(CultureInfo.InvariantCulture)),
                 //Used for RefreshToken Validation
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
@@ -116,24 +113,29 @@ namespace API.Services.Classes
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);
 
-            var tokeDescriptor = new SecurityTokenDescriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(1),
+                //Expires = DateTime.Now.Add(_jwtSettings.TokenLifeTime),
+                Expires = DateTime.UtcNow.AddSeconds(120),
                 SigningCredentials = cred
             };
 
+            var ex1 = DateTime.UtcNow;
+            var ex2 = DateTime.UtcNow.Add(_jwtSettings.TokenLifeTime);
+            
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var token = tokenHandler.CreateToken(tokeDescriptor);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             
             var refreshToken = new RefreshToken
             {
                 JwtId = token.Id,
+                UserId = user.Id,
                 CreateDateTime = DateTime.UtcNow,
-                UserId = user.Id
+                ExpireDateTime = DateTime.UtcNow.AddMonths(6)
             };
             await _tokenService.AddAsync(refreshToken);
 
@@ -162,9 +164,8 @@ namespace API.Services.Classes
         }
         private static bool HasJwtValidSecurityAlgorithm(SecurityToken validatedToken)
         {
-            return validatedToken is JwtSecurityToken jwtSecurityToken &&
-                   jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512,
-                       StringComparison.InvariantCultureIgnoreCase);
+            return validatedToken is JwtSecurityToken jwtSecurityToken
+                   && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
