@@ -56,6 +56,7 @@ namespace API.Controllers.Version1
         [HttpPost("Login")]
         public async Task<ActionResult<DtoAuthenticationResult>> Login(DtoLogin dtoLogin)
         {
+
             if (dtoLogin.UserName.IsNullOrEmptyOrWhiteSpace())
                 return BadRequest("Username or Email is empty");
 
@@ -85,7 +86,8 @@ namespace API.Controllers.Version1
 
             if (!result.Succeeded) return Unauthorized();
 
-            return Ok(await _tokenServiceApi.CreateTokenAsync(user));
+            var token = await _tokenServiceApi.CreateTokenAsync(user);
+            return Ok(token);
         }
 
 
@@ -93,13 +95,9 @@ namespace API.Controllers.Version1
         [HttpPost("Refresh")]
         public async Task<ActionResult<DtoAuthenticationResult>> Refresh(DtoRefreshToken refreshToken)
         {
-            await _tokenServiceApi.RefreshTokenAsync(refreshToken.Token, refreshToken.RefreshToken);
+            var sd = await _tokenServiceApi.RefreshTokenAsync(refreshToken.Token, refreshToken.RefreshToken);
 
-            var userId = User.GetUserId();
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
-
-            return await _tokenServiceApi.CreateTokenAsync(user);
-
+            return Ok(sd);
         }
     }
 }
