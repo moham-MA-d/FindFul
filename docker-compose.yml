@@ -1,0 +1,31 @@
+version: '3.4'
+
+networks:
+  localdev:
+    name: localdev
+
+services:
+  main-api:
+    image: API/
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    restart: always
+    ports:
+       - "7000:80"
+    depends_on:
+       - findfulsql
+    networks:
+       - localdev
+   
+  findfulsql:
+    image: microsoft/mssql-server-linux:2017-latest
+    container_name: findfulsql
+    environment:
+        - ACCEPT-EULA:Y
+        - MSSQL-SA-PASSOWRD:1234
+        - MSSQL-TCP-PORT=1443
+    ports:
+        - "2433:2433"
+    networks:
+        - localdev

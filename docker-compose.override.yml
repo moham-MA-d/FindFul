@@ -1,0 +1,35 @@
+version: '3.4'
+
+networks:
+  localdev:
+    name: localdev
+
+services:
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80" #access to api
+      - "443" # in docker
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    build: API/
+    restart: always
+    depends_on:
+       - db-server
+    networks:
+        - localdev
+
+  db-server:
+    image: mcr.microsoft.com/mssql/server
+    container_name: db-server
+    environment:
+     - ACCEPT_EULA=Y
+     - MSSQL_SA_PASSWORD=mohammad19A
+     - MSSQL_TCP_PORT=1443
+    ports:
+     - "2433:2433"
+    networks:
+        - localdev 
