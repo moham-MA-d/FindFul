@@ -54,7 +54,8 @@ export class AccountService {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.isLoggedIn = false;
-    environment.memberCache.clear();
+    /////environment.memberCache.clear();
+
   }
 
   //set user to observable

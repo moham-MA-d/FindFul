@@ -4,11 +4,11 @@
 
 import { GlobalConstants } from "src/app/common/global";
 
+//Map() is used like a dictionary with key, value parameters and have set() and get() methods.
 export const environment = {
+  memberCache: new Map(),
   production: false,
   apiUrl: GlobalConstants.APIURL,
-  //Map() is used like a dictionary with key, value parameters and have set() and get() methods.
-  memberCache: new Map()
 };
 
 /*
