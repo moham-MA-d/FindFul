@@ -23,7 +23,8 @@ export class MemberService {
   userPhotos: userPhoto[] = [];
 
   //Map() is used like a dictionary with key, value parameters and have set() and get() methods.
-  memberCache = environment.memberCache;
+  //memberCache = environment.memberCache;
+  memberCache: any;
   user: User;
   private _userParams: UserParameters;
   public get userParams(): UserParameters {
