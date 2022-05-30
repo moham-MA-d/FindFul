@@ -31,11 +31,14 @@ namespace Service.Helpers
             CreateMap<DtoMemberUpdate, AppUser>()
                 .ForMember(dst => dst.Id, act => act.Ignore())
                 .ForMember(dst => dst.Email, act => act.Ignore())
-                .ForMember(dst => dst.UserName, act => act.Ignore());
+                .ForMember(dst => dst.UserName, act => act.Ignore())
+                .ForMember(dst => dst.ProfilePhotoUrl, act => act.Ignore());
 
 
-            CreateMap<Post, DtoPostRequest>()
-                .ForMember(dst => dst.IsLiked, opt => opt.MapFrom(src => src.ThePostLikedList.Any(x => x.UserId == currentUserId && x.IsActive == true)));
+            CreateMap<Post, DtoPostResponse>()
+                .ForMember(dst => 
+                    dst.IsLiked, opt => 
+                    opt.MapFrom(src => src.ThePostLikedList.Any(x => x.UserId == currentUserId && x.IsActive == true)));
 
             CreateMap<DtoPostRequest, Post>().ForMember(dst => dst.CreateDateTime, act => act.Ignore());
 

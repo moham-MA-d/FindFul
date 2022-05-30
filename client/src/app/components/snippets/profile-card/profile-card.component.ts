@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Member } from 'src/app/models/user/member';
-import { User } from 'src/app/models/user/user';
+import { User, UserToken } from 'src/app/models/user/user';
 import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({

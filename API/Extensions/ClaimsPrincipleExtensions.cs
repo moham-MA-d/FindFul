@@ -13,7 +13,6 @@ namespace API.Extensions
 
         public static int GetUserId(this ClaimsPrincipal user)
         {
-            var sdf = user.FindFirst("Sex")?.Value;
             
              // ClaimTypes.NameIdentifier : Represent `JwtRegisteredClaimNames.NameId`
             // that we've set inside our token => `TokenService`

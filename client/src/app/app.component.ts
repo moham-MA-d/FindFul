@@ -1,5 +1,6 @@
+import { JsonpClientBackend } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user/user';
+import { User, UserToken } from 'src/app/models/user/user';
 import { AccountService } from 'src/app/services/account/account.service';
 
 //Using @component decorator means that our TypeScript class now has Angular features.
@@ -20,13 +21,12 @@ export class AppComponent implements OnInit{
   }
 
   setCurrentUser() {
-    var localUser = localStorage.getItem('user');
+    var localUser: UserToken = JSON.parse(localStorage.getItem('user'));
     if (localUser) {
-        const user: User = JSON.parse(localUser);
-        this.accountService.setCurrentUser(user);
+        this.accountService.setCurrentUser(localUser);
         this.accountService.isLoggedIn = true;
     }
   }
-  
+
 }
 
