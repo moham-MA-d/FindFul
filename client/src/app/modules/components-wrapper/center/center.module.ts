@@ -16,7 +16,7 @@ import { ProfileAlbumPhotoEditComponent } from 'src/app/components/members/Profi
 import { SnippetComponentsModule } from '../../snippet-components.module';
 import { ProfilePhotoEditComponent } from 'src/app/components/members/Profile/ProfileEdit/profilePhotoEdit/profilePhotoEdit.component';
 import { ProfileEditBasicInfoComponent } from 'src/app/components/members/Profile/ProfileEdit/profileEditBasicInfo/profileEditBasicInfo.component';
-import { MatDatepickerModule } from '@angular/material/datepicker/';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

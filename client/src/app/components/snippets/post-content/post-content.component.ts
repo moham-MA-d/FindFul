@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { post } from 'jquery';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Post } from 'src/app/models/post/post';
@@ -17,7 +16,7 @@ export class PostContentComponent implements OnInit {
   @Input() posts: Post;
 
   user: User;
-  currentUser$!: Observable<User>;
+  currentUser$!: Observable<User>; //TODO Remove
   textColor: string = '';
   faBeat: string = 'text-gray';
 

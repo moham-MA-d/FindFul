@@ -17,19 +17,19 @@ constructor(private accountService: AccountService, private toastService: Toastr
   canActivate(): Observable<boolean> {
     if (this.accountService.isLoggedIn) {
 
-      return this.accountService.currentUser$.pipe(
+      return this.accountService.currentUserToken$.pipe(
         map(user => {
           if(user){
-           
+
             if(this.router.url == '/') {
               this.router.navigated = true;
-            }          
+            }
             return true;
           }
           this.toastService.error("Access is denied!");
           this.router.navigateByUrl('/welcome');
           return false;
-        }) 
+        })
         );
     }
     else{
@@ -37,7 +37,7 @@ constructor(private accountService: AccountService, private toastService: Toastr
       this.router.navigateByUrl('/welcome');
       return new BehaviorSubject<boolean>(false);
     }
-    
+
   }
-  
+
 }

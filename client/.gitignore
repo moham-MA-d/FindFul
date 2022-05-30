@@ -1,6 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Mine 
+# Mine
 ssl
 src/resources/images
 src/resources/fonts
@@ -8,7 +8,7 @@ src/resources/css/emoji
 appsettings.json
 ../API/appsettings.json
 ../API/appsettings.Development.json
-
+.angular
 *.db*
 
 # compiled output

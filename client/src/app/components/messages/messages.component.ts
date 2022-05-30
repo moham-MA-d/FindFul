@@ -4,7 +4,7 @@ import { CreateMessage } from 'src/app/models/message/createMessage';
 import { MemberChat } from 'src/app/models/message/memberChat';
 import { Message } from 'src/app/models/message/message';
 import { Member } from 'src/app/models/user/member';
-import { User } from 'src/app/models/user/user';
+import { User, UserToken } from 'src/app/models/user/user';
 import { AccountService } from 'src/app/services/account/account.service';
 import { MessageService } from 'src/app/services/message/message.service';
 
@@ -18,6 +18,7 @@ export class MessagesComponent implements OnInit {
   memberChat: MemberChat[];
   messages: Message[];
   user: User;
+  userToken: UserToken;
   chatId: number;
   messageText: string;
   selectedMember: Member;
@@ -25,8 +26,8 @@ export class MessagesComponent implements OnInit {
   tmpDisableScroll: boolean = false;
 
   constructor(private messageService: MessageService, private accountService: AccountService) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
-      this.user = user;
+    this.accountService.currentUser$.pipe(take(1)).subscribe(u => {
+      this.user = u;
     })
   }
 
@@ -62,6 +63,7 @@ export class MessagesComponent implements OnInit {
             } else {
               this.messages = r;
             }
+            console.log("Messages: ", this.messages);
           }
         },
         complete: () => {
@@ -76,7 +78,6 @@ export class MessagesComponent implements OnInit {
   }
 
   SendMessage() {
-    console.log("11111");
     const createMessage: CreateMessage = {
       body: this.messageText,
       recieverId: this.chatId

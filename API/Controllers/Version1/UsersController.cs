@@ -29,7 +29,7 @@ namespace API.Controllers.Version1
             _mapperService = mapperService;
             _photoServiceAPI = photoService;
         }
-
+            
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<DtoMember>>> GetAll([FromQuery] UserParameters userParameters)
         {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/models/user/user';
+import { UserToken } from 'src/app/models/user/user';
 import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   setCurrentUser() {
     var localUser = localStorage.getItem('user');
     if (localUser) {
-      const user: User = JSON.parse(localUser);
+      const user: UserToken = JSON.parse(localUser);
       this.accountService.setCurrentUser(user);
       this.accountService.isLoggedIn = true;
       }

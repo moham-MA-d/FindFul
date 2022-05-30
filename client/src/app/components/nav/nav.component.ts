@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { User } from 'src/app/models/user/user';
+import { User, UserToken } from 'src/app/models/user/user';
 import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
@@ -15,7 +15,9 @@ export class NavComponent implements OnInit {
   currentUser$!: Observable<User>;
 
   constructor(public accountService: AccountService) {
-    accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    this.accountService.currentUser$.pipe(take(1)).subscribe(u => {
+      this.user = u;
+    });
   }
 
   ngOnInit(): void {

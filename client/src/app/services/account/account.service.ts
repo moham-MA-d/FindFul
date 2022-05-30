@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { User } from 'src/app/models/user/user';
+import { User, UserToken } from 'src/app/models/user/user';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -23,6 +23,9 @@ export class AccountService {
   // the number passed into the method is used for how many previous values we want to store.
   // it can be observe by other classes or components.
   // whenever sth subscribe to this then it's going to be notified if anything changes.
+  private currentUserTokenSource = new ReplaySubject<UserToken>(1);
+  currentUserToken$ = this.currentUserTokenSource.asObservable();
+
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -30,7 +33,7 @@ export class AccountService {
 
   login(model: User) {
     return this.http.post(this.baseUrl + 'account/login', model)
-    .pipe(map((response: User) => {
+    .pipe(map((response: UserToken) => {
       const user = response;
       if(user){
         this.setCurrentUser(user);
@@ -41,7 +44,7 @@ export class AccountService {
 
   register(model: any) {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
-      map((user: User) => {
+      map((user: UserToken) => {
         if (user) {
           this.setCurrentUser(user);
         }
@@ -52,6 +55,7 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
+    this.currentUserTokenSource.next(null);
     this.currentUserSource.next(null);
     this.isLoggedIn = false;
     /////environment.memberCache.clear();
@@ -59,17 +63,27 @@ export class AccountService {
   }
 
   //set user to observable
-  setCurrentUser(user:User) {
+  setCurrentUser(authResult: UserToken) {
+    const user: User = this.getDecodedToken(authResult.token);
+    const userRoles = user.roles;
     user.roles = [];
-    const roles = this.getDecodedToken(user.token).role;
-    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
+    Array.isArray(userRoles) ? user.roles = userRoles : user.roles.push(userRoles);
     this.isLoggedIn = true;
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(authResult));
+    this.currentUserTokenSource.next(authResult);
     this.currentUserSource.next(user);
   }
 
-  getDecodedToken(token: string){
-    return JSON.parse(atob(token.split('.')[1]));
+  getDecodedToken(token: string) : User {
+    let u = JSON.parse(atob(token.split('.')[1]));
+    let usr = new User();
+    usr.userName = u.UserName;
+    usr.sex = u.Sex;
+    usr.gender = u.Gender;
+    usr.photoUrl = u.PhotoUrl;
+    usr.roles = u.Roes;
+    usr.id = u.Id;
+    return usr;
   }
 
 
