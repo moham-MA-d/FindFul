@@ -14,7 +14,7 @@ namespace Data.Repositories
         protected readonly DataContext _context;
         protected readonly ILogger _logger;
 
-        public GenericRepository(DataContext context, ILogger logger)
+        protected GenericRepository(DataContext context, ILogger logger)
         {
             _context = context;
             _logger = logger;

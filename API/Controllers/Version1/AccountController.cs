@@ -95,9 +95,9 @@ namespace API.Controllers.Version1
         [HttpPost("Refresh")]
         public async Task<ActionResult<DtoAuthenticationResult>> Refresh(DtoRefreshToken refreshToken)
         {
-            var sd = await _tokenServiceApi.RefreshTokenAsync(refreshToken.Token, refreshToken.RefreshToken);
+            var result = await _tokenServiceApi.RefreshTokenAsync(refreshToken.Token, refreshToken.RefreshToken);
 
-            return Ok(sd);
+            return Ok(result);
         }
     }
 }

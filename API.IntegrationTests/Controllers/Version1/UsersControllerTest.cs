@@ -12,7 +12,7 @@ using Xunit;
 
 namespace API.IntegrationTests.Controllers.Version1
 {
-    public class UsersControllerTest : IntegrationTestBase
+    public class UsersControllerTest : IntegrationTestBase/*<Startup>*/
     {
         public async Task GetAll_X_Y()
         {
@@ -35,6 +35,20 @@ namespace API.IntegrationTests.Controllers.Version1
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             (await response.Content.ReadFromJsonAsync<List<DtoMember>>()).Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task GetAll_WithoutAnyUsers_ReturnEmptyResponse1111()
+        {
+            //Arrange
+            await AuthenticateAsync();
+
+            //Act
+            var response = await _httpClient.GetAsync("api/v1/Users/GetAll");
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            (await response.Content.ReadFromJsonAsync<List<DtoMember>>()).Should().BeEmpty();
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using API.Helpers;
+using API.Helpers.Authorizations;
 using Core.Models.Entities.User;
 using Data;
 using DTO.Admin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +17,6 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddIdentityCore<AppUser>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
@@ -64,7 +65,13 @@ namespace API.Extensions
             {
                 opt.AddPolicy(StaticPolicies.AdminPolicy, policy => policy.RequireRole(StaticRoles.Admin));
                 opt.AddPolicy(StaticPolicies.ModeratorPolicy, policy => policy.RequireRole(StaticRoles.Admin, StaticRoles.Moderator));
+                opt.AddPolicy(StaticPolicies.CompanyMembersPolicy, policy =>
+                {
+                    policy.AddRequirements(new CustomAuthorizations.CompanyMembers("findful.com"));
+                });
             });
+
+            services.AddSingleton<IAuthorizationHandler, CompanyMembersHandler>();
 
             return services;
         }
