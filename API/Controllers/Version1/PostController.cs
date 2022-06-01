@@ -23,8 +23,8 @@ namespace API.Controllers.Version1
         }
 
 
-        [HttpPost("AddPost")]
-        public async Task<ActionResult<DtoPostResponse>> AddPost(DtoPostRequest dtoPostRequest)
+        [HttpPost("Add")]
+        public async Task<ActionResult<DtoPostResponse>> Add(DtoPostRequest dtoPostRequest)
         {
             var post = _mapperService.DtoPostRequestToPost(dtoPostRequest);
             post.UserId = User.GetUserId();
@@ -34,8 +34,17 @@ namespace API.Controllers.Version1
             return Ok(dtoPostResponse);
         }
 
-        [HttpGet("GetPosts")]
-        public async Task<ActionResult<IEnumerable<DtoPostResponse>>> GetPosts([FromQuery] PostParameters postParameters)
+
+        [HttpGet("Get/{postId}")]
+        public async Task<ActionResult<IEnumerable<DtoPostResponse>>> Get(int postId)
+        {
+            var post = await _postService.GetByIdAsync(postId);
+
+            return Ok(post);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<DtoPostResponse>>> GetAll([FromQuery] PostParameters postParameters)
         {
             ++postParameters.PageIndex;
 
