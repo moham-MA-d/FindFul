@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class DatabaseInitial : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,12 +122,12 @@ namespace Data.Migrations
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SenderUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SenderId = table.Column<int>(type: "int", nullable: false),
-                    SnderDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    RecieverUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecieverId = table.Column<int>(type: "int", nullable: false),
-                    RecieverDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DateRecieved = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateReaded = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SenderDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    ReceiverUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReceiverId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DateReceived = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateRead = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false),
@@ -138,8 +138,8 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_RecieverId",
-                        column: x => x.RecieverId,
+                        name: "FK_Messages_Users_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -392,9 +392,9 @@ namespace Data.Migrations
                 column: "FollowingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_RecieverId",
+                name: "IX_Messages_ReceiverId",
                 table: "Messages",
-                column: "RecieverId");
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",

@@ -30,7 +30,7 @@ namespace Service.Classes.Posts
             return await _postLikedRepository.GetPostsLikedByUser(userId, postParameters);
         }
 
-        public async Task<IEnumerable<BaseMemberDTO>> GetUsersLikedPost(int postId)
+        public async Task<IEnumerable<DtoBaseMember>> GetUsersLikedPost(int postId)
         {
             return await _postLikedRepository.GetUsersLikedPost(postId);
         }

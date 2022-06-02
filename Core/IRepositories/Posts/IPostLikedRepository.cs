@@ -11,7 +11,7 @@ namespace Core.IRepositories.Posts
 	{
 		Task<PostLiked> GetPostLike(int postId, int userId);
 		Task<IEnumerable<DtoPostRequest>> GetPostsLikedByUser(int userId, PostParameters postParameters);
-		Task<IEnumerable<BaseMemberDTO>> GetUsersLikedPost(int postId);
+		Task<IEnumerable<DtoBaseMember>> GetUsersLikedPost(int postId);
 
 
 	}

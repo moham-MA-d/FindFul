@@ -44,7 +44,7 @@ namespace API.Controllers.Version1
 
             if (!result.Succeeded) return BadRequest(result.Errors.Select(x => x.Description));
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+            var roleResult = await _userManager.AddToRoleAsync(user, "DtoMember");
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             return await _tokenServiceApi.CreateTokenAsync(user);

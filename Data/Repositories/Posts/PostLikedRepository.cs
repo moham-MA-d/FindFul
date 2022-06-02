@@ -41,10 +41,10 @@ namespace Data.Repositories.Posts
                 postParameters.PageSize);
         }
 
-        public async Task<IEnumerable<BaseMemberDTO>> GetUsersLikedPost(int postId)
+        public async Task<IEnumerable<DtoBaseMember>> GetUsersLikedPost(int postId)
         {
             var posts = _context.Posts.Where(x => x.Id == postId).Select(x => x.TheUser);
-            var users = await posts.ProjectTo<BaseMemberDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            var users = await posts.ProjectTo<DtoBaseMember>(_mapper.ConfigurationProvider).ToListAsync();
 
             return users;
         }

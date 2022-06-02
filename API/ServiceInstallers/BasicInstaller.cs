@@ -1,6 +1,5 @@
 ﻿using System;
 using API.Extensions;
-using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -49,8 +48,7 @@ namespace API.ServiceInstallers
             services.AddSingleton(_ => configuration);
 
             services
-                .AddMvc(opt => { opt.EnableEndpointRouting = false; })
-                .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
+                .AddMvc(opt => { opt.EnableEndpointRouting = false; });
         }
     }
 }

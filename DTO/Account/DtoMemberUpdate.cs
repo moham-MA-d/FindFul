@@ -3,7 +3,7 @@ using DTO.Account.Base;
 
 namespace DTO.Account
 {
-    public class DtoMemberUpdate : BaseMemberDTO
+    public class DtoMemberUpdate : DtoBaseMember
     {
         
         public string City { get; set; }

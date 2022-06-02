@@ -1,6 +1,6 @@
 ﻿namespace DTO.Account.Photo
 {
-    public class MemberPhotoDTO
+    public class DtoMemberPhoto
     {
         public int Id { get; set; }
         public string Url { get; set; }

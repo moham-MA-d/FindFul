@@ -42,7 +42,7 @@ namespace API.Controllers.Version1
         }
 
         [HttpPost("AddPhoto")]
-        public async Task<ActionResult<MemberPhotoDTO>> AddPhoto(IFormFile file)
+        public async Task<ActionResult<DtoMemberPhoto>> AddPhoto(IFormFile file)
         {
             var user = await _userService.GetByUsernameAsync(User.GetUsername());
             var appUser = await _userService.GetUserByIdAsync(user.Id);

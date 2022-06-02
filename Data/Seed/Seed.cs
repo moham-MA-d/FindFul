@@ -21,7 +21,7 @@ namespace Data.Seed
             {
                 new AppRole {Name = "Admin", NormalizedName = "ADMIN"},
                 new AppRole {Name = "Moderator", NormalizedName = "MODERATOR"},
-                new AppRole {Name = "Member", NormalizedName = "MEMBER"}
+                new AppRole {Name = "DtoMember", NormalizedName = "MEMBER"}
             };
 
             foreach (var item in roles)
@@ -31,7 +31,7 @@ namespace Data.Seed
             {
                 user.UserName = user.UserName.ToLower();
                 await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "Member");
+                await userManager.AddToRoleAsync(user, "DtoMember");
             }
 
             var admin = new AppUser

@@ -57,7 +57,7 @@ namespace API.IntegrationTests
                 {
                     new AppRole {Name = "Admin", NormalizedName = "ADMIN"},
                     new AppRole {Name = "Moderator", NormalizedName = "MODERATOR"},
-                    new AppRole {Name = "Member", NormalizedName = "MEMBER"}
+                    new AppRole {Name = "DtoMember", NormalizedName = "MEMBER"}
                 };
                 context.Roles.AddRange(roles);
                 context.SaveChanges();

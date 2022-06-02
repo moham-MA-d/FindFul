@@ -1,6 +1,6 @@
 ﻿namespace DTO.Account.Base
 {
-    public class BaseMemberDTO
+    public class DtoBaseMember
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

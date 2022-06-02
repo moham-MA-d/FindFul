@@ -24,9 +24,9 @@ namespace Service.Helpers
                 //.ForMember(dst => dst.ProfilePhotoUrl, opt => opt.MapFrom(src => src.TheUserPhotosList.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dst => dst.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
 
-            CreateMap<UserPhoto, MemberPhotoDTO>();
+            CreateMap<UserPhoto, DtoMemberPhoto>();
 
-            CreateMap<AppUser, BaseMemberDTO>();
+            CreateMap<AppUser, DtoBaseMember>();
 
             CreateMap<DtoMemberUpdate, AppUser>()
                 .ForMember(dst => dst.Id, act => act.Ignore())
@@ -45,7 +45,7 @@ namespace Service.Helpers
 
             CreateMap<Message, DtoMessageResponse>()
                 .ForMember(dst => dst.SenderPhotoUrl, opt => opt.MapFrom(src => src.TheSender.ProfilePhotoUrl))
-                .ForMember(dst => dst.RecieverPhotoUrl, opt => opt.MapFrom(src => src.TheReciever.ProfilePhotoUrl));
+                .ForMember(dst => dst.RecieverPhotoUrl, opt => opt.MapFrom(src => src.TheReceiver.ProfilePhotoUrl));
         }
     }
 }

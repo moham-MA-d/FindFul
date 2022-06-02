@@ -20,10 +20,10 @@ namespace Data.Repositories.User
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<MemberPhotoDTO>> GetAllUserPhotos(int userId)
+        public async Task<IEnumerable<DtoMemberPhoto>> GetAllUserPhotos(int userId)
         {
             return await _context.UserPhotos.Where(x => x.UserId == userId)
-                .ProjectTo<MemberPhotoDTO>(_mapper.ConfigurationProvider)
+                .ProjectTo<DtoMemberPhoto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
     }

@@ -24,9 +24,9 @@ namespace Service.Classes.Mapper
         {
             return _mapper.Map(dtoMemberUpdate, appUser);
         }
-        public MemberPhotoDTO UserPhotoToDtoMemberPhoto(UserPhoto userPhoto)
+        public DtoMemberPhoto UserPhotoToDtoMemberPhoto(UserPhoto userPhoto)
         {
-            return _mapper.Map<MemberPhotoDTO>(userPhoto);
+            return _mapper.Map<DtoMemberPhoto>(userPhoto);
         }
         
         public Post DtoPostRequestToPost(DtoPostRequest dtoPostRequest)

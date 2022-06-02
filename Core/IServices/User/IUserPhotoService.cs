@@ -7,6 +7,6 @@ namespace Core.IServices.User
 {
     public interface IUserPhotoService : IEntityService<UserPhoto>
     {
-        Task<IEnumerable<MemberPhotoDTO>> GetAllUserPhotos(int userId);
+        Task<IEnumerable<DtoMemberPhoto>> GetAllUserPhotos(int userId);
     }
 }

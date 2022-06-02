@@ -124,9 +124,6 @@ namespace API.Services.Classes
                 SigningCredentials = cred
             };
 
-            var ex1 = DateTime.UtcNow;
-            var ex2 = DateTime.UtcNow.Add(_jwtSettings.TokenLifeTime);
-            
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

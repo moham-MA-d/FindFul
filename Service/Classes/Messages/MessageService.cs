@@ -27,9 +27,9 @@ namespace Service.Classes.Messages
                 SenderId = sender.Id,
                 TheSender = sender,
                 SenderUsername = sender.UserName,
-                RecieverId = reciever.Id,
-                TheReciever = reciever,
-                RecieverUsername = reciever.UserName,
+                ReceiverId = reciever.Id,
+                TheReceiver = reciever,
+                ReceiverUsername = reciever.UserName,
                 Body = dtoCreateMessage.Body,
             };
         }

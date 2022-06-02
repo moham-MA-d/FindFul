@@ -7,6 +7,6 @@ namespace Core.IRepositories.User
 {
     public interface IUserPhotoRepository : IGenericRepository<UserPhoto>
     {
-        Task<IEnumerable<MemberPhotoDTO>> GetAllUserPhotos(int userId);
+        Task<IEnumerable<DtoMemberPhoto>> GetAllUserPhotos(int userId);
     }
 }

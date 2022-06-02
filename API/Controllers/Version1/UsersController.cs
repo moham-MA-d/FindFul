@@ -67,7 +67,7 @@ namespace API.Controllers.Version1
         }
 
         [HttpPost("AddProfilePhoto")]
-        public async Task<ActionResult<MemberPhotoDTO>> AddProfilePhoto(IFormFile file)
+        public async Task<ActionResult<DtoMemberPhoto>> AddProfilePhoto(IFormFile file)
         {
             var appUser = await _userService.GetUserByIdAsync(User.GetUserId());
 
