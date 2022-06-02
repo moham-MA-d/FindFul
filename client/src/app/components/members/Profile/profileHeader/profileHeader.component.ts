@@ -84,7 +84,7 @@ export class ProfileHeaderComponent implements OnInit {
         let username = this.route.snapshot.paramMap.get("username");
         const createMessage: CreateMessage = {
           body: result,
-          recieverUsername: username
+          receiverUsername: username
         }
         this.messageService.SendMessage(createMessage).subscribe(r => {
           if (r) {

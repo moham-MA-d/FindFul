@@ -13,6 +13,6 @@ namespace DTO.Posts
         public bool IsLiked { get; set; } = false;
         public int LikesCount { get; set; }
         public DateTime CreateDateTime { get; set; } = DateTime.Now;
-        public DtoMember TheAppUser { get; set; }
+        public Account.DtoMember TheUser { get; set; }
     }
 }

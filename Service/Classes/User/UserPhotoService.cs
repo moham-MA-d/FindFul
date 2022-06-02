@@ -18,7 +18,7 @@ namespace Service.Classes.User
             _userPhotoRepository = userPhotoRepository;
         }
 
-        public async Task<IEnumerable<MemberPhotoDTO>> GetAllUserPhotos(int userId)
+        public async Task<IEnumerable<DtoMemberPhoto>> GetAllUserPhotos(int userId)
         {
             return await _userPhotoRepository.GetAllUserPhotos(userId);
         }

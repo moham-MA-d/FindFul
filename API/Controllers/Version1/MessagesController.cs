@@ -35,15 +35,15 @@ namespace API.Controllers.Version1
             var sender = await _userService.GetByIdAsync(User.GetUserId());
 
             AppUser receiver;
-            if (!string.IsNullOrEmpty(dtoCreateMessage.RecieverUsername))
+            if (!string.IsNullOrEmpty(dtoCreateMessage.ReceiverUsername))
             {
-                var receiverUsername = dtoCreateMessage.RecieverUsername.ToLower();
+                var receiverUsername = dtoCreateMessage.ReceiverUsername.ToLower();
                 var receiverUser = await _userService.GetByUsernameAsync(receiverUsername);
                 receiver = await _userService.GetByIdAsync(receiverUser.Id);
             }
             else
             {
-                receiver = await _userService.GetByIdAsync(dtoCreateMessage.RecieverId);
+                receiver = await _userService.GetByIdAsync(dtoCreateMessage.ReceiverId);
             }
 
 

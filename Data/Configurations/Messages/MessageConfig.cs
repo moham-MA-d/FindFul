@@ -15,9 +15,9 @@ namespace Data.Configurations.Messages
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-               .HasOne(m => m.TheReciever)
+               .HasOne(m => m.TheReceiver)
                .WithMany(u => u.TheReceivedMessagesList)
-               .HasForeignKey(u => u.RecieverId)
+               .HasForeignKey(u => u.ReceiverId)
                .OnDelete(DeleteBehavior.Restrict);
         }
     }

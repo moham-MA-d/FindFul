@@ -28,14 +28,14 @@ namespace Data.Repositories.Messages
             var recieverUsers = _context.Users.OrderBy(x => x.CreateDateTime).AsQueryable();
 
             var sentChats = _context.Messages.Where(x => x.SenderId == userId)
-                .Include(x => x.TheReciever.TheSentMessagesList)
-                .Include(x => x.TheReciever.TheReceivedMessagesList).AsQueryable();
-            var recievedChats = _context.Messages.Where(x => x.RecieverId == userId)
+                .Include(x => x.TheReceiver.TheSentMessagesList)
+                .Include(x => x.TheReceiver.TheReceivedMessagesList).AsQueryable();
+            var recievedChats = _context.Messages.Where(x => x.ReceiverId == userId)
                 .Include(x => x.TheSender.TheReceivedMessagesList)
                 .Include(x => x.TheSender.TheSentMessagesList).AsQueryable();
 
             senderUsers = recievedChats.Select(y => y.TheSender);
-            recieverUsers = sentChats.Select(x => x.TheReciever);
+            recieverUsers = sentChats.Select(x => x.TheReceiver);
 
             var senders = await senderUsers.ToListAsync();
             var recievers = await recieverUsers.ToListAsync();
@@ -49,7 +49,7 @@ namespace Data.Repositories.Messages
             {
                 if (!listRelatedUserIds.Contains(item.Id))
                 {
-                    var lastMessage = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
+                    var lastMessage = item.TheSentMessagesList.Where(x => x.ReceiverId == userId)
                                            .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
                     if (item.TheReceivedMessagesList != null)
                     {
@@ -87,7 +87,7 @@ namespace Data.Repositories.Messages
 
                     if (item.TheSentMessagesList != null)
                     {
-                        var lastMessagSender = item.TheSentMessagesList.Where(x => x.RecieverId == userId)
+                        var lastMessagSender = item.TheSentMessagesList.Where(x => x.ReceiverId == userId)
                                           .OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
                         if (lastMessagSender != null && lastMessagSender.CreateDateTime > lastMessage.CreateDateTime)
                         {
@@ -120,10 +120,10 @@ namespace Data.Repositories.Messages
         public async Task<List<DtoMessageResponse>> GetMessages(int currentUserId, int targetUserId, int skip)
         {
             var messagesQuery = _context.Messages
-                .Where(x => (x.SenderId == currentUserId && x.RecieverId == targetUserId) || (x.SenderId == targetUserId && x.RecieverId == currentUserId))
+                .Where(x => (x.SenderId == currentUserId && x.ReceiverId == targetUserId) || (x.SenderId == targetUserId && x.ReceiverId == currentUserId))
                 .OrderByDescending(x => x.CreateDateTime)
                 .Include(x => x.TheSender)
-                .Include(x => x.TheReciever)
+                .Include(x => x.TheReceiver)
                 .AsQueryable();
 
             var messagesCount = await messagesQuery.CountAsync();
@@ -140,26 +140,26 @@ namespace Data.Repositories.Messages
 
             var messages = await messagesQuery.OrderBy(x => x.CreateDateTime).ToListAsync();
 
-            var unreadMessages = messages.Where(x => x.DateReaded == null && x.RecieverId == currentUserId).ToList();
+            var unreadMessages = messages.Where(x => x.DateRead == null && x.ReceiverId == currentUserId).ToList();
             if (unreadMessages.Any())
             {
                 foreach (var message in unreadMessages)
                 {
-                    message.DateReaded = DateTime.Now;
+                    message.DateRead = DateTime.Now;
                 }
             }
 
             var messagesDTO = messages.Select(x => new DtoMessageResponse
             {
                 SenderId = x.SenderId,
-                RecieverId = x.RecieverId,
+                RecieverId = x.ReceiverId,
                 Body = x.Body,
                 CreateDateTime = x.CreateDateTime,
                 SenderPhotoUrl = x.TheSender.ProfilePhotoUrl,
-                RecieverPhotoUrl = x.TheReciever.ProfilePhotoUrl,
+                RecieverPhotoUrl = x.TheReceiver.ProfilePhotoUrl,
                 SenderUsername = x.TheSender.UserName,
-                RecieverUsername = x.TheReciever.UserName,
-                DateReaded = x.DateReaded,
+                RecieverUsername = x.TheReceiver.UserName,
+                DateReaded = x.DateRead,
             }).ToList();
 
 
@@ -168,10 +168,10 @@ namespace Data.Repositories.Messages
         public async Task<bool> HasChat(int currentUserId, int targetUserId)
         {
 
-            if (await _context.Messages.AnyAsync(x => x.SenderId == currentUserId && x.RecieverId == targetUserId))
+            if (await _context.Messages.AnyAsync(x => x.SenderId == currentUserId && x.ReceiverId == targetUserId))
                 return true;
 
-            if (await _context.Messages.AnyAsync(x => x.SenderId == targetUserId && x.RecieverId == currentUserId))
+            if (await _context.Messages.AnyAsync(x => x.SenderId == targetUserId && x.ReceiverId == currentUserId))
                 return true;
 
             return false;

@@ -18,7 +18,7 @@ namespace API.IntegrationTests.Controllers.Version1
     {
       
         [Fact]
-        public async Task Add_CorrectSenario_ReturnPost()
+        public async Task Add_CorrectScenario_ReturnPost()
         {
             //Arrange
             PostHelper _postHelper = new PostHelper();
@@ -27,8 +27,7 @@ namespace API.IntegrationTests.Controllers.Version1
             {
                 Id = 1,
                 Body = "Body",
-                CreateDateTime = DateTime.Now,
-                TheAppUser = MapDtoMember(_dtoRegisterId),
+                CreateDateTime = DateTime.Now
             });
 
             //Act   

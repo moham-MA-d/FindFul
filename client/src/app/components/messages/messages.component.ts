@@ -80,7 +80,7 @@ export class MessagesComponent implements OnInit {
   SendMessage() {
     const createMessage: CreateMessage = {
       body: this.messageText,
-      recieverId: this.chatId
+      receiverId: this.chatId
     }
     this.messageService.SendMessage(createMessage).subscribe((r: any) => {
       if (r) {

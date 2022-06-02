@@ -11,7 +11,7 @@ namespace Core.IServices.Mapper
     public interface IMapperService
     {
         AppUser DtoMemberUpdateToAppUser(DtoMemberUpdate dtoMemberUpdate, AppUser appUser);
-        MemberPhotoDTO UserPhotoToDtoMemberPhoto(UserPhoto userPhoto);
+        DtoMemberPhoto UserPhotoToDtoMemberPhoto(UserPhoto userPhoto);
 
         Post DtoPostRequestToPost(DtoPostRequest dtoPostRequest);
         DtoPostResponse PostToDtoPostResponse(Post post); 

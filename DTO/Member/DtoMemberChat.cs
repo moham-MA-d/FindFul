@@ -3,7 +3,7 @@ using System;
 
 namespace DTO.Member
 {
-    public class DtoMemberChat : BaseMemberDTO
+    public class DtoMemberChat : DtoBaseMember
     {
         public string LastMessage { get; set; }
         public DateTime LastMessageDateTime { get; set; }

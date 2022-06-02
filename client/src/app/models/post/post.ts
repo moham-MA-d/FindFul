@@ -7,5 +7,5 @@ export class Post{
   isLiked: boolean;
   createDateTime: Date;
   likesCount: number;
-  theAppUser: Member;
+  theUser: Member;
 }

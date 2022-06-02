@@ -3,10 +3,10 @@
         ================================================= -->
         <div class="post-content" *ngFor="let post of posts">
           <div class="post-container">
-            <img src="{{post.theAppUser.profilePhotoUrl}}" alt="user" class="profile-photo-md pull-left">
+            <img src="{{post.theUser.profilePhotoUrl}}" alt="user" class="profile-photo-md pull-left">
             <div class="post-detail">
               <div class="user-info">
-                <h5><a href="/members/{{post.theAppUser.userName}}" class="profile-link">{{post.theAppUser.firstName}}</a> <span class="following">following</span></h5>
+                <h5><a href="/members/{{post.theUser.userName}}" class="profile-link">{{post.theUser.firstName}}</a> <span class="following">following</span></h5>
                 <p class="text-muted">{{post.createDateTime | timeago }}</p>
               </div>
               <div class="reaction">

@@ -17,8 +17,13 @@ namespace API.Helpers
         //In this Scenario we are going to access `context` after `next` is executed
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            //Here : Before running controller
+            
             //resultContext: It is the context when the action is executed
             var resultContext = await next();
+
+            //Here : After running controller
+
 
             if (resultContext.HttpContext.User.Identity is { IsAuthenticated: false }) return;
 

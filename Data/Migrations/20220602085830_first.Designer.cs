@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220521173336_DatabaseInitial")]
-    partial class DatabaseInitial
+    [Migration("20220602085830_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,10 +98,10 @@ namespace Data.Migrations
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateReaded")
+                    b.Property<DateTime?>("DateRead")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateRecieved")
+                    b.Property<DateTime?>("DateReceived")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("GuId")
@@ -113,14 +113,17 @@ namespace Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("RecieverDeleted")
+                    b.Property<bool>("ReceiverDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RecieverId")
+                    b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
-                    b.Property<string>("RecieverUsername")
+                    b.Property<string>("ReceiverUsername")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SenderDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
@@ -128,12 +131,9 @@ namespace Data.Migrations
                     b.Property<string>("SenderUsername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("SnderDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RecieverId");
+                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -604,9 +604,9 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Entities.Messages.Message", b =>
                 {
-                    b.HasOne("Core.Models.Entities.User.AppUser", "TheReciever")
+                    b.HasOne("Core.Models.Entities.User.AppUser", "TheReceiver")
                         .WithMany("TheReceivedMessagesList")
-                        .HasForeignKey("RecieverId")
+                        .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -616,7 +616,7 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("TheReciever");
+                    b.Navigation("TheReceiver");
 
                     b.Navigation("TheSender");
                 });

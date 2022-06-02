@@ -14,6 +14,6 @@ namespace DTO.Account
         public int Age { get; set; }
         public bool IsFollowed { get; set; }
         public DateTime LastActivity { get; set; }
-        public ICollection<MemberPhotoDTO> Photos { get; set; }
+        public ICollection<DtoMemberPhoto> Photos { get; set; }
     }
 }
