@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using API.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace API.ServiceInstallers
 {
@@ -15,6 +18,8 @@ namespace API.ServiceInstallers
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("V1", new OpenApiInfo { Title = "Findful API", Version = "V1" });
+                //Add filters
+                options.ExampleFilters();
                 options.CustomSchemaIds(type => type.ToString());
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -39,7 +44,14 @@ namespace API.ServiceInstallers
                         Array.Empty<string>()
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
+            //add a registered of field
+            services.AddSwaggerExamplesFromAssemblyOf<Startup>();
+            
 
             services.AddCors();
 

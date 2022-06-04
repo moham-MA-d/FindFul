@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
 using API.Extensions;
 using Core.IServices.Mapper;
@@ -57,10 +58,7 @@ namespace API.Controllers.Version1
 
             var dtoMessage = _mapperService.MessageToDtoMessage(message);
 
-            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}{HttpContext.Request.Path}";
-            int index = baseUrl.LastIndexOf("/");
-            if (index >= 0)
-                baseUrl = baseUrl.Substring(0, index); // or index + 1 to keep slash
+            var baseUrl = HttpContext.GetCurrentLocationUri();
 
             var locationUri = baseUrl + "/" + message.Id;
 
