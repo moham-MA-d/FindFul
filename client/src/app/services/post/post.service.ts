@@ -18,7 +18,7 @@ export class PostService {
    }
 
   sendPost(post: Post) {
-    return this.http.post(this.baseUrl + 'Post/Add', post).pipe(
+    return this.http.post(this.baseUrl + 'Posts/Add', post).pipe(
       map((r: any) => {
           console.log("Post: ", r);
       })
@@ -30,7 +30,7 @@ export class PostService {
     let params = this.pagination.getPaginationHeaders(postParameters.pageIndex, postParameters.pageSize);
     params = this.getFilteredHeaders(params, postParameters);
 
-    return this.pagination.getPaginationResult<Post[]>(this.baseUrl + 'Post/GetAll', params, this.http);
+    return this.pagination.getPaginationResult<Post[]>(this.baseUrl + 'Posts/GetAll', params, this.http);
   }
 
   AddLike(postId: number) {
