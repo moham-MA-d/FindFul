@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.Contracts;
 using API.Controllers.Version1.Base;
 using API.Extensions;
+using API.Middlewares;
 using API.Services.Interfaces;
 using Core.IServices.Mapper;
 using Core.IServices.User;
@@ -47,6 +48,8 @@ namespace API.Controllers.Version1
             return Ok(members);
         }
 
+
+        [CachedAttribute(100)]
         [HttpGet("GetUser/{username}", Name = "GetUser")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<DtoMember>> GetUser(string username)
