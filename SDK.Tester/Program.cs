@@ -55,11 +55,6 @@ namespace SDK.Tester
         {
             services.AddScoped<Runner>();
             services.AddScoped<IPostSdk>(x => new PostSdk(cachedToken));
-            services.AddScoped<IPostApi>(x => RestService.For<IPostApi>("https://localhost:44341", new RefitSettings
-            {
-                //it release a delegate that return a string that put in authorization header.
-                AuthorizationHeaderValueGetter = () => Task.FromResult(cachedToken)
-            }));
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
         }
