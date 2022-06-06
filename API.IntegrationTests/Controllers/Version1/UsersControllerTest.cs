@@ -14,14 +14,6 @@ namespace API.IntegrationTests.Controllers.Version1
 {
     public class UsersControllerTest : IntegrationTestBase/*<Startup>*/
     {
-        public async Task GetAll_X_Y()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
 
         [Fact]
         public async Task GetAll_WithoutAnyUsers_ReturnEmptyResponse()
