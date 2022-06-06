@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
 
-  findfulapi:
-    build: ./API/findfulapi:tag
-    restart: always
-    ports:
-       - 44341:44341
-    environment:
-        DB_URL: FindFulConnection/findfulsql
+#  findfulapi:
+#    build: ./API/findfulapi
+#    restart: always
+#    ports:
+#       - 44341:44341
+#    environment:
+#        DB_URL: FindFulConnection/findfulsql
 
   findfulclient:
     build: ./client
