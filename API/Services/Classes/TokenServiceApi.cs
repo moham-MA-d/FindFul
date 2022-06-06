@@ -157,7 +157,7 @@ namespace API.Services.Classes
             }
             catch (Exception e)
             {
-                return null;
+                throw new Exception(e.Message, e);
             }
         }
         private static bool HasJwtValidSecurityAlgorithm(SecurityToken validatedToken)

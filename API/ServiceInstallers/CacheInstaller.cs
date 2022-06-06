@@ -17,12 +17,16 @@ namespace API.ServiceInstallers
 
             if (!redisCacheSettings.Enabled) return;
 
-            services.AddStackExchangeRedisCache(opt => opt.Configuration = redisCacheSettings.ConnectionString);
-            services.AddSingleton<IResponseCacheServiceApi, ResponseCacheServiceApi>();
 
-
-            var redisConnectionString = configuration.GetValue<string>("RedisConnection");
+            var redisConnectionString = configuration.GetValue<string>("ConnectionStrings:RedisConnection");
             services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(redisConnectionString));
+
+            services.AddSingleton<IResponseCacheServiceApi, ResponseCacheServiceApi>();
+            services.AddSingleton<IRedisCacheServiceApi, RedisCacheServiceApi> ();
+            services.AddHostedService<RedisSubscriber>();
+
+            //var redis = ConnectionMultiplexer.Connect("172.17.0.2");
+            //services.AddScoped(d => redis.GetDatabase());
         }
     }
 }

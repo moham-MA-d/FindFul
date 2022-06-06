@@ -10,14 +10,19 @@ namespace API.Services.Classes
     public class ResponseCacheServiceApi : IResponseCacheServiceApi
     {
         private readonly IDistributedCache _dsitributedCache;
-        private readonly IConnectionMultiplexer _connectionMultiplexer;
 
 
-        public ResponseCacheServiceApi(IDistributedCache dsitributedCache, IConnectionMultiplexer connectionMultiplexer)
+        public ResponseCacheServiceApi(IDistributedCache dsitributedCache)
         {
-            _connectionMultiplexer = connectionMultiplexer;
             _dsitributedCache = dsitributedCache;
         }
+
+        public async Task<string> GetCachedResponseAsync(string cacheKey)
+        {
+            var cachedResponse = await _dsitributedCache.GetStringAsync(cacheKey);
+            return String.IsNullOrEmpty(cachedResponse) ? null : cachedResponse;
+        }
+
 
         public async Task SetCacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive)
         {
@@ -29,11 +34,6 @@ namespace API.Services.Classes
                 AbsoluteExpirationRelativeToNow = timeToLive,
             });
         }
-
-        public async Task<string> GetCachedResponseAsync(string cacheKey)
-        {
-            var cachedResponse = await _dsitributedCache.GetStringAsync(cacheKey);
-            return String.IsNullOrEmpty(cachedResponse) ? null : cachedResponse;
-        }
+       
     }
 }
