@@ -8,11 +8,12 @@ namespace API.SwaggerExamples.Responses
     {
         public DtoPostResponse GetExamples()
         {
-            return new DtoPostResponse
+            var postResponse = new DtoPostResponse
             {
                 Body = "This is a post response example.",
                 TheUser = new DtoMember()
             };
+            return postResponse;
         }
     }
 }

@@ -10,11 +10,12 @@ public class PostRequestExamples
     {
         public DtoPostRequest GetExamples()
         {
-            return new DtoPostRequest
+            var postRequest =  new DtoPostRequest
             {
                 Body = "This is a new post request example.",
                 CreateDateTime = DateTime.Now
             };
+            return postRequest;
         }
     }
 }
