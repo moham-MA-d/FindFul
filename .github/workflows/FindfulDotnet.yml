@@ -20,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./Findful.sln
     - name: Build
-      run: dotnet build Findful/API.csproj --configuration Release --no-restore
+      run: dotnet build API/API.csproj --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
