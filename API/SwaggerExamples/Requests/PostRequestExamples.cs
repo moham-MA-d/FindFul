@@ -13,7 +13,7 @@ public class PostRequestExamples
             return new DtoPostRequest
             {
                 Body = "This is a new post request example.",
-                CreateDateTime = DateTime.Now,
+                CreateDateTime = DateTime.Now
             };
         }
     }
