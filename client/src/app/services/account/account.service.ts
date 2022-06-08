@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { User, UserToken } from 'src/app/models/user/user';
+import { User, UserSocialToken, UserToken } from 'src/app/models/user/user';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { SocialUser } from '@abacritt/angularx-social-login';
 
 // Default Angular services are singleton. When we injected them into a component and it's initialized
 //    it's available until our app disposed off
@@ -59,7 +60,22 @@ export class AccountService {
     this.currentUserSource.next(null);
     this.isLoggedIn = false;
     /////environment.memberCache.clear();
+  }
 
+  facebookAuth(model: SocialUser) {
+
+    let newModel = new UserSocialToken();
+    newModel.accessToken = model.authToken;
+
+    return this.http.post(this.baseUrl + 'account/facebookAuth', newModel)
+    .pipe(map((response: UserToken) => {
+      console.log("RRR: ", response);
+      const user = response;
+      if(user){
+        this.setCurrentUser(user);
+      }
+    }))
+    ;
   }
 
   //set user to observable

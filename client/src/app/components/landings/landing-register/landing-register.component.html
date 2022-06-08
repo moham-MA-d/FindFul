@@ -1,21 +1,59 @@
 <div id="page-contents" style="position: relative;">
-    <!-- <div id="page-contents" style="position: relative;" *ngIf="(currentUser$ |async) === null"> -->
-        <div class="container">
-        <div class="row">
+  <!-- <div id="page-contents" style="position: relative;" *ngIf="(currentUser$ |async) === null"> -->
+  <div class="container">
+    <div class="row">
 
-            <div class="col-md-12">
+      <div class="col-md-12">
 
-                <h1 class="text-center">
-                    Get Started!
-                </h1>
-                   
-                <div class="text-center">
-                    <a routerLink="/login" routerLinkActive="" class="btn btn-primary btn-lg">Login</a>
-                    <a routerLink="/register" class="btn btn-defaul btn-lg">Register</a>
-                </div>
-                
-            </div>
+        <h1 class="text-center">
+          Get Started!
+        </h1>
 
+        <div class="text-center">
+          <a routerLink="/login" routerLinkActive="" class="btn btn-primary btn-lg">Login</a>
+          <a routerLink="/register" class="btn btn-defaul btn-lg">Register</a>
         </div>
+
+      </div>
+
+
+      <div class="col-md-12 mt-5">
+        <hr />
+        <div class="text-center">
+          <div class="jumbotron bg-transparent text-center">
+            <div *ngIf="!user" class="card text-center">
+              <h6 class="card-header">
+                Social Login Demo
+              </h6>
+              <div class="card-block">
+                <h4 class="card-title">Not signed in</h4>
+                <p class="card-text">Sign in with</p>
+              </div>
+              <div class="card-block">
+                <button class="btn btn-social-icon btn-google" (click)="signInWithGoogle()"><span class="fa fa-google"></span></button>
+                <button class="btn btn-social-icon btn-facebook" (click)="signInWithFB()"><span class="fa fa-facebook"></span></button>
+                <button class="btn btn-social-icon btn-linkedin" (click)="signInWithLinkedIn()"><span class="fa fa-linkedin"></span></button>
+              </div>
+            </div>
+            <div *ngIf="user" class="card text-center">
+              <h6 class="card-header">
+                Social Login Demo
+              </h6>
+              <div class="card-block"></div>
+              <img class="card-img-top img-responsive photo" src="{{ user.photoUrl }}">
+              <div class="card-block">
+                <h4 class="card-title">{{ user.name }}</h4>
+                <p class="card-text">{{ user.email }}</p>
+              </div>
+              <div class="card-block">
+                <button class="btn btn-danger" (click)="signOut()">Sign out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+  </div>
 </div>

@@ -19,15 +19,17 @@ namespace API.Controllers.Version1
     {
         private readonly ITokenServiceApi _tokenServiceApi;
         private readonly IUserService _userService;
+        private readonly IIdentityServiceApi _identityServiceApi;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(ITokenServiceApi tokenServiceApi, IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(ITokenServiceApi tokenServiceApi, IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IIdentityServiceApi identityServiceApi)
         {
             _tokenServiceApi = tokenServiceApi;
             _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _identityServiceApi = identityServiceApi;
         }
 
         [HttpPost("Register")]
@@ -90,6 +92,23 @@ namespace API.Controllers.Version1
             return Ok(token);
         }
 
+
+        [HttpPost("FacebookAuth")]
+        public async Task<ActionResult<DtoAuthenticationResult>> FacebookAuth(DtoAuthSocial accessToken)
+        {
+
+            var r = await _identityServiceApi.LoginWithFacebookAsync(accessToken.AccessToken);
+
+            if (!r.Success)
+            {
+                return BadRequest(new DtoAuthenticationResult
+                {
+                    Errors = r.Errors
+                });
+            }
+
+            return Ok(r);
+        }
 
 
         [HttpPost("Refresh")]
