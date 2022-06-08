@@ -1,4 +1,5 @@
 ﻿using API.Helpers;
+using API.Helpers.HealthChecks;
 using API.Services.Classes;
 using API.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +20,20 @@ namespace API.ServiceInstallers
 
 
             var redisConnectionString = configuration.GetValue<string>("ConnectionStrings:RedisConnection");
-            services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(redisConnectionString));
 
-            services.AddSingleton<IResponseCacheServiceApi, ResponseCacheServiceApi>();
-            services.AddSingleton<IRedisCacheServiceApi, RedisCacheServiceApi> ();
-            services.AddHostedService<RedisSubscriber>();
+            var option = new ConfigurationOptions
+            {
+                AbortOnConnectFail = true,
+                ServiceName = redisConnectionString
+            };
+            
+            //needs docker
+            //services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(redisConnectionString));
+            //services.AddSingleton<IResponseCacheServiceApi, ResponseCacheServiceApi>();
+            //services.AddSingleton<IRedisCacheServiceApi, RedisCacheServiceApi>();
+            //services.AddHostedService<RedisSubscriber>();
+
+
 
             //var redis = ConnectionMultiplexer.Connect("172.17.0.2");
             //services.AddScoped(d => redis.GetDatabase());

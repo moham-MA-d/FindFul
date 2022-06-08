@@ -11,7 +11,8 @@ namespace API.ServiceInstallers
         {
             services.AddHealthChecks()
                 .AddDbContextCheck<DataContext>()
-                .AddCheck<RedisHealthCheck>("Redis")
+                //needs docker
+                //.AddCheck<RedisHealthCheck>("Redis")
                 ;
         }
     }
