@@ -50,6 +50,7 @@ namespace API.ServiceInstallers
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ITokenServiceApi, TokenServiceApi>();
+            services.AddScoped<IIdentityServiceApi, IdentityServiceApi>();
 
             services.AddScoped<IPhotoServiceApi, PhotoServiceApi>();
         }

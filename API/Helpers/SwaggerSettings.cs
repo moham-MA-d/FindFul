@@ -1,6 +1,6 @@
 ﻿namespace API.Helpers
 {
-    public class SwaggerOptions
+    public class SwaggerSettings
     {
         public string JsonRoute { get; set; }
         public string Description { get; set; }

@@ -79,8 +79,8 @@ namespace API
             if (env.IsDevelopment())
             {
 
-                var swaggerOption = new SwaggerOptions();
-                _config.GetSection(nameof(SwaggerOptions)).Bind(swaggerOption);
+                var swaggerOption = new SwaggerSettings();
+                _config.GetSection(nameof(SwaggerSettings)).Bind(swaggerOption);
 
                 app.UseSwagger(option =>
                 {

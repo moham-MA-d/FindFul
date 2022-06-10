@@ -95,7 +95,6 @@ namespace API.Services.Classes
         
         public async Task<DtoAuthenticationResult> CreateTokenAsync(AppUser user)
         {
-
             // Claim: store some properties in out token about user and issued by server.
             var claims = new List<Claim>
             {
@@ -104,7 +103,7 @@ namespace API.Services.Classes
                 new ("UserName", user.UserName),
                 new ("Sex", user.Sex.ToString()),
                 new ("Gender", user.Gender.ToString()),
-                new ("PhotoUrl", user.ProfilePhotoUrl ?? ""),
+                new ("PhotoUrl", user.ProfilePhotoUrl ?? "/assets/images/user.png"),
                 //new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddMonths(1).ToString(CultureInfo.InvariantCulture)),
                 //Used for RefreshToken Validation
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

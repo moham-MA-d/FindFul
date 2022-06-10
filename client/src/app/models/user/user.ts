@@ -15,3 +15,9 @@ export class UserToken {
   refreshToken: string;
   errors: string[];
 }
+
+
+
+export class UserSocialToken {
+  accessToken: string;
+}
