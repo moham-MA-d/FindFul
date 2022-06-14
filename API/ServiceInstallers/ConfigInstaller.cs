@@ -35,7 +35,7 @@ namespace API.ServiceInstallers
             // AddDbContext life time is Scoped
             services.AddDbContext<DataContext>(x =>
                 //x.UseSqlServer(configuration.GetConnectionString("FindFulConnection"))
-                x.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+                x.UseNpgsql(configuration.GetConnectionString("PostgresConnection"))
                 );
             //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
         }
