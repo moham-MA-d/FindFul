@@ -69,7 +69,6 @@ export class AccountService {
 
     return this.http.post(this.baseUrl + 'account/facebookAuth', newModel)
     .pipe(map((response: UserToken) => {
-      console.log("RRR: ", response);
       const user = response;
       if(user){
         this.setCurrentUser(user);
@@ -91,7 +90,15 @@ export class AccountService {
   }
 
   getDecodedToken(token: string) : User {
-    let u = JSON.parse(atob(token.split('.')[1]));
+
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    let u = JSON.parse(jsonPayload);
+
     let usr = new User();
     usr.userName = u.UserName;
     usr.sex = u.Sex;

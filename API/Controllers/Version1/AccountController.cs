@@ -41,7 +41,7 @@ namespace API.Controllers.Version1
                 return BadRequest("Username is Taken");
 
             var user = _userService.CreateAppUserForRegistration(dtoRegister);
-            
+            var dd = await _userService.AddAsync(user);
             var result = await _userManager.CreateAsync(user, dtoRegister.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors.Select(x => x.Description));

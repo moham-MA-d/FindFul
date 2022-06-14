@@ -54,7 +54,7 @@ namespace API.Controllers.Version1
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<DtoMember>> GetUser(string username)
         {
-            var member = await _userService.GetByUsernameAsync(username) ?? await _userService.GetByEmail(username);
+            var member = await _userService.GetByUsernameAsync(username) ?? await _userService.GetByEmailAsync(username);
             return Ok(member);
         }
 

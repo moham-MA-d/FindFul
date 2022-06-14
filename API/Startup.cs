@@ -15,7 +15,7 @@ using System.Linq;
 namespace API
 {
     public class Startup
-    {
+    {   
         // With this Interface we have access to our config that stored in appsetting.json file
         private readonly IConfiguration _config;
         public Startup(IConfiguration config)
@@ -76,6 +76,11 @@ namespace API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // to use static files.
+            // it checks for an index.html 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
             if (env.IsDevelopment())
             {
 
@@ -96,6 +101,7 @@ namespace API
             {
                 //Look at our controller to find endpoint for example [HttpGet] is an endpoint
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

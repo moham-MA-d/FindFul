@@ -1,7 +1,7 @@
-﻿using DTO.SocialNetworks;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DTO.SocialNetworks;
 
-namespace API.Services.Interfaces
+namespace Core.IServices.SocialNetworks
 {
     public interface IFacebookService
     {

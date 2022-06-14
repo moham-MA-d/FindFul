@@ -24,8 +24,18 @@ namespace Service.Classes.User
             _userRepository = userRepository;
         }
 
-
-        public async Task<DtoMember> GetByEmail(string email)
+        public new async Task<AppUser> AddAsync(AppUser entity)
+        {
+            if (entity.UserName == "")
+            {
+                return null;
+            }
+            await _userRepository.AddAsync(entity);
+            await SaveChangesAsync();
+            return entity;
+        }
+        
+        public async Task<DtoMember> GetByEmailAsync(string email)
         {
             return await _userRepository.GetUserByEmailAsync(email);
         }
