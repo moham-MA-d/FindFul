@@ -33,7 +33,10 @@ namespace API.ServiceInstallers
 
             // Connection string is defined in appsetting.json
             // AddDbContext life time is Scoped
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(configuration.GetConnectionString("FindFulConnection")));
+            services.AddDbContext<DataContext>(x =>
+                //x.UseSqlServer(configuration.GetConnectionString("FindFulConnection"))
+                x.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+                );
             //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
         }
     }

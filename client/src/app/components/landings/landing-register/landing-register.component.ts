@@ -15,7 +15,6 @@ export class LandingRegisterComponent implements OnInit {
 
   user: SocialUser;
   loggedIn: boolean;
-  ttt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Ik5pY2suZnVyeWZjYkBnbWFpbC5jb20iLCJJZCI6IjIwMCIsIlVzZXJOYW1lIjoiTmljayIsIlNleCI6IjAiLCJHZW5kZXIiOiIwIiwiUGhvdG9VcmwiOiJodHRwczovL3Njb250ZW50LWFtczQtMS54eC5mYmNkbi5uZXQvdi90MS4zMDQ5Ny0xLzg0NjI4MjczXzE3NjE1OTgzMDI3Nzg1Nl85NzI2OTMzNjM5MjI4MjkzMTJfbi5qcGc_c3RwPWMxNS4wLjUwLjUwYV9jcDBfZHN0LWpwZ19wNTB4NTAmX25jX2NhdD0xJmNjYj0xLTcmX25jX3NpZD0xMmIzYmUmX25jX29oYz1EM2w3blhzWjNOZ0FYX1NBYi1zJl9uY19odD1zY29udGVudC1hbXM0LTEueHgmZWRtPUFQNGhMM0lFQUFBQSZvaD0wMF9BVDhWaXl4cXdGeWNwcDVUUVJrU01vTTM0cGl2c21IT2hQWlNWSmZyZFlNUmR3Jm9lPTYyQzQ3MjE5IiwianRpIjoiZTFkMGZkZjktMjg2MS00NzUxLWJlY2ItYzM1MjRhZDY0YWEzIiwibmJmIjoxNjU0Njk2MDA0LCJleHAiOjE2NTQ2OTYxMjQsImlhdCI6MTY1NDY5NjAwNH0.MZRvz57yjCmtkZyCDfGu3RX2LZ3KglnMM3ZzTFE73Ln7TrPyQ5_EgeWr2w0fBLOIObN6KSs9Bwvcoya7gSf7Kg";
   constructor(private accountService: AccountService, private authService: SocialAuthService, private router: Router, private toastrService: ToastrService) {}
 
   refreshToken(): void {
@@ -29,8 +28,6 @@ export class LandingRegisterComponent implements OnInit {
     });
 
 
-    let u = JSON.parse(atob(this.ttt.replace("_","-").split('.')[1]));
-    console.log("U:" ,u);
   }
 
 
@@ -41,8 +38,8 @@ export class LandingRegisterComponent implements OnInit {
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(x => this.accountService.facebookAuth(x)
     .subscribe({
-      next: (n) => { console.log("nnn: ", n); this.router.navigateByUrl('/home'); },
-      error: (e) => { console.log("errr : ", e);this.toastrService.error(e.error) },
+      next: (n) => { this.router.navigateByUrl('/home'); },
+      error: (e) => { this.toastrService.error(e.error) },
       complete : () => {this.accountService.isLoggedIn = true;}
     })
     );

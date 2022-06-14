@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class first : Migration
+    public partial class postgresInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,11 +12,11 @@ namespace Data.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,42 +27,42 @@ namespace Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Phone = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true),
-                    ReferalCode = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Sex = table.Column<int>(type: "int", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Info = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
-                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastActivity = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProfilePhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfilePhotoUrlPublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CoverPhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CoverPhotoUrlPublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "varchar(70)", maxLength: 70, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GuId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Phone = table.Column<string>(type: "varchar", maxLength: 15, nullable: true),
+                    ReferalCode = table.Column<string>(type: "varchar", maxLength: 10, nullable: true),
+                    FirstName = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    LastName = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    MiddleName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Sex = table.Column<int>(type: "integer", nullable: false),
+                    Gender = table.Column<int>(type: "integer", nullable: false),
+                    Info = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    City = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Country = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastActivity = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ProfilePhotoUrl = table.Column<string>(type: "text", nullable: true),
+                    ProfilePhotoUrlPublicId = table.Column<string>(type: "text", nullable: true),
+                    CoverPhotoUrl = table.Column<string>(type: "text", nullable: true),
+                    CoverPhotoUrlPublicId = table.Column<string>(type: "text", nullable: true),
+                    UserName = table.Column<string>(type: "varchar", maxLength: 50, nullable: false),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "varchar", maxLength: 70, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,11 +73,11 @@ namespace Data.Migrations
                 name: "RoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,10 +94,10 @@ namespace Data.Migrations
                 name: "Follows",
                 columns: table => new
                 {
-                    FollowerId = table.Column<int>(type: "int", nullable: false),
-                    FollowingId = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CereateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FollowerId = table.Column<int>(type: "integer", nullable: false),
+                    FollowingId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CereateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,22 +118,22 @@ namespace Data.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SenderUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SenderId = table.Column<int>(type: "int", nullable: false),
-                    SenderDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    ReceiverUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReceiverId = table.Column<int>(type: "int", nullable: false),
-                    ReceiverDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DateReceived = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateRead = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Body = table.Column<string>(type: "text", nullable: true),
+                    SenderUsername = table.Column<string>(type: "text", nullable: true),
+                    SenderId = table.Column<int>(type: "integer", nullable: false),
+                    SenderDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    ReceiverUsername = table.Column<string>(type: "text", nullable: true),
+                    ReceiverId = table.Column<int>(type: "integer", nullable: false),
+                    ReceiverDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DateReceived = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DateRead = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    GuId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,26 +156,26 @@ namespace Data.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeleteDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LikesCount = table.Column<int>(type: "int", nullable: false),
-                    FavesCount = table.Column<int>(type: "int", nullable: false),
-                    DislikesCount = table.Column<int>(type: "int", nullable: false),
-                    WowsCount = table.Column<int>(type: "int", nullable: false),
-                    LaughsCount = table.Column<int>(type: "int", nullable: false),
-                    SadsCount = table.Column<int>(type: "int", nullable: false),
-                    AngersCount = table.Column<int>(type: "int", nullable: false),
-                    CommentsCount = table.Column<int>(type: "int", nullable: false),
-                    ViewsIpCount = table.Column<int>(type: "int", nullable: false),
-                    ViewsUsersCount = table.Column<int>(type: "int", nullable: false),
-                    ViewsTotalCount = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    GuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Body = table.Column<string>(type: "text", nullable: false),
+                    DeleteDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LikesCount = table.Column<int>(type: "integer", nullable: false),
+                    FavesCount = table.Column<int>(type: "integer", nullable: false),
+                    DislikesCount = table.Column<int>(type: "integer", nullable: false),
+                    WowsCount = table.Column<int>(type: "integer", nullable: false),
+                    LaughsCount = table.Column<int>(type: "integer", nullable: false),
+                    SadsCount = table.Column<int>(type: "integer", nullable: false),
+                    AngersCount = table.Column<int>(type: "integer", nullable: false),
+                    CommentsCount = table.Column<int>(type: "integer", nullable: false),
+                    ViewsIpCount = table.Column<int>(type: "integer", nullable: false),
+                    ViewsUsersCount = table.Column<int>(type: "integer", nullable: false),
+                    ViewsTotalCount = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GuId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,13 +191,13 @@ namespace Data.Migrations
                 name: "RefreshTokens",
                 columns: table => new
                 {
-                    Token = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    JwtId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsUsed = table.Column<bool>(type: "bit", nullable: false),
-                    IsInvalidated = table.Column<bool>(type: "bit", nullable: false),
-                    ExpireDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Token = table.Column<string>(type: "text", nullable: false),
+                    JwtId = table.Column<string>(type: "text", nullable: true),
+                    IsUsed = table.Column<bool>(type: "boolean", nullable: false),
+                    IsInvalidated = table.Column<bool>(type: "boolean", nullable: false),
+                    ExpireDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,11 +214,11 @@ namespace Data.Migrations
                 name: "UserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -234,10 +235,10 @@ namespace Data.Migrations
                 name: "UserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    ProviderKey = table.Column<string>(type: "text", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,16 +255,16 @@ namespace Data.Migrations
                 name: "UserPhotos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Url = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    IsMain = table.Column<bool>(type: "bit", nullable: false),
-                    PublicId = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    GuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Url = table.Column<string>(type: "varchar", maxLength: 256, nullable: true),
+                    IsMain = table.Column<bool>(type: "boolean", nullable: false),
+                    PublicId = table.Column<string>(type: "varchar", maxLength: 256, nullable: true),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GuId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -279,8 +280,8 @@ namespace Data.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -303,10 +304,10 @@ namespace Data.Migrations
                 name: "UserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -323,16 +324,16 @@ namespace Data.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    TheAppUserId = table.Column<int>(type: "int", nullable: true),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    GuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    TheAppUserId = table.Column<int>(type: "integer", nullable: true),
+                    PostId = table.Column<int>(type: "integer", nullable: false),
+                    GuId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -354,10 +355,10 @@ namespace Data.Migrations
                 name: "PostsLiked",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PostId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -425,8 +426,7 @@ namespace Data.Migrations
                 name: "RoleNameIndex",
                 table: "Roles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
@@ -457,8 +457,7 @@ namespace Data.Migrations
                 name: "UserNameIndex",
                 table: "Users",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
