@@ -2,9 +2,12 @@
 using System.IO;
 using System.Reflection;
 using API.Extensions;
+using API.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Service.Helpers;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace API.ServiceInstallers
@@ -61,6 +64,12 @@ namespace API.ServiceInstallers
 
             services
                 .AddMvc(opt => { opt.EnableEndpointRouting = false; });
+            
+            services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>()
+                .CreateLogger("DefaultLogger"));
+            services.AddScoped<LogUserActivity>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
         }
     }
 }
