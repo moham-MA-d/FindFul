@@ -1,4 +1,5 @@
-﻿using API.Helpers;
+﻿using System;
+using API.Helpers;
 using API.Services.Classes;
 using API.Services.Interfaces;
 using Core;
@@ -17,26 +18,59 @@ namespace API.ServiceInstallers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-
             services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySettings"));
 
-            // Useful for http request. It's is equal to http request lifetime.
-            // The point which we used Interface is that it would be much easier to test the application. 
-            services.AddScoped<ITokenService, TokenService>();
-
-            services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
-
-            services.AddScoped<LogUserActivity>();
-
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            // Connection string is defined in appsetting.json
+            // findful application will get its connection string from Heroku environment variable.
             // AddDbContext life time is Scoped
-            services.AddDbContext<DataContext>(x =>
-                //x.UseSqlServer(configuration.GetConnectionString("FindFulConnection"))
-                x.UseNpgsql(configuration.GetConnectionString("PostgresConnection"))
-                );
+            services.AddDbContext<DataContext>(options =>
+                    //x.UseSqlServer(configuration.GetConnectionString("FindFulConnection"))
+                    //x.UseNpgsql(configuration.GetConnectionString("PostgresConnection"))
+                {
+                    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+                    string connectionString;
+
+                    // Depending on if in development or production, use either Heroku-provided
+                    // connection string, or development connection string from env var.
+                    if (env == "Development")
+                    {
+                        // Use connection string from file.
+                        //connStr = configuration.GetConnectionString("FindFulConnection");
+                        connectionString = configuration.GetConnectionString("PostgresConnection");
+                    }
+                    else
+                    {
+                        // Use connection string provided at runtime by Heroku.
+                        var connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+                        // Parse connection URL to connection string for Npgsql
+                        if (connectionUrl != null)
+                        {
+                            connectionUrl = connectionUrl.Replace("postgres://", string.Empty);
+                            var pgUserPass = connectionUrl.Split("@")[0];
+                            var pgHostPortDb = connectionUrl.Split("@")[1];
+                            var pgHostPort = pgHostPortDb.Split("/")[0];
+                            var pgDb = pgHostPortDb.Split("/")[1];
+                            var pgUser = pgUserPass.Split(":")[0];
+                            var pgPass = pgUserPass.Split(":")[1];
+                            var pgHost = pgHostPort.Split(":")[0];
+                            var pgPort = pgHostPort.Split(":")[1];
+
+                            connectionString =
+                                $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
+                        }
+                        else
+                        {
+                            throw new Exception("There is a problem in connection!");
+                        }
+                    }
+
+                    // Whether the connection string came from the local development configuration file
+                    // or from the environment variable from Heroku, use it to set up your DbContext.
+                    options.UseNpgsql(connectionString);
+                }
+            );
+
             //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
         }
     }
