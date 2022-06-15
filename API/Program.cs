@@ -27,7 +27,7 @@ namespace API
                 var userManagerService = services.GetRequiredService<UserManager<AppUser>>();
                 var roleManagerService = services.GetRequiredService<RoleManager<AppRole>>();
                 // apply pending migrations to the database. and create database if it dose not already exist
-                //await context.Database.MigrateAsync();
+                await context.Database.MigrateAsync();
                 await Seed.SeedUsers(userManagerService, roleManagerService);
             }
             catch (System.Exception ex)
