@@ -2,9 +2,7 @@
 using DTO.Posts;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace API.SwaggerExamples.Requests;
-
-public class PostRequestExamples
+namespace API.SwaggerExamples.Requests
 {
     public class CreatePostRequestExample : IExamplesProvider<DtoPostRequest>
     {
