@@ -14,8 +14,7 @@ namespace Data.Seed
         {
             if (await userManager.Users.AnyAsync()) return;
 
-            // var userSeedData = await System.IO.File.ReadAllTextAsync(@"D:\dotnet Core\Findful\Data\Seed\UserSeedData.json");
-            var userSeedData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
+            var userSeedData = await System.IO.File.ReadAllTextAsync("../Data/Seed/UserSeedData.json");
 
             var users = JsonSerializer.Deserialize<List<AppUser>>(userSeedData);
 
