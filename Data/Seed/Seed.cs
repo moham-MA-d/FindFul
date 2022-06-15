@@ -12,7 +12,7 @@ namespace Data.Seed
         // We get UserManager From Identity so we can pass it here
         public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
-            if (await userManager.Users.AnyAsync()) return;
+            //if (await userManager.Users.AnyAsync()) return;
 
             var userSeedData = await System.IO.File.ReadAllTextAsync("../Data/Seed/UserSeedData.json");
 
