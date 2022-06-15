@@ -18,6 +18,8 @@ namespace SDK.Tester
             var cachedToken = string.Empty;
             var identityApi = RestService.For<IIdentityApi>("https://localhost:44341");
 
+
+            //TODO comment for deployment
             //var registerResponse = await identityApi.RegisterAsync(new DtoRegister
             //{
             //    Email = "mohammad1@gamil.com",
@@ -25,25 +27,26 @@ namespace SDK.Tester
             //    UserName = "mohammad1"
             //});
 
-            var loginResponse = await identityApi.LoginAsync(new DtoLogin
-            {
-                UserName = "mohammad1",
-                Password = "Pa$$w0rd"
-            });
+            
+            //var loginResponse = await identityApi.LoginAsync(new DtoLogin
+            //{
+            //    UserName = "mohammad1",
+            //    Password = "Pa$$w0rd"
+            //});
 
-            if (loginResponse.Content != null) cachedToken = loginResponse.Content.Token;
+            //if (loginResponse.Content != null) cachedToken = loginResponse.Content.Token;
 
 
-            var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
+            //var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
 
-            var startup = new Startup();
-            startup.ConfigureServices(services, cachedToken);
+            //var startup = new Startup();
+            //startup.ConfigureServices(services, cachedToken);
 
-            IServiceProvider serviceProvider = services.BuildServiceProvider();
+            //IServiceProvider serviceProvider = services.BuildServiceProvider();
 
-            // entry to run app
-            serviceProvider.GetRequiredService<Runner>()?.Run();
-            //Generate the implementation for this API
+            //// entry to run app
+            //serviceProvider.GetRequiredService<Runner>()?.Run();
+            ////Generate the implementation for this API
             
         }
     }
