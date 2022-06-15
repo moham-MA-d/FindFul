@@ -28,12 +28,14 @@ namespace API.Middlewares
             // check if the request is cached
             // return true else go to next()
 
-            var cacheSettings = context.HttpContext.RequestServices.GetRequiredService<RedisCacheSettings>();
-            if (!cacheSettings.Enabled)
-            {
-                await next();
-                return;
-            }
+
+            //TODO Commented for deployment
+            //var cacheSettings = context.HttpContext.RequestServices.GetRequiredService<RedisCacheSettings>();
+            //if (!cacheSettings.Enabled)
+            //{
+            //    await next();
+            //    return;
+            //}
 
             var cacheSerice = context.HttpContext.RequestServices.GetRequiredService<IResponseCacheServiceApi>();
 

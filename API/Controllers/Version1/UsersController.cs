@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Contracts;
 using API.Controllers.Version1.Base;
 using API.Extensions;
 using API.Middlewares;

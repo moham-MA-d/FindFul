@@ -38,29 +38,30 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseHealthChecks("/Health", new HealthCheckOptions
-            {
-                // accept httpcontext and report our specific component we're going to use that for the response
-                // this is a delegate that provides context (HttpContext) and a report for this check
-                ResponseWriter = async (context, report) =>
-                {
-                    context.Response.ContentType = "application/json";
+            //TODO Commented for deployment
+            //app.UseHealthChecks("/Health", new HealthCheckOptions
+            //{
+            //    // accept httpcontext and report our specific component we're going to use that for the response
+            //    // this is a delegate that provides context (HttpContext) and a report for this check
+            //    ResponseWriter = async (context, report) =>
+            //    {
+            //        context.Response.ContentType = "application/json";
 
-                    var response = new HealthCheckResponse
-                    {
-                        Status = report.Status.ToString(),
-                        Checks = report.Entries.Select(x => new HealthCheck
-                        {
-                            Component = x.Key, //key is the name of the thing (component) we are checking
-                            Status = x.Value.Status.ToString(),
-                            Description = x.Value.Description
-                        }),
-                        Duration = report.TotalDuration
-                    };
+            //        var response = new HealthCheckResponse
+            //        {
+            //            Status = report.Status.ToString(),
+            //            Checks = report.Entries.Select(x => new HealthCheck
+            //            {
+            //                Component = x.Key, //key is the name of the thing (component) we are checking
+            //                Status = x.Value.Status.ToString(),
+            //                Description = x.Value.Description
+            //            }),
+            //            Duration = report.TotalDuration
+            //        };
 
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
-                }
-            });
+            //        await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+            //    }
+            //});
 
             app.UseMiddleware<ExceptionMiddleware>();
 

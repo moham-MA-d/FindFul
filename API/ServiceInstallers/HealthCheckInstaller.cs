@@ -9,11 +9,14 @@ namespace API.ServiceInstallers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHealthChecks()
-                .AddDbContextCheck<DataContext>()
-                //needs docker
-                //.AddCheck<RedisHealthCheck>("Redis")
-                ;
+            //TODO Commented for deployment
+            // services.AddHealthChecks()
+            //.AddDbContextCheck<DataContext>()
+
+
+            //needs docker
+            //.AddCheck<RedisHealthCheck>("Redis")
+            ;
         }
     }
 }

@@ -12,21 +12,23 @@ namespace API.ServiceInstallers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            var redisCacheSettings = new RedisCacheSettings();
-            configuration.GetSection(nameof(redisCacheSettings)).Bind(redisCacheSettings);
-            services.AddSingleton(redisCacheSettings);
+            //TODO Commented for deployment
+            //var redisCacheSettings = new RedisCacheSettings();
+            //configuration.GetSection(nameof(redisCacheSettings)).Bind(redisCacheSettings);
+            //services.AddSingleton(redisCacheSettings);
 
-            if (!redisCacheSettings.Enabled) return;
+            //if (!redisCacheSettings.Enabled) return;
 
+            //var redisConnectionString = configuration.GetValue<string>("ConnectionStrings:RedisConnection");
 
-            var redisConnectionString = configuration.GetValue<string>("ConnectionStrings:RedisConnection");
-
-            var option = new ConfigurationOptions
-            {
-                AbortOnConnectFail = true,
-                ServiceName = redisConnectionString
-            };
+            //var option = new ConfigurationOptions
+            //{
+            //    AbortOnConnectFail = true,
+            //    ServiceName = redisConnectionString
+            //};
             
+
+
             //needs docker
             //services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(redisConnectionString));
             //services.AddSingleton<IResponseCacheServiceApi, ResponseCacheServiceApi>();
