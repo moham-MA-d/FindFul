@@ -43,6 +43,7 @@ export class OnlineService {
       this.toastr.info(username + 'is online')
     })
 
+
     //Listen to sever events: UserIsOffline
     this.hubConnection.on('UserIsOffline', username => {
       // this.onlineUsers$.pipe(take(1)).subscribe(usernames => {
