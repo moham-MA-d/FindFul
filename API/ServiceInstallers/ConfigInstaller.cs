@@ -36,7 +36,9 @@ namespace API.ServiceInstallers
                     {
                         // Use connection string from file.
                         //connStr = configuration.GetConnectionString("FindFulConnection");
-                        connectionString = configuration.GetConnectionString("PostgresConnection");
+                        
+                        options.UseNpgsql(configuration.GetConnectionString("PostgresConnection"));
+                        //options.UseSqlServer(configuration.GetConnectionString("FindFulConnection"));
                     }
                     else
                     {
@@ -58,6 +60,8 @@ namespace API.ServiceInstallers
 
                             connectionString =
                                 $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
+                            options.UseNpgsql(connectionString);
+
                         }
                         else
                         {
@@ -67,7 +71,6 @@ namespace API.ServiceInstallers
 
                     // Whether the connection string came from the local development configuration file
                     // or from the environment variable from Heroku, use it to set up your DbContext.
-                    options.UseNpgsql(connectionString);
                 }
             );
 

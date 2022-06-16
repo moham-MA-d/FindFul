@@ -5,6 +5,7 @@ import { User, UserSocialToken, UserToken } from 'src/app/models/user/user';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SocialUser } from '@abacritt/angularx-social-login';
+import { OnlineService } from '../hub/Online.service';
 
 // Default Angular services are singleton. When we injected them into a component and it's initialized
 //    it's available until our app disposed off
@@ -30,7 +31,7 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private onlineService: OnlineService) {}
 
   login(model: User) {
     return this.http.post(this.baseUrl + 'account/login', model)
@@ -59,6 +60,9 @@ export class AccountService {
     this.currentUserTokenSource.next(null);
     this.currentUserSource.next(null);
     this.isLoggedIn = false;
+
+    this.onlineService.stopHubConnection();
+
     /////environment.memberCache.clear();
   }
 
@@ -87,6 +91,8 @@ export class AccountService {
     localStorage.setItem('user', JSON.stringify(authResult));
     this.currentUserTokenSource.next(authResult);
     this.currentUserSource.next(user);
+    this.onlineService.createHubConnection(authResult);
+
   }
 
   getDecodedToken(token: string) : User {

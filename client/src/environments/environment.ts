@@ -9,6 +9,7 @@ export const environment = {
   memberCache: new Map(),
   production: false,
   apiUrl: GlobalConstants.APIURL,
+  hubUrl : GlobalConstants.HUBURL
 };
 
 /*

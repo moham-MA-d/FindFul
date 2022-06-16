@@ -118,8 +118,7 @@ namespace API.Services.Classes
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                //Expires = DateTime.Now.Add(_jwtSettings.TokenLifeTime),
-                Expires = DateTime.UtcNow.AddSeconds(120),
+                Expires = DateTime.Now.Add(_jwtSettings.TokenLifeTime),
                 SigningCredentials = cred
             };
 

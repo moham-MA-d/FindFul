@@ -65,7 +65,9 @@ namespace API.IntegrationTests
             }
             catch (Exception ex)
             {
-               // logger.LogError(ex, "An error occurred seeding the " + "database with test messages. Error: {Message}", ex.Message);
+                throw new Exception(ex.Message);
+                //TODO
+                // logger.LogError(ex, "An error occurred seeding the " + "database with test messages. Error: {Message}", ex.Message);
             }
 
             //context.Database.EnsureCreated();

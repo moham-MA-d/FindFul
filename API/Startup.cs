@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using API.Extensions;
 using API.Helpers;
 using API.Helpers.HealthChecks;
@@ -11,13 +12,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System.Linq;
+using API.SignalR;
 
 namespace API
 {
     public class Startup
-    {   
+    {
         // With this Interface we have access to our config that stored in appsetting.json file
         private readonly IConfiguration _config;
+
         public Startup(IConfiguration config)
         {
             _config = config;
@@ -32,12 +35,12 @@ namespace API
         {
             services.AddApplicationServices(_config);
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // All things in here are middleware (is a software to interact with request during http pipeline)
         // Ordering is important because this is middleware for requests.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             //TODO Commented for deployment
             //app.UseHealthChecks("/Health", new HealthCheckOptions
             //{
@@ -72,29 +75,35 @@ namespace API
             //it is only for development and has a lot of security issues.
             //AllowAnyMethod(): get, post , put and ...
             //AllowAnyHeader() : Authentication and ...
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()/*.WithOrigins("http://localhost:4200")*/);
+            app.UseCors(x => x
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    //.AllowAnyOrigin()
+                    // SignalR configuration  : it will allow SignalR to send access_token
+                    .AllowCredentials()
+                    .WithOrigins("https://localhost:4200"));
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             // to use static files.
             // it checks for an index.html 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-            
+            // if (!Debugger.IsAttached)
+            // {
+            //     app.UseDefaultFiles();
+            //     app.UseStaticFiles();
+            // }
+
             if (env.IsDevelopment())
             {
-
                 var swaggerOption = new SwaggerSettings();
                 _config.GetSection(nameof(SwaggerSettings)).Bind(swaggerOption);
 
-                app.UseSwagger(option =>
-                {
-                    option.RouteTemplate = swaggerOption.JsonRoute;
-                });
+                app.UseSwagger(option => { option.RouteTemplate = swaggerOption.JsonRoute; });
                 app.UseDeveloperExceptionPage();
 
-                app.UseSwaggerUI(options => options.SwaggerEndpoint(swaggerOption.UIEndpoint, swaggerOption.Description));
+                app.UseSwaggerUI(
+                    options => options.SwaggerEndpoint(swaggerOption.UIEndpoint, swaggerOption.Description));
             }
 
             //map controller endpoint to application so our app knows how to route requests
@@ -102,6 +111,8 @@ namespace API
             {
                 //Look at our controller to find endpoint for example [HttpGet] is an endpoint
                 endpoints.MapControllers();
+                // the route that access to PresenceHub 
+                endpoints.MapHub<PresenceHub>("hubs/online");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
         }

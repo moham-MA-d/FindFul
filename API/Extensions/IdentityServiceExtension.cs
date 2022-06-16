@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using API.Helpers;
 using API.Helpers.Authorizations;
 using Core.Models.Entities.User;
@@ -42,7 +43,6 @@ namespace API.Extensions
 
                 //RequireExpirationTime = true,
                 //ValidateLifetime = true
-
             };
 
             services.AddSingleton(tokenValidationParameters);
@@ -59,6 +59,27 @@ namespace API.Extensions
                 {
                     options.SaveToken = true;
                     options.TokenValidationParameters = tokenValidationParameters;
+                    
+                    // SignalR configuration  
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = httpContext =>
+                        {
+                            // "access_token" is a key that SignalR used by default to send token as query string. 
+                            var accessToken = httpContext.Request.Query["access_token"];
+
+                            // "targetPath" : is only used by SignalR  
+                            var targetPath = httpContext.HttpContext.Request.Path;
+                            // "/hubs": need to match what has been used in Startup.cs
+                            if (!string.IsNullOrEmpty(accessToken) && targetPath.StartsWithSegments("/hubs"))
+                            {
+                                httpContext.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
+                    };
+                    
                 });
 
             services.AddAuthorization(opt =>

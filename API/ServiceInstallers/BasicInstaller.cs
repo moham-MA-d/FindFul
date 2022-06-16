@@ -70,6 +70,10 @@ namespace API.ServiceInstallers
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
+            services.AddSignalR(e => {
+                //e.MaximumReceiveMessageSize = 102400000;
+                //e.EnableDetailedErrors = true;
+            });        
         }
     }
 }
