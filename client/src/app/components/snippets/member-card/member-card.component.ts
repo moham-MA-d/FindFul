@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserEnums } from 'src/app/enum/userEnums';
 import { Member } from 'src/app/models/user/member';
+import { OnlineService } from 'src/app/services/hub/Online.service';
 import { MemberService } from 'src/app/services/member/member.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class MemberCardComponent implements OnInit {
   @Input() member: Member;
   enumGenderValues = UserEnums.Gender;
 
-  constructor(private memberService: MemberService) { }
+  constructor(private memberService: MemberService, public onlineService: OnlineService) { }
 
   ngOnInit() {
   }

@@ -33,7 +33,7 @@ namespace API.Controllers.Version1
         }
 
         [HttpPost("Register")]
-        // If parameters have sent in a body of the request we need Object to receive them (.DTOs) not just string parameters
+        // when parameters are sending in a body of the request we need Object to receive them (.DTOs) not just string parameters
         public async Task<ActionResult<DtoAuthenticationResult>> Register(DtoRegister dtoRegister)
         {
            
@@ -41,7 +41,6 @@ namespace API.Controllers.Version1
                 return BadRequest("Username is Taken");
 
             var user = _userService.CreateAppUserForRegistration(dtoRegister);
-            var dd = await _userService.AddAsync(user);
             var result = await _userManager.CreateAsync(user, dtoRegister.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors.Select(x => x.Description));

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class OnlineService {
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;
+  // A variant of Subject (Gemeroc Observable) that requires an initial value and emits its current value whenever it is subscribed to.
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
   onlineUsers$ = this.onlineUsersSource.asObservable();
 
@@ -55,6 +56,7 @@ export class OnlineService {
 
     this.hubConnection.on('GetOnlineUsers', (usernames: string[]) => {
       console.log("SignalR: On");
+      // update onlineUsersSource with list of current users.
       this.onlineUsersSource.next(usernames);
     })
 

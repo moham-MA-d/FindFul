@@ -4,6 +4,7 @@
       <li>
         <a routerLink="/members/{{member.userName}}/timeline" class="profile-link">
           <img src="{{member.profilePhotoUrl}}" alt="user" class="profile-photo-lg">
+          <span  [class.online-dot]="(onlineService.onlineUsers$ | async).includes(member.userName)"></span>
         </a>
       </li>
       <li class="main-details">

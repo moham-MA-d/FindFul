@@ -18,7 +18,7 @@ export class LandingRegisterComponent implements OnInit {
   constructor(private accountService: AccountService, private authService: SocialAuthService, private router: Router, private toastrService: ToastrService) {}
 
   refreshToken(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+    //this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
 
   ngOnInit() {
@@ -31,9 +31,9 @@ export class LandingRegisterComponent implements OnInit {
   }
 
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
+  // signInWithGoogle(): void {
+  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  // }
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(x => this.accountService.facebookAuth(x)
