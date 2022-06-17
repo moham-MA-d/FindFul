@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using API.Extensions;
 using API.Helpers;
+using API.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -70,6 +71,7 @@ namespace API.ServiceInstallers
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
+            services.AddSingleton<OnlineTracker>();
             services.AddSignalR(e => {
                 //e.MaximumReceiveMessageSize = 102400000;
                 //e.EnableDetailedErrors = true;
