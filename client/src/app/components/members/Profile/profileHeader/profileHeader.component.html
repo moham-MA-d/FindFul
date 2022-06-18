@@ -4,6 +4,7 @@
   <div class="timeline-nav-bar hidden-sm hidden-xs">
       <div class="profile-info">
         <img src="{{member.profilePhotoUrl}}" alt="" class="img-responsive profile-photo">
+        <span [class.online-dot]="(onlineService.onlineUsers$ | async).includes(member.userName)"></span>
         <h3>{{member.firstName + member.lastName}}</h3>
         <p class="text-muted">Creative Director</p>
       </div>
@@ -37,6 +38,7 @@
   <div class="navbar-mobile hidden-lg hidden-md">
     <div class="profile-info">
       <img src="{{member.profilePhotoUrl}}" alt="" class="img-responsive profile-photo">
+      <span [class.online-dot]="(onlineService.onlineUsers$ | async).includes(member.userName)"></span>
       <h4>Sarah Cruiz</h4>
       <p class="text-muted">Creative Director</p>
     </div>

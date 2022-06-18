@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/services/account/account.service';
 import { User } from 'src/app/models/user/user';
 import { take } from 'rxjs/operators';
+import { OnlineService } from 'src/app/services/hub/Online.service';
 
 @Component({
   selector: 'app-profileHeader',
@@ -29,7 +30,8 @@ export class ProfileHeaderComponent implements OnInit {
     private compService: ComponentService,
     private messageService: MessageService,
     private tosterService: ToastrService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    public onlineService: OnlineService
   ) { this.accountService.currentUser$.pipe(take(1)).subscribe(u => this.currentUser = u) }
 
   ngOnInit() {

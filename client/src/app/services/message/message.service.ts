@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { CreateMessage } from 'src/app/models/message/createMessage';
 import { ScrollParameters } from 'src/app/models/page/scrollParameters';
+import { UserToken } from 'src/app/models/user/user';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +15,45 @@ import { environment } from 'src/environments/environment';
 export class MessageService {
 
   baseUrl = environment.apiUrl;
+  hubUrl = environment.hubUrl;
+  private hubConnection: HubConnection;
+
+  // to deal with situation when a message send to this hub we need to cereate an Observable
+  private messageThreadSource = new BehaviorSubject<Message[]>([]);
+  nessageThread$ = this.messageThreadSource.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  createHubConnection(userToken: UserToken, otherUserId: string, skip: string) {
+    console.log("XXXX: ", this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip);
+    this.hubConnection = new HubConnectionBuilder()
+      .configureLogging(LogLevel.Debug)
+      .withUrl(this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip, {
+        //skipNegotiation: true,
+        // transport: should be enable on windows server
+        //transport: HttpTransportType.WebSockets,
+        //accessTokenFactory: return a string that contains access token and actually is userToken.Token
+        accessTokenFactory: () => userToken.token
+
+      })
+      .withAutomaticReconnect()
+      .build()
+
+    this.hubConnection
+      .start()
+      .catch(error => console.log("SignalR Message Error : ", error));
+
+      this.hubConnection.on("ReceiveMessageThread", messages => {
+        this.messageThreadSource.next(messages);
+      });
+  }
+
+  stopHubConnection() {
+    console.log("SignalR: stop");
+    if (this.hubConnection) {
+      this.hubConnection.stop().catch(error => console.log(error));
+    }
+  }
 
   SendMessage(model: CreateMessage) {
     return this.http.post(this.baseUrl + 'messages/addmessage', model)
