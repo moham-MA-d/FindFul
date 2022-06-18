@@ -25,9 +25,12 @@ export class MessagesComponent implements OnInit {
   skip = 0;
   tmpDisableScroll: boolean = false;
 
-  constructor(private messageService: MessageService, private accountService: AccountService) {
+  constructor(public messageService: MessageService, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(u => {
       this.user = u;
+    })
+    this.accountService.currentUserToken$.pipe(take(1)).subscribe(u => {
+      this.userToken = u;
     })
   }
 
@@ -47,34 +50,35 @@ export class MessagesComponent implements OnInit {
 
   }
 
-  GetMessages(userId: number) {
+  GetMessages(targetUserId: number) {
     this.tmpDisableScroll = true;
-    if (this.chatId != userId) {
+    if (this.chatId != targetUserId) {
       this.messages = [];
       this.skip = 0;
     }
-    this.chatId = userId;
-    this.messageService.GetMessages(userId, this.skip).subscribe(
-      {
-        next: (r: Message[]) => {
-          if (r) {
-            if (this.messages != null) {
-              this.messages = r.concat(this.messages);
-            } else {
-              this.messages = r;
-            }
-            console.log("Messages: ", this.messages);
-          }
-        },
-        complete: () => {
-          this.chatBox.nativeElement.scrollTop = 4;
-          this.skip += 20;
-          setTimeout(() => {
-            this.tmpDisableScroll = false;
-          }, 10);
-        },
-        error() { console.log("Erorr in getting message"); }
-      })
+    this.chatId = targetUserId;
+    this.messageService.createHubConnection(this.userToken, targetUserId.toString(), this.skip.toString());
+
+    // this.messageService.GetMessages(targetUserId, this.skip).subscribe(
+    //   {
+    //     next: (r: Message[]) => {
+    //       if (r) {
+    //         if (this.messages != null) {
+    //           this.messages = r.concat(this.messages);
+    //         } else {
+    //           this.messages = r;
+    //         }
+    //       }
+    //     },
+    //     complete: () => {
+    //       this.chatBox.nativeElement.scrollTop = 4;
+    //       this.skip += 20;
+    //       setTimeout(() => {
+    //         this.tmpDisableScroll = false;
+    //       }, 10);
+    //     },
+    //     error() { console.log("Erorr in getting message"); }
+    //   })
   }
 
   SendMessage() {

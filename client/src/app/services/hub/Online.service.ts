@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HttpTransportType, HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { User, UserToken } from 'src/app/models/user/user';
 import { ToastrService } from 'ngx-toastr';
@@ -21,8 +21,13 @@ export class OnlineService {
 
   // it is not an HttpRequest so we cannot use `JwtInterceptor.ts`
   createHubConnection(userToken: UserToken) {
+    console.log("oooooooo: ", this.hubUrl + 'online');
     this.hubConnection = new HubConnectionBuilder()
+      .configureLogging(LogLevel.Debug)
       .withUrl(this.hubUrl + 'online', {
+        //skipNegotiation: true,
+        // transport: should be enable on windows server
+        //transport: HttpTransportType.WebSockets,
         //accessTokenFactory: return a string that contains access token and actually is userToken.Token
         accessTokenFactory: () => userToken.token
 
@@ -69,7 +74,9 @@ export class OnlineService {
   }
 
   stopHubConnection() {
-    console.log("SignalR: stop");
-    this.hubConnection.stop().catch(error => console.log(error));
+    if(this.hubConnection) {
+      console.log("SignalR: stop");
+      this.hubConnection.stop().catch(error => console.log(error));
+    }
   }
 }

@@ -48,9 +48,9 @@ namespace API.Controllers.Version1
         }
 
 
-        [CachedAttribute(100)]
+        //[CachedAttribute(100)]
         [HttpGet("GetUser/{username}", Name = "GetUser")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<DtoMember>> GetUser(string username)
         {
             var member = await _userService.GetByUsernameAsync(username) ?? await _userService.GetByEmailAsync(username);

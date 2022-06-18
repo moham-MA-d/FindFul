@@ -113,6 +113,7 @@ namespace API
                 endpoints.MapControllers();
                 // the route that access to PresenceHub 
                 endpoints.MapHub<OnlineHub>("hubs/online");
+                endpoints.MapHub<MessageHub>("hubs/message");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
         }

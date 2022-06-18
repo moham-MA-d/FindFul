@@ -20,12 +20,22 @@ export class JwtInterceptor implements HttpInterceptor {
     let userToken: UserToken;
     // take(): with using take() method we don't need to unsubscribe, after the observable being completed
     // we will automatically unsubscribe from it.
+
+
+    // this.accountService.currentUserToken$.pipe(take(1)).subscribe(uToken => {
+    //   userToken = uToken;
+    // });
+    // this.accountService.currentUser$.pipe(take(1)).subscribe(u => {
+    //   currentUser = u;
+    // });
+
     this.accountService.currentUserToken$.pipe(take(1)).subscribe(uToken => {
       userToken = uToken;
       this.accountService.currentUser$.pipe(take(1)).subscribe(u => {
         currentUser = u;
       })
     });
+
     if (currentUser) {
       // we want to clone `request` and add authentication header into it.
       // it will attach our token to every request when we are logged in

@@ -87,7 +87,7 @@ export class MemberService {
     if (this.currentMember !== undefined) {
       return of(this.currentMember);
     }
-
+    console.log("member");
     return this.http.get<Member>(this.baseUrl + 'users/GetUser/' + userName);
 
   }
