@@ -6,6 +6,8 @@ export class GlobalConstants {
   //public static HUBURL: string = "https://localhost:5001/hubs/";
   public static HUBURL: string = "https://localhost:44341/hubs/";
 
-  public static siteTitle: string = "This is example of ItSolutionStuff.com";
+  public static SITETITLE: string = "Findful.com";
+
+  public static USESIGNALR: boolean = true;
 
 }

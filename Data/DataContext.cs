@@ -11,6 +11,7 @@ using Core.Models.Entities.Messages;
 using Data.Configurations.Messages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Core.Models.Entities.SignalR;
 
 namespace Data
 {
@@ -32,6 +33,8 @@ namespace Data
         public DbSet<PostLiked> PostsLiked { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<SignalRGroup> SignalRGroups { get; set; }
+        public DbSet<SignalRConnection> SignalRConnections { get; set; }
 
 
         //This is the method that is called when an entity is created.

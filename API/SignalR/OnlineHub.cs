@@ -20,7 +20,8 @@ namespace API.SignalR
         // in SignalR there is no way to detect online users in OnConnectedAsync.
         //  because in a web firm when there is more than one web server there is no way of getting the 
         //  connection information from the other server. this service is confined to the server that is running on. 
-        // there are some strategies to fix this:
+        
+        //  There are some strategies to fix this:
         //  1. Redis, we can store tracking information in it that can be distribute among many servers.
         //  2. Use a class that is responsible who is connected and store that in a dictionary.
         //      this method is not scalable and work on a single server but it will not work on multiple servers

@@ -26,11 +26,12 @@
 
         <!--Chat Messages in Right-->
         <!-- #chatBox : template reference variable -->
-        <div #chatBox class="tab-content scrollbar-wrapper wrapper scrollbar-outer" (scroll)="onScroll($event)">
-          <div class="tab-pane" id="contact-{{chatId}}">
+        <div #chatBox class="tab-content scrollbar-wrapper wrapper scrollbar-outer">
+        <!-- <div #chatBox class="tab-content scrollbar-wrapper wrapper scrollbar-outer" (scroll)="onScroll($event)"> -->
+            <div class="tab-pane" id="contact-{{chatId}}">
             <div class="chat-body" >
               <ul class="chat-message">
-                <ng-container *ngFor="let message of messageService.nessageThread$ | async">
+                <ng-container *ngFor="let message of (messageService.messageThread$ | async)">
                   <li *ngIf="message.senderId != user.id && message.recieverId == user.id" class="left">
                     <a routerLink="/members/{{message.senderUsername}}">
                       <img src="{{message.senderPhotoUrl}}" alt="" class="profile-photo-sm pull-left" />
