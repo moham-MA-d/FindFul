@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
+import { take } from 'rxjs/operators';
 import { CreateMessage } from 'src/app/models/message/createMessage';
 import { ScrollParameters } from 'src/app/models/page/scrollParameters';
 import { UserToken } from 'src/app/models/user/user';
@@ -17,24 +19,22 @@ export class MessageService {
   baseUrl = environment.apiUrl;
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;
-
   // to deal with situation when a message send to this hub we need to cereate an Observable
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
-  nessageThread$ = this.messageThreadSource.asObservable();
+  messageThread$ = this.messageThreadSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
   createHubConnection(userToken: UserToken, otherUserId: string, skip: string) {
-    console.log("XXXX: ", this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip);
+    console.log("createHubConnection");
     this.hubConnection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl(this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip, {
+      .withUrl(this.hubUrl + 'signalrmessage?targetUserId=' + otherUserId + '&&skip=' + skip, {
         //skipNegotiation: true,
         // transport: should be enable on windows server
         //transport: HttpTransportType.WebSockets,
         //accessTokenFactory: return a string that contains access token and actually is userToken.Token
         accessTokenFactory: () => userToken.token
-
       })
       .withAutomaticReconnect()
       .build()
@@ -43,38 +43,57 @@ export class MessageService {
       .start()
       .catch(error => console.log("SignalR Message Error : ", error));
 
-      this.hubConnection.on("ReceiveMessageThread", messages => {
-        this.messageThreadSource.next(messages);
-      });
+    this.hubConnection.on("ReceiveMessageThread", messages => {
+      console.log("hubConnection on ReceiveMessageThread :", messages);
+      this.messageThreadSource.next(messages);
+    });
+
+    this.hubConnection.on("NewMessage", message => {
+      console.log("NewMessage : ", message);
+     this.messageThread$.pipe(take(1)).subscribe(messages => {
+      console.log("messageThread$ : ", messages);
+      this.messageThreadSource.next([...messages,message]);
+     })
+    });
+
   }
 
   stopHubConnection() {
     console.log("SignalR: stop");
     if (this.hubConnection) {
+      this.messageThreadSource.next([]);
       this.hubConnection.stop().catch(error => console.log(error));
     }
   }
 
-  SendMessage(model: CreateMessage) {
-    return this.http.post(this.baseUrl + 'messages/addmessage', model)
-    .pipe(map((response: Message) => {
-      return response;
-    }))
+
+  async SendMessageSignalR(model: CreateMessage) {
+      // invoke(): call a method in server.
+      return this.hubConnection.invoke('SendMessage', model)
+      .catch(error => console.log("Error in seding message : ", error));
   }
 
-  GetChats(){
+  SendMessage(model: CreateMessage) {
+      return this.http.post(this.baseUrl + 'messages/addmessage', model)
+      .pipe(map((response: Message) => {
+        return response;
+      }))
+  }
+
+
+  GetChats() {
     return this.http.get(this.baseUrl + 'messages/getchats')
-    .pipe(map((response: any) => {
-      return response;
-    }))
+      .pipe(map((response: any) => {
+        return response;
+      }))
   }
 
   GetMessages(userId: number, skip: number) {
     //const filter = this.turnFilterIntoUrl(filterDto);
-    return this.http.get(this.baseUrl + 'messages/getmessages?userid=' + userId + "&&skip="+ skip)
-    .pipe(map((response: any) => {
-      return response;
-    }))
+    return this.http.get(this.baseUrl + 'messages/getmessages?userid=' + userId + "&&skip=" + skip)
+      .pipe(map((response: any) => {
+        return response;
+      }))
   }
 
 

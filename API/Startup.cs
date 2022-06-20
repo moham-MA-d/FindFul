@@ -111,9 +111,9 @@ namespace API
             {
                 //Look at our controller to find endpoint for example [HttpGet] is an endpoint
                 endpoints.MapControllers();
-                // the route that access to PresenceHub 
+                // the route that access to Hubs
                 endpoints.MapHub<OnlineHub>("hubs/online");
-                endpoints.MapHub<MessageHub>("hubs/message");
+                endpoints.MapHub<MessageHub>("hubs/signalrmessage");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
         }

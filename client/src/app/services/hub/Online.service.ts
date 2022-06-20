@@ -17,11 +17,10 @@ export class OnlineService {
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
   onlineUsers$ = this.onlineUsersSource.asObservable();
 
-  constructor(private toastr: ToastrService, private router: Router) { }
+  constructor(private toastr: ToastrService) { }
 
   // it is not an HttpRequest so we cannot use `JwtInterceptor.ts`
   createHubConnection(userToken: UserToken) {
-    console.log("oooooooo: ", this.hubUrl + 'online');
     this.hubConnection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
       .withUrl(this.hubUrl + 'online', {

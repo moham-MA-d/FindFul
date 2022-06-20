@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { CreateMessage } from 'src/app/models/message/createMessage';
 import { MemberChat } from 'src/app/models/message/memberChat';
@@ -7,13 +7,14 @@ import { Member } from 'src/app/models/user/member';
 import { User, UserToken } from 'src/app/models/user/user';
 import { AccountService } from 'src/app/services/account/account.service';
 import { MessageService } from 'src/app/services/message/message.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit{
   @ViewChild('chatBox') private chatBox: ElementRef;
   memberChat: MemberChat[];
   messages: Message[];
@@ -86,31 +87,43 @@ export class MessagesComponent implements OnInit {
       body: this.messageText,
       receiverId: this.chatId
     }
-    this.messageService.SendMessage(createMessage).subscribe((r: any) => {
-      if (r) {
-        this.messages.push(r);
-        this.messageText = "";
-        this.scrollToBottom();
-      }
-    });
+    if (environment.useSignalR) {
+      this.messageService.SendMessageSignalR(createMessage).then(() => {
+        //this.scrollToBottom();
+        console.log("SIGNALR IS DONE");
+      });
+    } else {
+      // this.messageService.SendMessage(createMessage).subscribe((r: any) => {
+      //   if (r) {
+      //     this.messages.push(r);
+      //     this.messageText = "";
+      //     this.scrollToBottom();
+      //   }
+      // });
+    }
+
   }
 
-  onScroll(event: any) {
-    if (this.tmpDisableScroll === false) {
-      // visible height + pixel scrolled >= total height
-      if (event.target.scrollTop == 0) {
-        this.GetMessages(this.chatId);
-      }
-    }
-    //End Of The Chat
-    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) { }
-  }
+  // onScroll(event: any) {
+  //   if (this.tmpDisableScroll === false) {
+  //     // visible height + pixel scrolled >= total height
+  //     if (event.target.scrollTop == 0) {
+  //       this.GetMessages(this.chatId);
+  //     }
+  //   }
+  //   //End Of The Chat
+  //   if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) { }
+  // }
 
   scrollToBottom() {
     try {
       this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
     } catch (err) { }
   }
+
+  // ngOnDestroy(): void {
+  //   this.messageService.stopHubConnection();
+  // }
 
 }
 
