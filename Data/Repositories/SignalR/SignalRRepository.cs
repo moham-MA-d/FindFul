@@ -17,10 +17,6 @@ namespace Data.Repositories.SignalR
         {
         }
 
-        public void AddGroup(SignalRGroup group)
-        {
-            _context.SignalRGroups.Add(group);
-        }
 
         public async Task<SignalRGroup> GetGroupForConnection(string connectionId)
         {

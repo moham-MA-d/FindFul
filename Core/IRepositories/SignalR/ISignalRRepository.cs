@@ -5,7 +5,6 @@ namespace Core.IRepositories.SignalR
 {
     public interface ISignalRRepository : IGenericRepository<SignalRGroup>
     {
-        void AddGroup(SignalRGroup group);
         void RemoveConnection(SignalRConnection connection);
         Task<SignalRConnection> GetConnection(string connectionId);
         Task<SignalRGroup> GetMessageGroup(string groupName);

@@ -6,6 +6,7 @@ using Core.IServices.User;
 using Core.Models.Entities.SignalR;
 using Core.Models.Entities.User;
 using DTO.Messages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
@@ -13,12 +14,15 @@ using System.Threading.Tasks;
 
 namespace API.SignalR
 {
+    [Authorize]
+
     public class MessageHub : Hub
     {
         private readonly IMapperService _mapperService;
         private readonly IMessageService _messageService;
         private readonly ISignalRService _signalRService;
         private readonly IUserService _userService;
+
 
         public MessageHub(
             IMapperService mapperService,
@@ -31,6 +35,7 @@ namespace API.SignalR
             _mapperService = mapperService;
             _signalRService = signalRService;
         }
+
 
 
         public override async Task OnConnectedAsync()
@@ -114,10 +119,11 @@ namespace API.SignalR
             if (group == null)
             {
                 group = new SignalRGroup(groupName);
-                _signalRService.AddGroup(group);
+                await _signalRService.AddAsync(group);
             }
 
             group.Connections.Add(connection);
+            await _signalRService.SaveChangesAsync();
 
             return group;
 
