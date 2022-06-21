@@ -9,6 +9,7 @@ using DTO.Account.Base;
 using Core.Models.Entities.Messages;
 using DTO.Messages;
 using Extensions.Common;
+using System;
 
 namespace Service.Helpers
 {
@@ -16,6 +17,10 @@ namespace Service.Helpers
     {
         public AutoMapperProfiles()
         {
+
+            //It will add a 'z' at the end of the utc date time, therefor all browsers show time same as each other.
+            CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
+
             int currentUserId = 0;
             string currentUsername = string.Empty;
 

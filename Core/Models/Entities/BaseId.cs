@@ -8,7 +8,7 @@ namespace Core.Models.Entities
         public Guid GuId { get; set; } = Guid.NewGuid();
         public bool IsDelete { get; set; } = false;
         public bool IsActive { get; set; } = true;
-        public DateTime CreateDateTime { get; set; } = DateTime.Now;
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
 
     }
 }
