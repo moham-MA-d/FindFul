@@ -4,16 +4,19 @@ using Core;
 using Core.IRepositories.Follows;
 using Core.IRepositories.Messages;
 using Core.IRepositories.Posts;
+using Core.IRepositories.SignalR;
 using Core.IRepositories.User;
 using Core.IServices.Follows;
 using Core.IServices.Mapper;
 using Core.IServices.Messages;
 using Core.IServices.Posts;
+using Core.IServices.SignalR;
 using Core.IServices.User;
 using Data;
 using Data.Repositories.Follows;
 using Data.Repositories.Messages;
 using Data.Repositories.Posts;
+using Data.Repositories.SignalR;
 using Data.Repositories.User;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +24,7 @@ using Service.Classes.Follows;
 using Service.Classes.Mapper;
 using Service.Classes.Messages;
 using Service.Classes.Posts;
+using Service.Classes.SignalR;
 using Service.Classes.User;
 
 namespace API.ServiceInstallers
@@ -50,6 +54,9 @@ namespace API.ServiceInstallers
 
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMessageService, MessageService>();
+
+            services.AddScoped<ISignalRRepository, SignalRRepository>();
+            services.AddScoped<ISignalRService, SignalRService>();
 
             services.AddScoped<ITokenRepository, TokenRepository>();
             // Useful for http request. It's is equal to http request lifetime.

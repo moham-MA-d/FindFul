@@ -25,12 +25,12 @@ export class MessageService {
 
   constructor(private http: HttpClient) { }
 
+
   createHubConnection(userToken: UserToken, otherUserId: string, skip: string) {
-    console.log("createHubConnection");
     this.hubConnection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl(this.hubUrl + 'signalrmessage?targetUserId=' + otherUserId + '&&skip=' + skip, {
-        //skipNegotiation: true,
+      .withUrl(this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip, {
+          //skipNegotiation: true,
         // transport: should be enable on windows server
         //transport: HttpTransportType.WebSockets,
         //accessTokenFactory: return a string that contains access token and actually is userToken.Token

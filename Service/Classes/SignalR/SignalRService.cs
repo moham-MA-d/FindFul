@@ -20,11 +20,6 @@ namespace Service.Classes.SignalR
             _signalRRepository = signalRRepository;
         }
 
-        public void AddGroup(SignalRGroup group)
-        {
-            _signalRRepository.AddGroup(group);
-        }
-
         public async Task<SignalRConnection> GetConnection(string connectionId)
         {
             return await _signalRRepository.GetConnection(connectionId);

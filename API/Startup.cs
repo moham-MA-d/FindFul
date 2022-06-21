@@ -113,7 +113,8 @@ namespace API
                 endpoints.MapControllers();
                 // the route that access to Hubs
                 endpoints.MapHub<OnlineHub>("hubs/online");
-                endpoints.MapHub<MessageHub>("hubs/signalrmessage");
+                endpoints.MapHub<MessageHub>("hubs/message");
+                endpoints.MapHub<ChatHub>("hubs/chat");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
