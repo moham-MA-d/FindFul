@@ -42,19 +42,19 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var targetUserId = Int32.Parse(httpContext.Request.Query["targetUserId"].ToString());
+            var targetUser = _userService.GetById(targetUserId);
             var skip = Int32.Parse(httpContext.Request.Query["skip"].ToString());
-            var groupName = GetGroupName(Context.User.GetUserId(), targetUserId);
+            var groupName = GetGroupName(Context.User.GetUsername(), targetUser.UserName);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            
+
             var group = await AddToGroup(groupName);
             //await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
-            
+
             var messages = await _messageService.GetMessages(Context.User.GetUserId(), targetUserId, skip);
 
             //if (_messageService.HasChanges()) await _messageService.Complete();
 
-            //await Clients.SignalRGroup(groupName).SendAsync("ReceiveMessageThread", messages);
-            await Clients.All.SendAsync("ReceiveMessageThread", messages);
+            await Clients.Group(groupName).SendAsync("ReceiveMessageThread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -65,6 +65,7 @@ namespace API.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
+        // SendMessage Called by client
         public async Task SendMessage(DtoCreateMessage dtoCreateMessage)
         {
             var User = Context.GetHttpContext().User;
@@ -96,7 +97,7 @@ namespace API.SignalR
 
             var dtoMessage = _mapperService.MessageToDtoMessage(message);
 
-            var groupName = GetGroupName(sender.Id, receiver.Id);
+            var groupName = GetGroupName(sender.UserName, receiver.UserName);
             var group = await _signalRService.GetMessageGroup(groupName);
 
             if (group.Connections.Any(x => x.Username == receiver.UserName))
@@ -105,10 +106,7 @@ namespace API.SignalR
             }
 
             await Clients.Group(groupName).SendAsync("NewMessage", dtoMessage);
-            
-            await Clients.All.SendAsync("NewMessage", dtoMessage);
-
-         }
+        }
 
         private async Task<SignalRGroup> AddToGroup(string groupName)
         {
@@ -135,7 +133,7 @@ namespace API.SignalR
             var group = await _signalRService.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             _signalRService.RemoveConnection(connection);
-            
+
             return group;
 
             throw new HubException("Failed to remove from group");
@@ -146,5 +144,11 @@ namespace API.SignalR
             var stringCompare = string.CompareOrdinal(caller.ToString(), other.ToString()) < 0;
             return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
         }
+        private string GetGroupName(string caller, string other)
+        {
+            var stringCompare = string.CompareOrdinal(caller, other) < 0;
+            return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
+        }
+
     }
 }

@@ -28,7 +28,7 @@ export class MessageService {
 
   createHubConnection(userToken: UserToken, otherUserId: string, skip: string) {
     this.hubConnection = new HubConnectionBuilder()
-      .configureLogging(LogLevel.Debug)
+      //.configureLogging(LogLevel.Debug)
       .withUrl(this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip, {
           //skipNegotiation: true,
         // transport: should be enable on windows server
@@ -44,16 +44,29 @@ export class MessageService {
       .catch(error => console.log("SignalR Message Error : ", error));
 
     this.hubConnection.on("ReceiveMessageThread", messages => {
-      console.log("hubConnection on ReceiveMessageThread :", messages);
       this.messageThreadSource.next(messages);
     });
 
+    // this.hubConnection.on("NewMessage", message => {
+    //   this.messageThread$.pipe(take(1)).subscribe(messages => {
+    //     this.messageThreadSource.next([...messages,message]);
+    //   })
+    // });
+
+    let allMessages;
     this.hubConnection.on("NewMessage", message => {
-      console.log("NewMessage : ", message);
-     this.messageThread$.pipe(take(1)).subscribe(messages => {
-      console.log("messageThread$ : ", messages);
-      this.messageThreadSource.next([...messages,message]);
-     })
+
+      this.messageThread$.pipe(take(1)).subscribe(
+      {
+        next: (messages: Message[]) => {
+          allMessages = [...messages,message];
+        },
+        complete: () => {
+          this.messageThreadSource.next(allMessages);
+        },
+        error() { console.log("Erorr in getting message"); }
+      })
+
     });
 
   }

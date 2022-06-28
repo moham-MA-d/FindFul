@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models.Entities.SignalR
 {
@@ -17,5 +18,7 @@ namespace Core.Models.Entities.SignalR
         [Key]
         public string ConnectionId { get; set; }
         public string Username { get; set; }
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
+
     }
 }
