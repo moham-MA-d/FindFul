@@ -101,7 +101,6 @@ namespace API
 
                 app.UseSwagger(option => { option.RouteTemplate = swaggerOption.JsonRoute; });
                 app.UseDeveloperExceptionPage();
-
                 app.UseSwaggerUI(
                     options => options.SwaggerEndpoint(swaggerOption.UIEndpoint, swaggerOption.Description));
             }
@@ -114,7 +113,6 @@ namespace API
                 // the route that access to Hubs
                 endpoints.MapHub<OnlineHub>("hubs/online");
                 endpoints.MapHub<MessageHub>("hubs/message");
-                endpoints.MapHub<ChatHub>("hubs/chat");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
         }

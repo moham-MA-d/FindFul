@@ -21,5 +21,7 @@ namespace Core.Models.Entities.SignalR
         [Key]
         public string Name { get; set; }
         public ICollection<SignalRConnection> Connections { get; set; } = new List<SignalRConnection>();
+
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
     }
 }
