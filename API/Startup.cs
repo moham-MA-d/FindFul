@@ -115,6 +115,7 @@ namespace API
                 endpoints.MapHub<MessageHub>("hubs/message");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
+
         }
     }
 }

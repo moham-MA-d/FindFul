@@ -44,7 +44,7 @@ export class OnlineService {
       // this.onlineUsers$.pipe(take(1)).subscribe(usernames => {
       //   this.onlineUsersSource.next([...usernames, username])
       // })
-      console.log("SignalR: 1");
+      console.log("UserIsOnline : ", username);
       this.toastr.info(username + 'is online')
     })
 
@@ -54,12 +54,12 @@ export class OnlineService {
       // this.onlineUsers$.pipe(take(1)).subscribe(usernames => {
       //   this.onlineUsersSource.next([...usernames.filter(x => x !== username)])
       // })
-      console.log("SignalR: 2");
+      console.log("UserIsOffline : ", username );
       this.toastr.info(username + 'is offline')
     })
 
     this.hubConnection.on('GetOnlineUsers', (usernames: string[]) => {
-      console.log("SignalR: On");
+      console.log("GetOnlineUsers : ", usernames);
       // update onlineUsersSource with list of current users.
       this.onlineUsersSource.next(usernames);
     })

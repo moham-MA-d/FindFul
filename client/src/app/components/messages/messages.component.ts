@@ -48,7 +48,6 @@ export class MessagesComponent implements OnInit{
         this.skip = 0;
       });
 
-
   }
 
   GetMessages(targetUserId: number) {
@@ -90,6 +89,9 @@ export class MessagesComponent implements OnInit{
     if (environment.useSignalR) {
       this.messageService.SendMessageSignalR(createMessage).then(() => {
         //this.scrollToBottom();
+        this.messageService.messageThread$.subscribe((message: any) => {
+          this.messages.concat(message)
+    });
         console.log("SIGNALR IS DONE");
       });
     } else {

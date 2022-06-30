@@ -44,24 +44,24 @@ namespace API.SignalR
             var targetUserId = Int32.Parse(httpContext.Request.Query["targetUserId"].ToString());
             var targetUser = _userService.GetById(targetUserId);
             var skip = Int32.Parse(httpContext.Request.Query["skip"].ToString());
-            var groupName = GetGroupName(Context.User.GetUsername(), targetUser.UserName);
+            var groupName = GetGroupName(Context.User.GetUserId(), targetUser.Id);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
             var group = await AddToGroup(groupName);
-            //await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
+            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
             var messages = await _messageService.GetMessages(Context.User.GetUserId(), targetUserId, skip);
 
             //if (_messageService.HasChanges()) await _messageService.Complete();
 
-            await Clients.Group(groupName).SendAsync("ReceiveMessageThread", messages);
+            await Clients.Caller.SendAsync("ReceiveMessageThread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             // SignalR automatically remove user from a group when they are disconnected.
             var group = await RemoveFromMessageGroup();
-            //await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
             await base.OnDisconnectedAsync(exception);
         }
 
@@ -75,18 +75,11 @@ namespace API.SignalR
             var sender = await _userService.GetByIdAsync(User.GetUserId());
 
             AppUser receiver;
-            if (!string.IsNullOrEmpty(dtoCreateMessage.ReceiverUsername))
-            {
-                var receiverUsername = dtoCreateMessage.ReceiverUsername.ToLower();
-                var receiverUser = await _userService.GetByUsernameAsync(receiverUsername);
-                receiver = await _userService.GetByIdAsync(receiverUser.Id);
-            }
-            else
-            {
-                receiver = await _userService.GetByIdAsync(dtoCreateMessage.ReceiverId);
-            }
-
-
+            if (dtoCreateMessage.ReceiverId == 0)
+                throw new HubException("No user found!");
+            
+            receiver = await _userService.GetByIdAsync(dtoCreateMessage.ReceiverId);
+          
             if (receiver == null) throw new HubException("No user found!");
 
             if (User.GetUserId() == receiver.Id) throw new HubException("You cannot send a message to yourself!");
@@ -97,10 +90,10 @@ namespace API.SignalR
 
             var dtoMessage = _mapperService.MessageToDtoMessage(message);
 
-            var groupName = GetGroupName(sender.UserName, receiver.UserName);
+            var groupName = GetGroupName(sender.Id, receiver.Id);
             var group = await _signalRService.GetMessageGroup(groupName);
 
-            if (group.Connections.Any(x => x.Username == receiver.UserName))
+            if (group.Connections.Any(x => x.UserId == receiver.Id.ToString()))
             {
                 message.DateRead = DateTime.UtcNow;
             }
@@ -112,7 +105,7 @@ namespace API.SignalR
         {
             var group = await _signalRService.GetMessageGroup(groupName);
             //var connection = new DbLoggerCategory.Database.Connection(Context.ConnectionId, Context.User.GetUsername());
-            var connection = new SignalRConnection(Context.ConnectionId, Context.User.GetUsername());
+            var connection = new SignalRConnection(Context.ConnectionId, Context.User.GetUserId().ToString());
 
             if (group == null)
             {
@@ -139,16 +132,12 @@ namespace API.SignalR
             throw new HubException("Failed to remove from group");
         }
 
+
         private string GetGroupName(int caller, int other)
         {
             var stringCompare = string.CompareOrdinal(caller.ToString(), other.ToString()) < 0;
             return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
         }
-        private string GetGroupName(string caller, string other)
-        {
-            var stringCompare = string.CompareOrdinal(caller, other) < 0;
-            return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
-        }
-
+      
     }
 }
