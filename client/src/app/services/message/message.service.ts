@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { take } from 'rxjs/operators';
 import { CreateMessage } from 'src/app/models/message/createMessage';
+import { Group } from 'src/app/models/message/group';
 import { ScrollParameters } from 'src/app/models/page/scrollParameters';
 import { UserToken } from 'src/app/models/user/user';
 import { environment } from 'src/environments/environment';
@@ -19,55 +19,70 @@ export class MessageService {
   baseUrl = environment.apiUrl;
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;
+
   // to deal with situation when a message send to this hub we need to cereate an Observable
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-
   createHubConnection(userToken: UserToken, otherUserId: string, skip: string) {
+    //WebSocket = undefined;
+    //EventSource = undefined;
     this.hubConnection = new HubConnectionBuilder()
       //.configureLogging(LogLevel.Debug)
       .withUrl(this.hubUrl + 'message?targetUserId=' + otherUserId + '&&skip=' + skip, {
-          //skipNegotiation: true,
+        //skipNegotiation: true,
         // transport: should be enable on windows server
         //transport: HttpTransportType.WebSockets,
         //accessTokenFactory: return a string that contains access token and actually is userToken.Token
         accessTokenFactory: () => userToken.token
       })
       .withAutomaticReconnect()
-      .build()
+      .build();
 
-    this.hubConnection
-      .start()
-      .catch(error => console.log("SignalR Message Error : ", error));
+    this.hubConnection.on('UpdatedGroup', (group: Group) => {
+      console.log("Group : ", group);
+      if (group.connections.some(x => x.userId === otherUserId)) {
+        console.log("Group other user id: ", otherUserId);
+        this.messageThread$.pipe(take(1)).subscribe(messages => {
+          messages.forEach(message => {
+            // if (!message.dateRead) {
+            //   message.dateRead = new Date(Date.now())
+            // }
+          })
+          this.messageThreadSource.next([...messages]);
+        })
+      }
+    });
+
+    this.hubConnection.on("NewMessage", message => {
+      this.messageThread$.pipe(take(1)).subscribe(messages => {
+        this.messageThreadSource.next([...messages, message]);
+      })
+    });
+
+    // let allMessages;
+    // this.hubConnection.on("NewMessage", message => {
+    //   this.messageThread$.pipe(take(1)).subscribe(
+    //   {
+    //     next: (messages: Message[]) => {
+    //       allMessages = [...messages,message];
+    //     },
+    //     complete: () => {
+    //       this.messageThreadSource.next(allMessages);
+    //     },
+    //     error() { console.log("Erorr in getting message"); }
+    //   })
+    // });
 
     this.hubConnection.on("ReceiveMessageThread", messages => {
       this.messageThreadSource.next(messages);
     });
 
-    // this.hubConnection.on("NewMessage", message => {
-    //   this.messageThread$.pipe(take(1)).subscribe(messages => {
-    //     this.messageThreadSource.next([...messages,message]);
-    //   })
-    // });
-
-    let allMessages;
-    this.hubConnection.on("NewMessage", message => {
-
-      this.messageThread$.pipe(take(1)).subscribe(
-      {
-        next: (messages: Message[]) => {
-          allMessages = [...messages,message];
-        },
-        complete: () => {
-          this.messageThreadSource.next(allMessages);
-        },
-        error() { console.log("Erorr in getting message"); }
-      })
-
-    });
+    this.hubConnection
+      .start()
+      .catch(error => console.log("SignalR Message Error : ", error));
 
   }
 
@@ -81,18 +96,17 @@ export class MessageService {
 
 
   async SendMessageSignalR(model: CreateMessage) {
-      // invoke(): call a method in server.
-      return this.hubConnection.invoke('SendMessage', model)
+    // invoke(): call a method in server.
+    return this.hubConnection.invoke('SendMessage', model)
       .catch(error => console.log("Error in seding message : ", error));
   }
 
   SendMessage(model: CreateMessage) {
-      return this.http.post(this.baseUrl + 'messages/addmessage', model)
+    return this.http.post(this.baseUrl + 'messages/addmessage', model)
       .pipe(map((response: Message) => {
         return response;
       }))
   }
-
 
   GetChats() {
     return this.http.get(this.baseUrl + 'messages/getchats')
@@ -108,7 +122,6 @@ export class MessageService {
         return response;
       }))
   }
-
 
   private turnFilterIntoUrl(filterDto?: ScrollParameters) {
     if (!filterDto) {

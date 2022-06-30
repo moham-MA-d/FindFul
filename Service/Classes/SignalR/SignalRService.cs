@@ -32,7 +32,7 @@ namespace Service.Classes.SignalR
 
         public async Task<SignalRGroup> GetMessageGroup(string groupName)
         {
-            return await _signalRRepository.GetMessageGroup(groupName);   
+            return await _signalRRepository.GetMessageGroup("grp-" + groupName);   
         }
 
         public void RemoveConnection(SignalRConnection connection)

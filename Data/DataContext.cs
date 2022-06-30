@@ -55,6 +55,7 @@ namespace Data
             modelBuilder.ApplyConfiguration(new FollowConfig());
             modelBuilder.ApplyConfiguration(new PostLikedConfig());
             modelBuilder.ApplyConfiguration(new MessageConfig());
+            modelBuilder.ApplyConfiguration(new SignalRGroupConfig());
             //modelBuilder.ApplyConfiguration(new RefreshTokenConfig());
 
         }

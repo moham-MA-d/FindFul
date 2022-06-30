@@ -9,15 +9,15 @@ namespace Core.Models.Entities.SignalR
         {
         }
 
-        public SignalRConnection(string connectionId, string username)
+        public SignalRConnection(string connectionId, string userId)
         {
             ConnectionId = connectionId;
-            Username = username;
+            UserId = userId;
         }
 
         [Key]
         public string ConnectionId { get; set; }
-        public string Username { get; set; }
+        public string UserId { get; set; }
         public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
 
     }

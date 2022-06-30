@@ -73,6 +73,7 @@ namespace API.ServiceInstallers
 
             services.AddSingleton<OnlineTracker>();
             services.AddSignalR(e => {
+                e.EnableDetailedErrors = true;
                 //e.MaximumReceiveMessageSize = 102400000;
                 //e.EnableDetailedErrors = true;
             });        
