@@ -98,7 +98,7 @@ namespace API.SignalR
                 message.DateRead = DateTime.UtcNow;
             }
 
-            await Clients.Group(groupName).SendAsync("NewMessage", dtoMessage);
+            await Clients.Group(groupName).SendAsync("GetNewMessage", dtoMessage);
         }
 
         private async Task<SignalRGroup> AddToGroup(string groupName)
@@ -126,7 +126,6 @@ namespace API.SignalR
             var group = await _signalRService.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             _signalRService.RemoveConnection(connection);
-
             return group;
 
             throw new HubException("Failed to remove from group");

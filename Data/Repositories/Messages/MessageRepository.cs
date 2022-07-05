@@ -152,13 +152,13 @@ namespace Data.Repositories.Messages
             var messagesDTO = messages.Select(x => new DtoMessageResponse
             {
                 SenderId = x.SenderId,
-                RecieverId = x.ReceiverId,
+                ReceiverId = x.ReceiverId,
                 Body = x.Body,
                 CreateDateTime = x.CreateDateTime,
                 SenderPhotoUrl = x.TheSender.ProfilePhotoUrl,
-                RecieverPhotoUrl = x.TheReceiver.ProfilePhotoUrl,
+                ReceiverPhotoUrl = x.TheReceiver.ProfilePhotoUrl,
                 SenderUsername = x.TheSender.UserName,
-                RecieverUsername = x.TheReceiver.UserName,
+                ReceiverUsername = x.TheReceiver.UserName,
                 DateReaded = x.DateRead,
             }).ToList();
 

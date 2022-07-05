@@ -31,8 +31,8 @@
             <div class="tab-pane" id="contact-{{chatId}}">
             <div class="chat-body" >
               <ul class="chat-message">
-                <ng-container *ngFor="let message of (messageService.messageThread$ | async)">
-                  <li *ngIf="message.senderId != user.id && message.recieverId == user.id" class="left">
+                <ng-container *ngFor="let message of messageService.messages">
+                  <li *ngIf="message.senderId != user.id && message.receiverId == user.id" class="left">
                     <a routerLink="/members/{{message.senderUsername}}">
                       <img src="{{message.senderPhotoUrl}}" alt="" class="profile-photo-sm pull-left" />
                     </a>
@@ -41,7 +41,7 @@
                       <small class="text-muted">{{message.createDateTime | timeago}}</small>
                     </div>
                   </li>
-                  <li *ngIf="message.senderId == user.id && message.recieverId != user.id" class="right">
+                  <li *ngIf="message.senderId == user.id && message.receiverId != user.id" class="right">
                     <a routerLink="/members/{{message.recieverUsername}}">
                       <img src="{{message.senderPhotoUrl}}" alt="" class="profile-photo-sm pull-right" />
                     </a>
