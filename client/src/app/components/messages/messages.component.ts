@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit{
+export class MessagesComponent implements OnInit {
   @ViewChild('chatBox') private chatBox: ElementRef;
   memberChat: MemberChat[];
   messages: Message[];
@@ -88,11 +88,10 @@ export class MessagesComponent implements OnInit{
     }
     if (environment.useSignalR) {
       this.messageService.SendMessageSignalR(createMessage).then(() => {
-        //this.scrollToBottom();
         this.messageService.messageThread$.subscribe((message: any) => {
           this.messages.concat(message)
-    });
-        console.log("SIGNALR IS DONE");
+        });
+        //console.log("SIGNALR IS DONE");
       });
     } else {
       // this.messageService.SendMessage(createMessage).subscribe((r: any) => {
@@ -103,7 +102,9 @@ export class MessagesComponent implements OnInit{
       //   }
       // });
     }
+    this.scrollToBottom();
 
+    this.messageText = "";
   }
 
   // onScroll(event: any) {

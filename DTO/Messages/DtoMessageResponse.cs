@@ -14,8 +14,8 @@ namespace DTO.Messages
         public string SenderUsername { get; set; }
         public string SenderPhotoUrl { get; set; }
 
-        public int RecieverId { get; set; }
-        public string RecieverUsername { get; set; }
-        public string RecieverPhotoUrl{ get; set; }
+        public int ReceiverId { get; set; }
+        public string ReceiverUsername { get; set; }
+        public string ReceiverPhotoUrl { get; set; }
     }
 }

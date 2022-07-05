@@ -50,7 +50,7 @@ namespace Service.Helpers
 
             CreateMap<Message, DtoMessageResponse>()
                 .ForMember(dst => dst.SenderPhotoUrl, opt => opt.MapFrom(src => src.TheSender.ProfilePhotoUrl))
-                .ForMember(dst => dst.RecieverPhotoUrl, opt => opt.MapFrom(src => src.TheReceiver.ProfilePhotoUrl));
+                .ForMember(dst => dst.ReceiverPhotoUrl, opt => opt.MapFrom(src => src.TheReceiver.ProfilePhotoUrl));
         }
     }
 }

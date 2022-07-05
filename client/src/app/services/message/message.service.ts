@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { take } from 'rxjs/operators';
 import { CreateMessage } from 'src/app/models/message/createMessage';
 import { Group } from 'src/app/models/message/group';
+import { Message } from 'src/app/models/message/message';
 import { ScrollParameters } from 'src/app/models/page/scrollParameters';
 import { UserToken } from 'src/app/models/user/user';
 import { environment } from 'src/environments/environment';
@@ -23,6 +23,9 @@ export class MessageService {
   // to deal with situation when a message send to this hub we need to cereate an Observable
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
+
+  public message: Message;
+  public messages: Message[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -42,9 +45,9 @@ export class MessageService {
       .build();
 
     this.hubConnection.on('UpdatedGroup', (group: Group) => {
-      console.log("Group : ", group);
+      //console.log("Group : ", group);
       if (group.connections.some(x => x.userId === otherUserId)) {
-        console.log("Group other user id: ", otherUserId);
+        //console.log("Group other user id: ", otherUserId);
         this.messageThread$.pipe(take(1)).subscribe(messages => {
           messages.forEach(message => {
             // if (!message.dateRead) {
@@ -56,11 +59,15 @@ export class MessageService {
       }
     });
 
-    this.hubConnection.on("NewMessage", message => {
-      this.messageThread$.pipe(take(1)).subscribe(messages => {
-        this.messageThreadSource.next([...messages, message]);
-      })
-    });
+
+    this.hubConnection.on("GetNewMessage", (message: Message) => {
+      this.message = message;
+      this.messages.push(this.message);
+      console.log("Push", this.messages);
+      // this.messageThread$.pipe(take(1)).subscribe(messages => {
+      //   this.messageThreadSource.next([...messages, message]);
+      // })
+    })
 
     // let allMessages;
     // this.hubConnection.on("NewMessage", message => {
@@ -76,8 +83,11 @@ export class MessageService {
     //   })
     // });
 
-    this.hubConnection.on("ReceiveMessageThread", messages => {
-      this.messageThreadSource.next(messages);
+    this.hubConnection.on("ReceiveMessageThread", (messages: Message[]) => {
+      //this.messageThreadSource.next(messages);
+      this.messages = messages;
+      console.log("Get Messages", messages);
+
     });
 
     this.hubConnection

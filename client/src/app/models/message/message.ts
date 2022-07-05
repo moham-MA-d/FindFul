@@ -4,5 +4,5 @@ export class Message {
   recieverUsername: string;
   senderUsername: string;
   senderId: number;
-  recieverId: number;
+  receiverId: number;
 }
