@@ -8,6 +8,7 @@ using Core.Models.Entities.User;
 using DTO.Account;
 using Core.IRepositories.User;
 using System.Linq;
+using System.Threading;
 using DTO.Pagination;
 using Data.Helpers;
 using DTO.Enumerations;
@@ -74,7 +75,8 @@ namespace Data.Repositories.User
                     UserEnums.OrderBy.LastActivity => query.OrderByDescending(x => x.LastActivity),
                     _ => query.OrderByDescending(x => x.CreateDateTime),
                 };
-
+               
+               Thread.Sleep(111);
 
                 //We used `AsNoTracking()` Because We only going to read the data and we are not going to to anything else with the data
                 return await PagedList<DtoMember>.CreateAsync(
@@ -90,7 +92,7 @@ namespace Data.Repositories.User
             }
         }
 
-        public async Task<AppUser> GetUserByIdAsync(int id)
+        public async ValueTask<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
                 .Include(x => x.TheUserPhotosList)

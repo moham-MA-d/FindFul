@@ -1,3 +1,4 @@
+using System.Threading;
 using Core.Models.Entities.User;
 using Data;
 using Data.Seed;
@@ -16,6 +17,8 @@ namespace API
         // this method is outside of middleware, so we don't access to global error exception and we need try, catch
         public static async Task Main(string[] args)
         {
+            ThreadPool.SetMaxThreads(1, 1);
+           
             var host = CreateHostBuilder(args).Build();
 
             // create a scope for services that we need.

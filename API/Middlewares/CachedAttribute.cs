@@ -37,13 +37,13 @@ namespace API.Middlewares
             //    return;
             //}
 
-            var cacheSerice = context.HttpContext.RequestServices.GetRequiredService<IResponseCacheServiceApi>();
+            var cacheService = context.HttpContext.RequestServices.GetRequiredService<IResponseCacheServiceApi>();
 
 
             // we need to identify each is unique and the way to that is cacheKey
             // we get actual url and query string and use them as a cacheKey
             var cacheKey = GenerateCacheKey(context.HttpContext.Request);
-            var cacheResponse = await cacheSerice.GetCachedResponseAsync(cacheKey);
+            var cacheResponse = await cacheService.GetCachedResponseAsync(cacheKey);
 
             // a response from redis:
             if (!string.IsNullOrEmpty(cacheResponse))
@@ -63,7 +63,7 @@ namespace API.Middlewares
 
             if (executedContext.Result is OkObjectResult okObjectResult)
             {
-                await cacheSerice.SetCacheResponseAsync(cacheKey, okObjectResult.Value, TimeSpan.FromSeconds(_timeToLiveSecounds));
+                await cacheService.SetCacheResponseAsync(cacheKey, okObjectResult.Value, TimeSpan.FromSeconds(_timeToLiveSecounds));
             }
 
             // after the controller :
