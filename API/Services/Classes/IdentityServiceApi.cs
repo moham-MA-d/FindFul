@@ -3,7 +3,6 @@ using Core.Models.Entities.User;
 using DTO.Account;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using Core.IServices.SocialNetworks;
 
 namespace API.Services.Classes
 {
