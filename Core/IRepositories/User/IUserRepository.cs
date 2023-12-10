@@ -13,7 +13,7 @@ namespace Core.IRepositories.User
         Task<DtoMember> GetMemberByUsernameAsync(string username);
         Task<AppUser> GetUserByUsernameAsync(string username);
         Task<PagedListBase<DtoMember>> GetAllMembers(UserParameters userParameters);
-        Task<AppUser> GetUserByIdAsync(int id);
+        ValueTask<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByIdAsync(int id, IQueryable<AppUser> query);
     }
 }

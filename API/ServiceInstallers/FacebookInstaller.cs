@@ -1,10 +1,8 @@
 ﻿using API.Services.Classes;
 using API.Services.Interfaces;
-using Core.IServices.SocialNetworks;
 using DTO.SocialNetworks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Service.Classes.SocialNetworks;
 
 namespace API.ServiceInstallers
 {
