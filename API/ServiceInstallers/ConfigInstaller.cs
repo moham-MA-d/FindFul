@@ -37,7 +37,7 @@ namespace API.ServiceInstallers
                         // Use connection string from file.
                         //connStr = configuration.GetConnectionString("FindFulConnection");
                         
-                        options.UseNpgsql(configuration.GetConnectionString("PostgresConnection"));
+                        options.UseSqlServer(configuration.GetConnectionString("PostgresConnection"));
                         //options.UseSqlServer(configuration.GetConnectionString("FindFulConnection"));
                     }
                     else
@@ -60,7 +60,7 @@ namespace API.ServiceInstallers
 
                             connectionString =
                                 $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
-                            options.UseNpgsql(connectionString);
+                            options.UseSqlServer(connectionString);
 
                         }
                         else
@@ -74,6 +74,9 @@ namespace API.ServiceInstallers
                 }
             );
 
+            // Connection string is defined in appsetting.json
+            // AddDbContext life time is Scoped
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(configuration.GetConnectionString("FindFulConnection")));
             //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
         }
     }
