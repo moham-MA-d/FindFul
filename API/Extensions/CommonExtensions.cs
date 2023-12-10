@@ -13,6 +13,9 @@ namespace API.Extensions
             if (index >= 0)
                 baseUrl = baseUrl[..index]; // or index + 1 to keep slash
 
+
+
+
             return baseUrl;
         }
     }
