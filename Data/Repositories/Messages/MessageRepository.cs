@@ -42,7 +42,7 @@ namespace Data.Repositories.Messages
 
             List<DtoMemberChat> chats = new();
 
-            //TODO: Fix : Remove Repeated users in senders and receivers withing query
+            //TODO: Fix : Remove Repeated users in senders and recievers withing query
             var listRelatedUserIds = new List<int>();
 
             foreach (var item in senders)
