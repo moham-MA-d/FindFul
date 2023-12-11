@@ -20,7 +20,6 @@ namespace API.ServiceInstallers
         {
             services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySettings"));
 
-            // findful application will get its connection string from Heroku environment variable.
             // AddDbContext life time is Scoped
             services.AddDbContext<DataContext>(options =>
                     //x.UseSqlServer(configuration.GetConnectionString("FindFulConnection"))
@@ -34,10 +33,8 @@ namespace API.ServiceInstallers
                     // connection string, or development connection string from env var.
                     if (env == "Development")
                     {
-                        // Use connection string from file.
-                        //connStr = configuration.GetConnectionString("FindFulConnection");
-                        
-                        options.UseSqlServer(configuration.GetConnectionString("PostgresConnection"));
+                        options.UseNpgsql(configuration.GetConnectionString("FindFulConnection"));
+                        options.LogTo(Console.WriteLine, LogLevel.Information);
                         //options.UseSqlServer(configuration.GetConnectionString("FindFulConnection"));
                     }
                     else
@@ -68,16 +65,10 @@ namespace API.ServiceInstallers
                             throw new Exception("There is a problem in connection!");
                         }
                     }
-
                     // Whether the connection string came from the local development configuration file
                     // or from the environment variable from Heroku, use it to set up your DbContext.
                 }
             );
-
-            // Connection string is defined in appsetting.json
-            // AddDbContext life time is Scoped
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(configuration.GetConnectionString("FindFulConnection")));
-            //services.AddDbContext<DataContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Data")));
         }
     }
 }

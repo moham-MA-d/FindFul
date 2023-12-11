@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Core.Models.Entities.User;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace Data.Seed
 {
@@ -31,6 +32,10 @@ namespace Data.Seed
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
+                user.CreateDateTime = user.CreateDateTime.ToUniversalTime();
+                user.LastActivity = user.LastActivity.ToUniversalTime();
+                user.DateOfBirth = user.DateOfBirth.ToUniversalTime();
+
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "DtoMember");
             }
@@ -38,7 +43,7 @@ namespace Data.Seed
             var admin = new AppUser
             {
                 UserName = "Admin",
-                ProfilePhotoUrl = "/assets/images/user.png"
+                ProfilePhotoUrl = "/assets/images/user.png",
             };
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });

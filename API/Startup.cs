@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System.Linq;
 using API.SignalR;
+using Serilog;
+using Serilog.Formatting;
 
 namespace API
 {
@@ -96,7 +98,9 @@ namespace API
 
             if (env.IsDevelopment())
             {
-                var swaggerOption = new SwaggerSettings();
+                app.UseSerilogRequestLogging();
+
+                var swaggerOption = new SwaggerSettings(); 
                 _config.GetSection(nameof(SwaggerSettings)).Bind(swaggerOption);
 
                 app.UseSwagger(option => { option.RouteTemplate = swaggerOption.JsonRoute; });
