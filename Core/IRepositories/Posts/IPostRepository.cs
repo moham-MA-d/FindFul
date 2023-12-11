@@ -8,6 +8,5 @@ namespace Core.IRepositories.Posts
     public interface IPostRepository : IGenericRepository<Post>
     {
         Task<PagedListBase<DtoPostResponse>> GetAllPosts(PostParameters postParameters, int? userId);
-
-    }
+    } 
 }

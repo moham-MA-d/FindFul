@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Serilog.Core;
+using Serilog;
 
 namespace API
 {
@@ -18,7 +20,8 @@ namespace API
         public static async Task Main(string[] args)
         {
             ThreadPool.SetMaxThreads(1, 1);
-           
+            
+
             var host = CreateHostBuilder(args).Build();
 
             // create a scope for services that we need.
@@ -45,6 +48,7 @@ namespace API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
