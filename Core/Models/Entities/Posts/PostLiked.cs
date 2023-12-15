@@ -6,7 +6,7 @@ namespace Core.Models.Entities.Posts
 	public class PostLiked
 	{
         public bool IsActive { get; set; } = false;
-        public DateTime CreateDateTime { get; set; } = DateTime.Now;
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
 		public int PostId { get; set; }
 		public Post ThePost { get; set; }
 		public int UserId { get; set; }

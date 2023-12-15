@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
-using API.Extensions;
+using API.Helpers.Authentication;
 using Core.IServices.Follows;
 using Core.IServices.User;
 using Core.Models.Entities.Follows;

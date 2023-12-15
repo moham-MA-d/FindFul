@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
-using API.Extensions;
+using API.Helpers.Authentication;
 using Core.IServices.Posts;
 using Core.Models.Entities.Posts;
 using Microsoft.AspNetCore.Authorization;

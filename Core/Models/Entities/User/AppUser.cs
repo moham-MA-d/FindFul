@@ -13,7 +13,7 @@ namespace Core.Models.Entities.User
         public Guid GuId { get; set; } = Guid.NewGuid();
         public bool IsDelete { get; set; } = false;
         public bool IsActive { get; set; } = true;
-        public DateTime CreateDateTime { get; set; } = DateTime.Now;
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
 
         public string Phone { get; set; }
         public string ReferalCode { get; set; }
@@ -26,7 +26,7 @@ namespace Core.Models.Entities.User
         public string City { get; set; }
         public string Country { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public DateTime LastActivity { get; set; } = DateTime.Now;
+        public DateTime LastActivity { get; set; } = DateTime.UtcNow;
         public string ProfilePhotoUrl { get; set; }
         public string ProfilePhotoUrlPublicId { get; set; }
         public string CoverPhotoUrl { get; set; }

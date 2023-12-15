@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using API.Helpers;
@@ -12,6 +13,7 @@ using Core.IServices.User;
 using Core.Models.Entities.User;
 using DTO.Account;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,7 @@ namespace API.Services.Classes
 {
     public class TokenServiceApi : ITokenServiceApi
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JwtSettings _jwtSettings;
         private readonly ITokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
@@ -30,15 +33,20 @@ namespace API.Services.Classes
         //  because in this situation (JWT) key remains on the server.
         private readonly SymmetricSecurityKey _key;
 
-        public TokenServiceApi(IConfiguration configuration, UserManager<AppUser> userManager, TokenValidationParameters validationParameters, JwtSettings jwtSettings, ITokenService tokenService)
+        public TokenServiceApi(IConfiguration configuration, UserManager<AppUser> userManager, TokenValidationParameters validationParameters, JwtSettings jwtSettings, ITokenService tokenService, IHttpContextAccessor httpContextAccessor)
         {
             _validationParameters = validationParameters;
             _jwtSettings = jwtSettings;
             _tokenService = tokenService;
+            _httpContextAccessor = httpContextAccessor;
+
             configuration.Bind(nameof(_jwtSettings), _jwtSettings);
 
             _userManager = userManager;
-            _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtSettings.SecretKey));
+
+            // Ensure the key is at least 512 bits (64 bytes)
+            var keyBytes = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
+            _key = new SymmetricSecurityKey(keyBytes);
         }
 
 
@@ -95,7 +103,7 @@ namespace API.Services.Classes
         
         public async Task<DtoAuthenticationResult> CreateTokenAsync(AppUser user)
         {
-            // Claim: store some properties in out token about user and issued by server.
+            // Claim: store some properties in the token about user. it's issued by server.
             var claims = new List<Claim>
             {
                 new ("Email", user.Email),
@@ -104,23 +112,28 @@ namespace API.Services.Classes
                 new ("Sex", user.Sex.ToString()),
                 new ("Gender", user.Gender.ToString()),
                 new ("PhotoUrl", user.ProfilePhotoUrl ?? "/assets/images/user.png"),
-                //new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddMonths(1).ToString(CultureInfo.InvariantCulture)),
+                new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddMonths(1).ToString(CultureInfo.InvariantCulture)),
                 //Used for RefreshToken Validation
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
             var roles = await _userManager.GetRolesAsync(user);
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+ 
+            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
-            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);
+            var identity = new ClaimsIdentity(claims, "CustomLogin");
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.Add(_jwtSettings.TokenLifeTime),
+                Subject = identity,
+                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifeTime),
                 SigningCredentials = cred
             };
+
+            //var claimsPrincipal = new ClaimsPrincipal(identity);
+            //_httpContextAccessor.HttpContext.User = claimsPrincipal;
 
             var tokenHandler = new JwtSecurityTokenHandler();
 

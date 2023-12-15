@@ -1,22 +1,18 @@
-﻿using API.Helpers.HealthChecks;
-using Data;
+﻿using Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace API.ServiceInstallers
+namespace API.ServiceInstallers;
+
+public class HealthCheckInstaller : IServiceInstaller
 {
-    public class HealthCheckInstaller : IServiceInstaller
+    public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
-        {
-            //TODO Commented for deployment
-            // services.AddHealthChecks()
-            //.AddDbContextCheck<DataContext>()
+        //TODO Commented for deployment
+        services.AddHealthChecks().AddDbContextCheck<DataContext>()
 
-
-            //needs docker
-            //.AddCheck<RedisHealthCheck>("Redis")
-            ;
-        }
+        //needs docker
+        //.AddCheck<RedisHealthCheck>("Redis")
+        ;
     }
 }

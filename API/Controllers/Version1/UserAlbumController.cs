@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
-using API.Extensions;
+using API.Helpers.Authentication;
 using API.Services.Interfaces;
 using Core.IServices.Mapper;
 using Core.IServices.User;

@@ -11,7 +11,7 @@ namespace API.SwaggerExamples.Requests
             var postRequest =  new DtoPostRequest
             {
                 Body = "This is a new post request example.",
-                CreateDateTime = DateTime.Now
+                CreateDateTime = DateTime.UtcNow
             };
             return postRequest;
         }
