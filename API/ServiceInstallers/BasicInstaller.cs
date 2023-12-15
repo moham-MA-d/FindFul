@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using API.Extensions;
 using API.Helpers;
+using API.Helpers.Authentication;
 using API.SignalR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -19,52 +20,18 @@ namespace API.ServiceInstallers
         {
             services.AddControllers();
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("V1", new OpenApiInfo { Title = "Findful API", Version = "V1" });
-                //Add filters
-                options.ExampleFilters();
-                options.CustomSchemaIds(type => type.ToString());
-
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "Findful Authorization using the bearer scheme",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
-                });
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer",
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                options.IncludeXmlComments(xmlPath);
-            });
-            //add a registered of field
-            services.AddSwaggerExamplesFromAssemblyOf<Startup>();
-            
-
             services.AddCors();
+
+            services.AddLogging();
+
+            //IdentityServiceExtension.SetLogger(services.BuildServiceProvider().GetRequiredService<ILogger>());
+            IdentityService.SetLogger(services.BuildServiceProvider().GetRequiredService<ILoggerFactory>().CreateLogger("IdentityServiceExtension"));
 
             services.AddIdentityServices(configuration);
 
             services.AddSingleton(_ => configuration);
 
-            services
-                .AddMvc(opt => { opt.EnableEndpointRouting = false; });
+            services.AddMvc(opt => { opt.EnableEndpointRouting = false; });
             
             services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>()
                 .CreateLogger("DefaultLogger"));

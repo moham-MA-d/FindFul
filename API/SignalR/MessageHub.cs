@@ -1,4 +1,4 @@
-using API.Extensions;
+using API.Helpers.Authentication;
 using Core.IServices.Mapper;
 using Core.IServices.Messages;
 using Core.IServices.SignalR;

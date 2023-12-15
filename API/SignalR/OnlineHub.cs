@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using API.Extensions;
+using API.Helpers.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
