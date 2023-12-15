@@ -30,7 +30,7 @@ import { HasRoleDirective } from './directives/role/has-role.directive';
   imports: [
     BrowserModule, //basic modulde to show our code in SPA.
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule, // Handle HTTPS
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

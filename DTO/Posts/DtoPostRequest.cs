@@ -12,6 +12,6 @@ namespace DTO.Posts
         public string Body { get; set; }
         public bool IsLiked { get; set; } = false;
         public int LikesCount { get; set; }
-        public DateTime CreateDateTime { get; set; } = DateTime.Now;
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
     }
 }

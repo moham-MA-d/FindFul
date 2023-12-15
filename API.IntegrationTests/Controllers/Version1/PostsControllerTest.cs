@@ -27,7 +27,7 @@ namespace API.IntegrationTests.Controllers.Version1
             {
                 Id = 1,
                 Body = "Body",
-                CreateDateTime = DateTime.Now
+                CreateDateTime = DateTime.UtcNow
             });
 
             //Act   

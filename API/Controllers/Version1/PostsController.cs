@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
 using API.Errors;
 using API.Extensions;
+using API.Helpers.Authentication;
 using Core.IServices.Mapper;
 using Core.IServices.Posts;
+using DTO;
 using DTO.Pagination;
 using DTO.Posts;
 using Extensions.Common;
-using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Version1
@@ -27,29 +29,30 @@ namespace API.Controllers.Version1
         /// <summary>
         /// Create a post
         /// </summary>
-        /// <response code="201">Post is created successfully</response>
         /// <response code="400">Post is not created</response>
-        [ProducesResponseType(typeof(DtoPostResponse), 201)]
-        [ProducesResponseType(typeof(ApiException), 400)]
+        /// <response code="401">The user is Not Authorized</response>
+        /// <response code="201">Post is created successfully</response>
+        [Authorize]
         [HttpPost("Add")]
-        public async Task<ActionResult<DtoPostResponse>> Add(DtoPostRequest dtoPostRequest)
+        [ProducesResponseType(typeof(ApiException), 400)]
+        [ProducesResponseType(typeof(ApiException), 401)]
+        [ProducesResponseType(typeof(Alaki), 201)]
+        public async Task<ActionResult<object>> Add(DtoPostRequest dtoPostRequest)
         {
             var post = _mapperService.DtoPostRequestToPost(dtoPostRequest);
             post.UserId = User.GetUserId();
             await _postService.AddAsync(post);
 
-            var dtoPostResponse = _mapperService.PostToDtoPostResponse(post);
+            //var dtoPostResponse = _mapperService.PostToDtoPostResponse(post);
 
             var baseUrl = HttpContext.GetCurrentLocationUri();
 
             var locationUri = baseUrl + "/" + post.Id;
 
-            return Created(locationUri, dtoPostResponse);
+            return Created(locationUri, new Alaki() { Aaaa =1, Bbbb ="11111"});
         }
 
-
-        
-
+       
 
         /// <summary>
         /// Get all posts

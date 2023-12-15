@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Controllers.Version1.Base;
-using API.Extensions;
 using API.Services.Interfaces;
 using Core.IServices.User;
 using Core.Models.Entities.User;
@@ -57,7 +56,6 @@ namespace API.Controllers.Version1
         [HttpPost("Login")]
         public async Task<ActionResult<DtoAuthenticationResult>> Login(DtoLogin dtoLogin)
         {
-
             if (dtoLogin.UserName.IsNullOrEmptyOrWhiteSpace())
                 return BadRequest("Username or Email is empty");
 
@@ -80,7 +78,7 @@ namespace API.Controllers.Version1
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             if (user == null) return Unauthorized("Invalid Username");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, dtoLogin.Password, false);

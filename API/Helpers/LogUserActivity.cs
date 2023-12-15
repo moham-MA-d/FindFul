@@ -1,8 +1,8 @@
-﻿using API.Extensions;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using Core.IServices.User;
+using API.Helpers.Authentication;
 
 namespace API.Helpers
 {
@@ -34,7 +34,7 @@ namespace API.Helpers
 
             var user = await userService.GetUserByIdAsync(userId);
 
-            user.LastActivity = System.DateTime.Now;
+            user.LastActivity = System.DateTime.UtcNow;
 
             await userService.SaveChangesAsync();
         }
