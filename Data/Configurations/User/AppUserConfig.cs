@@ -10,6 +10,8 @@ namespace Data.Configurations.User
         {
             builder.ToTable("Users");
 
+            builder.HasQueryFilter(x => x.IsDelete != false);
+
             builder
                 .HasMany(x => x.TheUserRolesList)
                 .WithOne(x => x.TheUser)

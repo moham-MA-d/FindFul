@@ -3,7 +3,7 @@ using System;
 
 namespace Core.Models.Entities.Messages
 {
-    public class Message : BaseId
+    public class Message : BaseFields
     {
         public string Body { get; set; }
 

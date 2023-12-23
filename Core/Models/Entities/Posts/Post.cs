@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Core.Models.Entities.Posts
 {
-    public class Post : BaseId
+    public class Post : BaseFields
     {
         public string Body { get; set; }
         public DateTime DeleteDateTime { get; set; }
