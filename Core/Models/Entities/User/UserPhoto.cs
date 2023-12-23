@@ -1,6 +1,6 @@
 namespace Core.Models.Entities.User
 {
-    public class UserPhoto : BaseId
+    public class UserPhoto : BaseFields
     {
 
         public string Url { get; set; }

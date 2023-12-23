@@ -12,6 +12,7 @@ using Data.Configurations.Messages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Core.Models.Entities.SignalR;
+using Data.Interceptors;
 
 namespace Data
 {
@@ -24,6 +25,11 @@ namespace Data
             ChangeTracker.LazyLoadingEnabled = false;
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new LoggingInterceptor());
+            base.OnConfiguring(optionsBuilder);
+        }
 
         public DbSet<UserPhoto> UserPhotos { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -36,11 +42,11 @@ namespace Data
         public DbSet<SignalRConnection> SignalRConnections { get; set; }
 
 
-        //This is the method that is called when an entity is created.
+        //This method that is called when Context is created for the first time.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-         
+
             modelBuilder.ApplyConfiguration(new AppUserConfig());
             modelBuilder.ApplyConfiguration(new AppRoleConfig());
             modelBuilder.ApplyConfiguration(new AppUserRoleConfig());

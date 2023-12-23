@@ -3,7 +3,7 @@ using Core.Models.Entities.User;
 
 namespace Core.Models.Entities.Comments
 {
-    public class Comment : BaseId
+    public class Comment : BaseFields
     {
         public string Text { get; set; }
 
