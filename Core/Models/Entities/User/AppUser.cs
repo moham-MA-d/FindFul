@@ -1,5 +1,6 @@
 using Core.Models.Entities.Comments;
 using Core.Models.Entities.Follows;
+using Core.Models.Entities.Groups;
 using Core.Models.Entities.Messages;
 using Core.Models.Entities.Posts;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +36,8 @@ namespace Core.Models.Entities.User
 
         public ICollection<UserPhoto> TheUserPhotosList { get; set; }
         public ICollection<Post> ThePostsList { get; set; }
+        public ICollection<Group> TheGroupsList { get; set; }
+        public ICollection<GroupAdmin> TheGroupAdminsList { get; set; }
         public ICollection<RefreshToken> TheRefreshTokensList { get; set; }
         public ICollection<Comment> TheCommentsList { get; set; }
 		public ICollection<Follow> TheFollowerList { get; set; }
