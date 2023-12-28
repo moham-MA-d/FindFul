@@ -22,7 +22,7 @@ internal class SoftDeleteInterceptor : SaveChangesInterceptor
         var trackedEntries = eventData.Context.ChangeTracker.Entries()
             .Where(x => x.State == EntityState.Deleted && x.Entity is BaseFields);
 
-        foreach ( var entry in trackedEntries )
+        foreach (var entry in trackedEntries)
         {
             entry.State = EntityState.Modified;
 
@@ -38,5 +38,5 @@ internal class SoftDeleteInterceptor : SaveChangesInterceptor
         return base.SavedChanges(eventData, result);
     }
 
-   
+
 }
