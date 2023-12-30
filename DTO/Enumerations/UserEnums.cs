@@ -79,5 +79,23 @@ namespace DTO.Enumerations
             Phone = 2,
             Username = 3,
         }
+
+        public enum MemberRole
+        {
+            MemberL1,
+            MemberL2
+            // Add other roles as needed
+        }
+        public enum AdminGrant
+        {
+            AddNewMember,
+            DeleteMember,
+            AddNewAdmin,
+            DeleteAdmin,
+            AddNewPost,
+            EditAndDeletePost,
+            EditAndDeleteOtherAdminsPost,
+            ChangeGroupInfo,
+        }
     }
 }

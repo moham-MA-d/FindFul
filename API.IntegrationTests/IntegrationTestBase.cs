@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace API.IntegrationTests
 {
@@ -22,8 +23,9 @@ namespace API.IntegrationTests
         private readonly IServiceProvider _serviceProvider;
         protected IntegrationTestBase()
         {
+
             //Because we are using EF we can change our SQL server database with an in-memory one.
-            var appFactory = new WebApplicationFactory<Startup>()
+            var appFactory = new WebApplicationFactory<Program>()
                     .WithWebHostBuilder(builder =>
                     {
                         // at this point Startup execution has been finished.

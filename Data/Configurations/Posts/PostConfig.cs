@@ -18,7 +18,6 @@ namespace Data.Configurations.Posts
             builder.Property(x => x.Body)
                 .IsRequired();
 
-
         }
     }
 }

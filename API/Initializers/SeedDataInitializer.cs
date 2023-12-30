@@ -23,7 +23,7 @@ public static class SeedDataInitializer
             var userManagerService = services.GetRequiredService<UserManager<AppUser>>();
             var roleManagerService = services.GetRequiredService<RoleManager<AppRole>>();
             await context.Database.MigrateAsync();
-            await Seed.SeedUsers(userManagerService, roleManagerService);
+            await Seed.SeedUsers(userManagerService, roleManagerService, context);
         }
         catch (System.Exception ex)
         {

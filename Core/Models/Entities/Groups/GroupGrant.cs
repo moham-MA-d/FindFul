@@ -7,6 +7,6 @@ public class GroupGrant
 {
     public int Id { get; set; }
     public AdminGrant AdminGrant { get; set; }
-    public ICollection<GroupAdminGrant> TheGroupAdminGrantsLost { get; set; }
+    public ICollection<GroupAdminGrant> TheGroupAdminGrantsList { get; set; }
 
 }

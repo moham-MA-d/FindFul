@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Core.Models.Entities.SignalR;
 using Data.Interceptors;
+using Core.Models.Entities.Groups;
+using Data.Configurations.Groups;
 
 namespace Data
 {
@@ -32,14 +34,23 @@ namespace Data
         }
 
         public DbSet<UserPhoto> UserPhotos { get; set; }
+        
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Follow> Follows { get; set; }
         public DbSet<PostLiked> PostsLiked { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Follow> Follows { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<SignalRGroup> SignalRGroups { get; set; }
         public DbSet<SignalRConnection> SignalRConnections { get; set; }
+
+
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<GroupAdmin> GroupAdmins { get; set; }
+        public DbSet<GroupGrant> GroupGrants { get; set; }
+        public DbSet<GroupAdminGrant> GroupAdminGrants { get; set; }
 
 
         //This method that is called when Context is created for the first time.
@@ -50,11 +61,14 @@ namespace Data
             modelBuilder.ApplyConfiguration(new AppUserConfig());
             modelBuilder.ApplyConfiguration(new AppRoleConfig());
             modelBuilder.ApplyConfiguration(new AppUserRoleConfig());
+
             modelBuilder.ApplyConfiguration(new IdentityUserClaimConfig());
             modelBuilder.ApplyConfiguration(new IdentityUserLoginConfig());
             modelBuilder.ApplyConfiguration(new IdentityRoleClaimConfig());
             modelBuilder.ApplyConfiguration(new IdentityUserTokenConfig());
+
             modelBuilder.ApplyConfiguration(new UserPhotoConfig());
+
             modelBuilder.ApplyConfiguration(new PostConfig());
             modelBuilder.ApplyConfiguration(new CommentConfig());
             modelBuilder.ApplyConfiguration(new FollowConfig());
@@ -62,6 +76,12 @@ namespace Data
             modelBuilder.ApplyConfiguration(new MessageConfig());
             modelBuilder.ApplyConfiguration(new SignalRGroupConfig());
             //modelBuilder.ApplyConfiguration(new RefreshTokenConfig());
+
+
+            modelBuilder.Entity<Group>().UseTphMappingStrategy();
+            modelBuilder.ApplyConfiguration(new GroupConfig());
+            modelBuilder.ApplyConfiguration(new GroupAdminGrantConfig());
+
 
         }
     }

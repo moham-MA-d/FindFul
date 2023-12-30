@@ -78,9 +78,9 @@ namespace Data.Repositories.User
                
                Thread.Sleep(111);
 
-                //We used `AsNoTracking()` Because We only going to read the data and we are not going to to anything else with the data
                 return await PagedList<DtoMember>.CreateAsync(
-                    query.ProjectTo<DtoMember>(_mapper.ConfigurationProvider, new {currentUsername = userParameters.CurrentUsername}).AsNoTracking(),
+                    query.ProjectTo<DtoMember>(_mapper.ConfigurationProvider, new {currentUsername = userParameters.CurrentUsername})
+                    .AsNoTracking(),
                     userParameters.PageIndex,
                     userParameters.PageSize);
 

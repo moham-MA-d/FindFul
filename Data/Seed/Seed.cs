@@ -5,13 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using Core.Models.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using System;
+using Core.Models.Entities.Groups;
+using static DTO.Enumerations.UserEnums;
 
 namespace Data.Seed
 {
     public static class Seed
     {
         // We get UserManager From Identity so we can pass it here
-        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public static async Task SeedUsers(
+            UserManager<AppUser> userManager,
+            RoleManager<AppRole> roleManager,
+            DataContext context)
         {
             if (await userManager.Users.AnyAsync()) return;
 
@@ -47,6 +52,17 @@ namespace Data.Seed
             };
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
+
+            foreach (AdminGrant grnt in Enum.GetValues(typeof(AdminGrant)))
+            {
+                var grant = new GroupGrant
+                {
+                    AdminGrant = grnt,
+                };
+                await context.GroupGrants.AddAsync(grant);
+            }
+            await context.SaveChangesAsync();
+
         }
     }
 }
